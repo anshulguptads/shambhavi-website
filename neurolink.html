@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NeuroLink v2 — The AI-Native Learning Platform for India's Universities | Shambhavi Innovation Lab</title>
+<meta name="description" content="NeuroLink v2 turns university lectures into personalized interactive learning, with a live knowledge graph for every student. Built for India's CS and AI departments." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 120'><path d='M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z' stroke='%231a1840' stroke-width='6' fill='none'/><circle cx='80' cy='60' r='16' fill='%23d99133'/><circle cx='80' cy='60' r='5.5' fill='%231a1840'/></svg>" />
+
+<link rel="canonical" href="https://shambhavilabs.com/neurolink.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Shambhavi Innovation Lab" />
+<meta property="og:title" content="NeuroLink v2 — The AI-Native Learning Platform for India's Universities" />
+<meta property="og:description" content="Turn any university lecture into personalized interactive learning. Live Concept DNA knowledge graph per student. Zero GPU infrastructure required. Built for CS and AI departments." />
+<meta property="og:url" content="https://shambhavilabs.com/neurolink.html" />
+<meta property="og:image" content="https://shambhavilabs.com/og-neurolink.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="NeuroLink v2 — AI-Native Learning for India's Universities" />
+<meta name="twitter:description" content="14 features. Concept DNA per student. Zero GPUs required." />
+<meta name="twitter:image" content="https://shambhavilabs.com/og-neurolink.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "NeuroLink v2",
+  "description": "NeuroLink v2 is an AI-native interactive learning platform for India's government universities and CS/AI departments. 14 interconnected features including Concept DNA knowledge graph, Ghost Mode, and Paper-to-Playground.",
+  "brand": { "@type": "Brand", "name": "Shambhavi Innovation Lab" },
+  "category": "Higher Education Software",
+  "image": "https://shambhavilabs.com/og-neurolink.png",
+  "url": "https://shambhavilabs.com/neurolink.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web-based"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do we need to buy GPUs or any new infrastructure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. NeuroLink v2 runs entirely on cloud APIs — Google Gemini 3.1 Pro for the AI layer, Neo4j cloud for the knowledge graph. Universities need a browser. No GPU procurement, no server maintenance, no capex."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does this integrate with our existing LMS or academic systems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NeuroLink can function as a complete standalone platform or as a layer on top of existing LMS systems like Moodle, Canvas, or national platforms like DIKSHA. Authentication supports Google Workspace, SAML SSO, and Active Directory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it only work for CS and AI, or broader fields?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NeuroLink v2 is optimized for Computer Science, Machine Learning, and AI curricula. The Bridges feature extends utility to data-adjacent fields like Operations Research, Computational Biology, and Quantitative Finance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is student data stored? Is it safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All data is stored in Indian data centers. DPDPA-compliant from day one. Student data is tenant-isolated and never used to train shared models. Each institution's data stays with that institution."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do professors actually have to do differently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Less, not more. Professors upload existing lecture materials — slides, PDFs, papers — and the AI transforms them. Many professors spend less time grading and more time mentoring within the first month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can we run this for a single department before a university-wide rollout?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, and we strongly recommend it. Our standard pilot structure starts with a single CS or AI department, one semester, roughly 200–500 students. Scale-up decisions happen based on evidence."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Manrope:wght@300..800&family=Noto+Serif+Devanagari:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #1a1840; --navy-deep: #0f0e2a; --navy-12: rgba(26, 24, 64, 0.12);
+  --saffron: #d99133; --saffron-soft: #f5c179; --saffron-glow: rgba(217, 145, 51, 0.15);
+  --paper: #f5f1e8; --cream: #faf7ef; --ink: #0a0920;
+  --on-dark: #f1ece0; --on-dark-muted: rgba(241, 236, 224, 0.65); --on-dark-faint: rgba(241, 236, 224, 0.35);
+  --on-light: #1a1840; --on-light-muted: rgba(26, 24, 64, 0.7); --on-light-faint: rgba(26, 24, 64, 0.4);
+  --display: 'Fraunces', 'Times New Roman', serif; --body: 'Manrope', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace; --devanagari: 'Noto Serif Devanagari', serif;
+  --gutter: clamp(1.25rem, 4vw, 3rem); --section-pad: clamp(5rem, 10vh, 9rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--body); background: var(--navy); color: var(--on-dark); line-height: 1.55; font-size: 17px; letter-spacing: -0.005em; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--saffron); color: var(--navy); }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.grain::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 0.88 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+  opacity: 0.08; mix-blend-mode: overlay; z-index: 1; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem var(--gutter);
+  display: flex; justify-content: space-between; align-items: center; transition: all 400ms var(--ease-out); }
+.nav--scrolled { background: rgba(15, 14, 42, 0.78); backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%); padding-top: 0.85rem; padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(241, 236, 224, 0.06); }
+.nav__brand { display: flex; align-items: center; gap: 0.75rem; }
+.nav__logo { width: 38px; }
+.nav__wordmark { font-family: var(--display); font-size: 1.05rem; font-weight: 500;
+  font-variation-settings: "opsz" 14, "SOFT" 30; letter-spacing: -0.015em; }
+.nav__wordmark em { font-style: italic; font-weight: 400; color: var(--saffron-soft); }
+.nav__product { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--saffron); font-weight: 600; padding-left: 0.85rem; margin-left: 0.5rem;
+  border-left: 1px solid rgba(241, 236, 224, 0.2); }
+.nav__links { display: flex; gap: 2rem; align-items: center; }
+.nav__links a { font-size: 0.85rem; color: var(--on-dark-muted); font-weight: 500; transition: color 200ms var(--ease-out); }
+.nav__links a:hover { color: var(--on-dark); }
+.nav__cta { font-size: 0.82rem; font-weight: 600; padding: 0.58rem 1.1rem;
+  border: 1px solid var(--saffron); color: var(--saffron); border-radius: 999px;
+  transition: all 200ms var(--ease-out); }
+.nav__cta:hover { background: var(--saffron); color: var(--navy); }
+@media (max-width: 900px) { .nav__links, .nav__product { display: none; } }
+
+/* HERO */
+.hero { position: relative; min-height: 92vh; padding: 8rem var(--gutter) 4rem;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: radial-gradient(ellipse at 75% 40%, rgba(217,145,51,0.1) 0%, transparent 55%), var(--navy); }
+.hero__grid { width: 100%; max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(2rem, 5vw, 5rem);
+  align-items: center; position: relative; z-index: 2; flex: 1; }
+@media (max-width: 1000px) { .hero__grid { grid-template-columns: 1fr; gap: 4rem; } }
+
+.hero__crumb { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.76rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--saffron); font-weight: 600;
+  margin-bottom: 2rem; }
+.hero__crumb-sep { color: var(--on-dark-faint); }
+.hero__crumb a { color: var(--on-dark-muted); }
+
+.hero__wordmark { font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 0;
+  font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 0.95; font-weight: 340;
+  letter-spacing: -0.035em; margin-bottom: 1.5rem; }
+.hero__wordmark em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; font-weight: 380; }
+
+.hero__tagline { font-family: var(--display);
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.3; font-weight: 400;
+  letter-spacing: -0.015em; margin-bottom: 1.75rem; max-width: 26ch; }
+
+.hero__sub { color: var(--on-dark-muted); font-size: 1.05rem; line-height: 1.55;
+  margin-bottom: 2.5rem; max-width: 44ch; }
+
+.hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn { padding: 0.95rem 1.6rem; border-radius: 999px; font-weight: 600; font-size: 0.92rem;
+  display: inline-flex; align-items: center; gap: 0.5rem; transition: all 200ms var(--ease-out); }
+.btn:hover { transform: translateY(-1px); }
+.btn--primary { background: var(--saffron); color: var(--navy); }
+.btn--primary:hover { background: var(--saffron-soft); }
+.btn--ghost { border: 1px solid rgba(241, 236, 224, 0.25); color: var(--on-dark); }
+.btn--ghost:hover { border-color: var(--on-dark); }
+.btn__arrow { width: 16px; height: 16px; transition: transform 300ms var(--ease-out); }
+.btn:hover .btn__arrow { transform: translateX(3px); }
+
+/* Hero visual: The Concept DNA Graph */
+.dna-viz {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 520px;
+  margin-left: auto;
+  width: 100%;
+}
+.dna-viz svg { width: 100%; height: 100%; overflow: visible; }
+.dna-viz .dna-edge { stroke: rgba(241,236,224,0.15); stroke-width: 0.8; }
+.dna-viz .dna-edge-active { stroke: var(--saffron); stroke-width: 1.4; opacity: 0.6; }
+.dna-viz .dna-node { fill: var(--on-dark); opacity: 0.4; transition: all 500ms var(--ease-out); }
+.dna-viz .dna-node-mastered { fill: var(--saffron); opacity: 0.9; }
+.dna-viz .dna-node-learning { fill: var(--saffron-soft); opacity: 0.7; }
+.dna-viz .dna-pulse { fill: var(--saffron); opacity: 0; animation: dnaPulse 3s ease-out infinite; }
+.dna-viz .dna-label { font-family: var(--body); font-size: 8px; fill: var(--on-dark-muted);
+  letter-spacing: 0.5px; font-weight: 500; }
+.dna-viz .dna-label-mastered { fill: var(--saffron-soft); }
+@keyframes dnaPulse {
+  0% { opacity: 0.6; r: 12; } 100% { opacity: 0; r: 55; }
+}
+
+.hero__stats { width: 100%; max-width: 1400px; margin: 3rem auto 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+  z-index: 2; border-top: 1px solid rgba(241, 236, 224, 0.12); padding-top: 2rem;
+  position: relative; }
+@media (max-width: 900px) { .hero__stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2.5rem; } }
+.stat__num { font-family: var(--display); font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 350; color: var(--saffron); line-height: 1;
+  letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+.stat__label { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--on-dark-muted); font-weight: 500; }
+
+/* Section shared */
+.section__head { max-width: 1400px; margin: 0 auto 5rem;
+  display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
+@media (max-width: 780px) { .section__head { grid-template-columns: 1fr; gap: 1.25rem; } }
+.section__eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--saffron); display: flex; align-items: center; gap: 0.85rem; }
+.section__eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--saffron); }
+.section__title { font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 30; font-weight: 350;
+  font-size: clamp(2rem, 3.8vw, 3.4rem); line-height: 1.08; letter-spacing: -0.025em; }
+.section__title em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 96, "SOFT" 80, "WONK" 1; }
+
+/* CRISIS (AI workforce) */
+.crisis { padding: var(--section-pad) var(--gutter); background: var(--paper); color: var(--on-light); }
+.crisis .section__eyebrow { color: var(--navy); }
+.crisis .section__title em { color: var(--saffron); }
+
+.crisis__stats {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--navy-12);
+}
+@media (max-width: 780px) { .crisis__stats { grid-template-columns: 1fr; } }
+.crisis__stat { padding: 3.5rem 2rem; border-right: 1px solid var(--navy-12); border-bottom: 1px solid var(--navy-12); }
+.crisis__stat:nth-child(3n) { border-right: none; }
+@media (max-width: 780px) { .crisis__stat { border-right: none; } }
+.crisis__stat-num { font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-weight: 300; line-height: 1; letter-spacing: -0.035em;
+  color: var(--navy); margin-bottom: 0.75rem; }
+.crisis__stat-num em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 80, "WONK" 1; }
+.crisis__stat-label { font-size: 0.95rem; color: var(--on-light-muted); line-height: 1.5; max-width: 30ch; }
+
+.crisis__closing { max-width: 1400px; margin: 3.5rem auto 0;
+  padding-top: 2.5rem; border-top: 1px solid var(--navy-12);
+  font-family: var(--display); font-style: italic;
+  font-variation-settings: "opsz" 48, "SOFT" 60;
+  font-size: clamp(1.35rem, 2.3vw, 1.85rem); line-height: 1.45;
+  max-width: 48ch; letter-spacing: -0.015em; color: var(--navy); font-weight: 400; }
+
+/* HOW IT WORKS */
+.how { padding: var(--section-pad) var(--gutter); background: var(--navy-deep); }
+.how__flow {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+@media (max-width: 900px) { .how__flow { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .how__flow { grid-template-columns: 1fr; } }
+
+.how__step {
+  padding: 2rem 1.5rem 2rem 0;
+  position: relative;
+  border-top: 1px solid rgba(241,236,224,0.1);
+}
+.how__step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--saffron);
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+@media (max-width: 900px) { .how__step:not(:last-child)::after { display: none; } .how__step { padding-right: 1.5rem; } }
+
+.how__num { font-family: var(--mono); font-size: 0.78rem;
+  letter-spacing: 0.2em; color: var(--saffron); margin-bottom: 1.25rem; font-weight: 500; }
+.how__title { font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-size: 1.55rem; font-weight: 450; letter-spacing: -0.02em; margin-bottom: 0.75rem; line-height: 1.15; }
+.how__desc { font-size: 0.9rem; color: var(--on-dark-muted); line-height: 1.55; max-width: 30ch; }
+
+/* FEATURES — 14 cards */
+.features { padding: var(--section-pad) var(--gutter); background: var(--paper); color: var(--on-light); }
+.features .section__eyebrow { color: var(--navy); }
+.features .section__title em { color: var(--saffron); }
+
+.features__grid {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) { .features__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .features__grid { grid-template-columns: 1fr; } }
+
+.feat {
+  background: var(--cream);
+  border: 1px solid var(--navy-12);
+  padding: 2rem 1.75rem;
+  border-radius: 4px;
+  transition: all 300ms var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+.feat:hover {
+  transform: translateY(-3px);
+  border-color: var(--saffron);
+  box-shadow: 0 20px 40px -25px rgba(26, 24, 64, 0.3);
+}
+.feat__num { font-family: var(--mono); font-size: 0.68rem;
+  letter-spacing: 0.18em; color: var(--on-light-faint); margin-bottom: 1rem; font-weight: 500; }
+.feat__title { font-family: var(--display);
+  font-variation-settings: "opsz" 40, "SOFT" 40;
+  font-size: 1.3rem; font-weight: 450; line-height: 1.15;
+  letter-spacing: -0.02em; margin-bottom: 0.75rem; color: var(--navy); }
+.feat__title em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 40, "SOFT" 80, "WONK" 1; }
+.feat__desc { font-size: 0.88rem; color: var(--on-light-muted); line-height: 1.55; }
+
+/* OUTCOMES */
+.outcomes { padding: var(--section-pad) var(--gutter); background: var(--navy); }
+.outcomes__grid {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+}
+@media (max-width: 900px) { .outcomes__grid { grid-template-columns: repeat(2, 1fr); gap: 3rem 1.5rem; } }
+@media (max-width: 540px) { .outcomes__grid { grid-template-columns: 1fr; } }
+
+.outcome { border-top: 1px solid rgba(217,145,51,0.4); padding-top: 2rem; }
+.outcome__big {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 60;
+  font-size: clamp(3.5rem, 7vw, 5.5rem); font-weight: 300; color: var(--saffron);
+  line-height: 1; letter-spacing: -0.035em; margin-bottom: 1rem; }
+.outcome__big em { font-style: italic; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; }
+.outcome__label { font-family: var(--display);
+  font-variation-settings: "opsz" 24;
+  font-size: 1.1rem; font-weight: 500; margin-bottom: 0.35rem; letter-spacing: -0.015em; }
+.outcome__desc { font-size: 0.85rem; color: var(--on-dark-muted); line-height: 1.5; }
+
+/* IMPLEMENTATION */
+.impl { padding: var(--section-pad) var(--gutter); background: var(--paper); color: var(--on-light); }
+.impl .section__eyebrow { color: var(--navy); }
+.impl .section__title em { color: var(--saffron); }
+
+.impl__phases {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--navy-12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .impl__phases { grid-template-columns: 1fr; } }
+
+.phase { padding: 2.25rem 1.75rem; background: var(--cream);
+  border-right: 1px solid var(--navy-12);
+  transition: all 300ms var(--ease-out); }
+.phase:last-child { border-right: none; }
+@media (max-width: 900px) { .phase { border-right: none; border-bottom: 1px solid var(--navy-12); }
+  .phase:last-child { border-bottom: none; } }
+
+.phase:hover { background: #fff; }
+.phase__num { font-family: var(--mono); font-size: 0.72rem;
+  letter-spacing: 0.2em; color: var(--saffron); margin-bottom: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.phase__timeframe { font-family: var(--display);
+  font-variation-settings: "opsz" 24;
+  font-style: italic; font-size: 0.95rem; color: var(--on-light-muted); margin-bottom: 1.25rem; }
+.phase__title { font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-size: 1.4rem; font-weight: 450; margin-bottom: 1rem; color: var(--navy);
+  letter-spacing: -0.02em; line-height: 1.15; }
+.phase__desc { font-size: 0.88rem; color: var(--on-light-muted); line-height: 1.55; }
+.phase__desc ul { margin-top: 0.75rem; padding-left: 0; list-style: none; }
+.phase__desc li { padding-left: 1rem; position: relative; margin-bottom: 0.4rem; }
+.phase__desc li::before { content: "·"; position: absolute; left: 0; color: var(--saffron); font-weight: 700; }
+
+/* PARTNERSHIP */
+.partnership { padding: var(--section-pad) var(--gutter); background: var(--navy-deep); }
+.partnership__layout {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+@media (max-width: 900px) { .partnership__layout { grid-template-columns: 1fr; gap: 3rem; } }
+.partnership__col h3 { font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-size: 1.6rem; font-weight: 450; margin-bottom: 2rem; letter-spacing: -0.02em; }
+.partnership__list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.partnership__list li { font-size: 0.95rem; color: var(--on-dark-muted);
+  line-height: 1.55; padding-left: 1.5rem; position: relative; }
+.partnership__list li::before { content: ""; width: 8px; height: 8px;
+  position: absolute; left: 0; top: 0.55rem;
+  background: var(--saffron); border-radius: 50%; }
+
+/* FAQ (reused) */
+.faq { padding: var(--section-pad) var(--gutter); background: var(--navy); }
+.faq__layout { max-width: 1100px; margin: 0 auto; }
+.faq__head { text-align: center; margin-bottom: 4rem; }
+.faq__head .section__eyebrow { justify-content: center; }
+.faq__head .section__title { max-width: 30ch; margin: 1.25rem auto 0; }
+.faq__list { border-top: 1px solid rgba(241, 236, 224, 0.08); }
+.faq__item { border-bottom: 1px solid rgba(241, 236, 224, 0.08); }
+.faq__q { width: 100%; text-align: left; padding: 1.75rem 0;
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+  font-family: var(--display);
+  font-variation-settings: "opsz" 24, "SOFT" 30;
+  font-size: 1.15rem; font-weight: 450; letter-spacing: -0.015em;
+  transition: color 200ms var(--ease-out); }
+.faq__q:hover { color: var(--saffron); }
+.faq__icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--saffron);
+  transition: transform 300ms var(--ease-out); }
+.faq__item[open] .faq__icon { transform: rotate(45deg); }
+.faq__a { padding: 0 0 1.75rem; color: var(--on-dark-muted);
+  line-height: 1.65; font-size: 0.95rem; max-width: 80ch; }
+
+/* CTA */
+.cta { padding: var(--section-pad) var(--gutter); background: var(--navy-deep);
+  text-align: center; position: relative; overflow: hidden; }
+.cta__bg-glow { position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%); width: 900px; height: 900px;
+  background: radial-gradient(circle, var(--saffron-glow) 0%, transparent 55%);
+  pointer-events: none; z-index: 0; }
+.cta__content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+.cta__title { font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.05; font-weight: 340;
+  letter-spacing: -0.035em; margin-bottom: 1.75rem; }
+.cta__title em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 80, "WONK" 1; }
+.cta__sub { color: var(--on-dark-muted); font-size: 1.05rem;
+  margin-bottom: 2.75rem; max-width: 52ch; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.cta__ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* FOOTER */
+.footer { background: var(--ink); padding: 4.5rem var(--gutter) 2rem;
+  color: var(--on-dark-muted); font-size: 0.88rem; }
+.footer__layout { max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(241,236,224,0.06); }
+@media (max-width: 860px) { .footer__layout { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+@media (max-width: 520px) { .footer__layout { grid-template-columns: 1fr; } }
+.footer__brand { display: flex; flex-direction: column; gap: 1.25rem; }
+.footer__brand .nav__logo { width: 48px; }
+.footer__tagline { font-family: var(--display);
+  font-variation-settings: "opsz" 20;
+  font-size: 1rem; font-style: italic; line-height: 1.4; max-width: 28ch; color: var(--on-dark); }
+.footer__col h4 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 600; color: var(--saffron); margin-bottom: 1.25rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.footer__col a:hover { color: var(--on-dark); }
+.footer__bottom { max-width: 1400px; margin: 2rem auto 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: var(--on-dark-faint); flex-wrap: wrap; gap: 1rem; }
+.footer__devanagari { font-family: var(--devanagari); color: var(--saffron);
+  font-size: 1rem; opacity: 0.6; }
+
+.reveal { opacity: 0; transform: translateY(30px);
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+.reveal--in { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(25px);
+  transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out); }
+.reveal-stagger.reveal--in > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.reveal--in > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.reveal--in > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger.reveal--in > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger.reveal--in > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger.reveal--in > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger.reveal--in > *:nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger.reveal--in > *:nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger.reveal--in > *:nth-child(8) { transition-delay: 420ms; }
+.reveal-stagger.reveal--in > *:nth-child(9) { transition-delay: 480ms; }
+.reveal-stagger.reveal--in > *:nth-child(10) { transition-delay: 540ms; }
+.reveal-stagger.reveal--in > *:nth-child(11) { transition-delay: 600ms; }
+.reveal-stagger.reveal--in > *:nth-child(12) { transition-delay: 660ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="index.html" class="nav__brand">
+    <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#f1ece0" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+      <circle cx="80" cy="60" r="16" fill="#d99133"/>
+      <circle cx="80" cy="60" r="5.5" fill="#f1ece0"/>
+    </svg>
+    <span class="nav__wordmark">Shambhavi <em>Innovation Lab</em></span>
+    <span class="nav__product">NeuroLink v2</span>
+  </a>
+  <nav class="nav__links">
+    <a href="#problem">The Problem</a>
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#impl">Implementation</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a href="#cta" class="nav__cta">Partner With Us</a>
+</header>
+
+<!-- HERO -->
+<section class="hero grain">
+  <div class="hero__grid">
+    <div>
+      <div class="hero__crumb">
+        <a href="index.html">Shambhavi Labs</a>
+        <span class="hero__crumb-sep">/</span>
+        <span>Learn</span>
+        <span class="hero__crumb-sep">/</span>
+        <span>NeuroLink v2</span>
+      </div>
+      <h1 class="hero__wordmark">Neuro<em>Link</em></h1>
+      <p class="hero__tagline">
+        The AI-native platform for India's <em>CS and AI universities.</em>
+      </p>
+      <p class="hero__sub">
+        Turn any lecture slide into a personalized interactive lesson. Give every student a living knowledge graph. Watch class-wide confusion in real time. Zero GPU infrastructure required.
+      </p>
+      <div class="hero__ctas">
+        <a href="#cta" class="btn btn--primary">
+          Partner for a Pilot
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn btn--ghost">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="dna-viz" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <!-- Edges -->
+        <g>
+          <line class="dna-edge-active" x1="200" y1="200" x2="120" y2="120"/>
+          <line class="dna-edge-active" x1="200" y1="200" x2="280" y2="120"/>
+          <line class="dna-edge-active" x1="200" y1="200" x2="300" y2="220"/>
+          <line class="dna-edge" x1="200" y1="200" x2="100" y2="220"/>
+          <line class="dna-edge" x1="200" y1="200" x2="180" y2="320"/>
+          <line class="dna-edge" x1="200" y1="200" x2="260" y2="310"/>
+          <line class="dna-edge" x1="120" y1="120" x2="70" y2="60"/>
+          <line class="dna-edge" x1="120" y1="120" x2="60" y2="170"/>
+          <line class="dna-edge" x1="280" y1="120" x2="330" y2="60"/>
+          <line class="dna-edge" x1="280" y1="120" x2="350" y2="170"/>
+          <line class="dna-edge" x1="300" y1="220" x2="370" y2="280"/>
+          <line class="dna-edge" x1="100" y1="220" x2="40" y2="260"/>
+          <line class="dna-edge" x1="180" y1="320" x2="160" y2="380"/>
+          <line class="dna-edge" x1="260" y1="310" x2="290" y2="370"/>
+        </g>
+
+        <!-- Pulses -->
+        <circle class="dna-pulse" cx="200" cy="200" r="12"/>
+        <circle class="dna-pulse" cx="200" cy="200" r="12" style="animation-delay: 1s;"/>
+        <circle class="dna-pulse" cx="200" cy="200" r="12" style="animation-delay: 2s;"/>
+
+        <!-- Central node -->
+        <circle cx="200" cy="200" r="18" fill="#d99133" filter="drop-shadow(0 0 20px rgba(217,145,51,0.6))"/>
+        <circle cx="200" cy="200" r="6" fill="#0f0e2a"/>
+        <text class="dna-label dna-label-mastered" x="200" y="172" text-anchor="middle" font-size="9" font-weight="600" fill="#d99133">NEURAL NETS</text>
+
+        <!-- Master nodes -->
+        <circle class="dna-node dna-node-mastered" cx="120" cy="120" r="10"/>
+        <text class="dna-label dna-label-mastered" x="88" y="104" text-anchor="end">LINEAR ALG.</text>
+
+        <circle class="dna-node dna-node-mastered" cx="280" cy="120" r="10"/>
+        <text class="dna-label dna-label-mastered" x="312" y="104">CALCULUS</text>
+
+        <circle class="dna-node dna-node-learning" cx="300" cy="220" r="9"/>
+        <text class="dna-label" x="332" y="224">GRADIENTS</text>
+
+        <!-- Outer concept nodes -->
+        <circle class="dna-node" cx="100" cy="220" r="8"/>
+        <text class="dna-label" x="68" y="224" text-anchor="end">PROB</text>
+
+        <circle class="dna-node" cx="180" cy="320" r="7"/>
+        <text class="dna-label" x="180" y="344" text-anchor="middle">BACKPROP</text>
+
+        <circle class="dna-node" cx="260" cy="310" r="7"/>
+        <text class="dna-label" x="260" y="334" text-anchor="middle">CNNs</text>
+
+        <circle class="dna-node" cx="70" cy="60" r="5"/>
+        <circle class="dna-node" cx="60" cy="170" r="5"/>
+        <circle class="dna-node" cx="330" cy="60" r="5"/>
+        <circle class="dna-node" cx="350" cy="170" r="5"/>
+        <circle class="dna-node" cx="370" cy="280" r="5"/>
+        <circle class="dna-node" cx="40" cy="260" r="5"/>
+        <circle class="dna-node" cx="160" cy="380" r="5"/>
+        <circle class="dna-node" cx="290" cy="370" r="5"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero__stats">
+    <div><div class="stat__num">14</div><div class="stat__label">Interconnected Features</div></div>
+    <div><div class="stat__num">Zero</div><div class="stat__label">GPUs Required</div></div>
+    <div><div class="stat__num">Gemini 3.1</div><div class="stat__label">AI Backbone</div></div>
+    <div><div class="stat__num">50+</div><div class="stat__label">Target Universities</div></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="crisis" id="problem">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      India's AI Workforce Crisis
+    </div>
+    <h2 class="section__title reveal">
+      One million AI professionals short. <em>Three point nine lakh students admitted annually.</em> The math doesn't work.
+    </h2>
+  </div>
+
+  <div class="crisis__stats reveal-stagger">
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>1M+</em></div>
+      <div class="crisis__stat-label">AI professionals shortfall projected for India by 2027.</div>
+    </div>
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>53%</em></div>
+      <div class="crisis__stat-label">AI talent gap estimated across Indian industry in 2026.</div>
+    </div>
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>63%</em></div>
+      <div class="crisis__stat-label">Of Indian workers will need significant reskilling by 2030.</div>
+    </div>
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>3.9L</em></div>
+      <div class="crisis__stat-label">CS engineering students admitted to Indian universities annually.</div>
+    </div>
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>60%+</em></div>
+      <div class="crisis__stat-label">Of professor time spent on administration, not teaching or mentoring.</div>
+    </div>
+    <div class="crisis__stat">
+      <div class="crisis__stat-num"><em>Zero</em></div>
+      <div class="crisis__stat-label">Systematic way to know, at scale, which concepts students are actually stuck on.</div>
+    </div>
+  </div>
+
+  <p class="crisis__closing reveal">
+    The talent India needs is already in its universities. What's missing is the infrastructure to teach every student like the best professor is teaching only them.
+  </p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      How It Works
+    </div>
+    <h2 class="section__title reveal">
+      From static slides <em>to interactive learning</em> — in four steps.
+    </h2>
+  </div>
+
+  <div class="how__flow reveal-stagger">
+    <div class="how__step">
+      <div class="how__num">STEP · 01</div>
+      <h3 class="how__title">Upload</h3>
+      <p class="how__desc">Professors upload PDFs, slides, research papers, or lecture notes. Any format.</p>
+    </div>
+    <div class="how__step">
+      <div class="how__num">STEP · 02</div>
+      <h3 class="how__title">AI Transform</h3>
+      <p class="how__desc">Gemini extracts concepts, generates interactive content, animations, and code playgrounds.</p>
+    </div>
+    <div class="how__step">
+      <div class="how__num">STEP · 03</div>
+      <h3 class="how__title">Students Learn</h3>
+      <p class="how__desc">Personalized lessons, adaptive challenges, 24/7 AI tutor. Each student, their own pace.</p>
+    </div>
+    <div class="how__step">
+      <div class="how__num">STEP · 04</div>
+      <h3 class="how__title">Measure</h3>
+      <p class="how__desc">Real-time analytics on learning gaps, per student and class-wide. Confusion made visible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      Platform Capabilities
+    </div>
+    <h2 class="section__title reveal">
+      Fourteen features. <em>One unified learning graph.</em>
+    </h2>
+  </div>
+
+  <div class="features__grid reveal-stagger">
+
+    <div class="feat">
+      <div class="feat__num">01 · INTELLIGENCE</div>
+      <h3 class="feat__title">Concept <em>DNA</em></h3>
+      <p class="feat__desc">A living Neo4j knowledge graph for every student. Not flat scores — interconnected concepts. When CNNs fail, the graph traces back to weak tensor intuition.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">02 · RETENTION</div>
+      <h3 class="feat__title">Time <em>Machine</em></h3>
+      <p class="feat__desc">Modified SM-2 spaced repetition with AI-adjusted intervals. Daily warmups of 5-10 micro-challenges pulled from last week's concepts.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">03 · VISUALIZATION</div>
+      <h3 class="feat__title">Animate My <em>Understanding</em></h3>
+      <p class="feat__desc">On-demand 3D visualizations in under 5 seconds. Polished Manim video renders for popular concepts. Sliders to play with parameters.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">04 · REASONING</div>
+      <h3 class="feat__title">Ghost <em>Mode</em></h3>
+      <p class="feat__desc">Watch the AI solve problems with full reasoning exposed — approach selection, tradeoffs, decisions. Students explore alternate branches at each decision point.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">05 · DEBUGGING</div>
+      <h3 class="feat__title">Code <em>Archaeology</em></h3>
+      <p class="feat__desc">Cracks open ML black boxes. Captures tensor shapes, gradients, loss values at every checkpoint. DVR-style replay of execution with AI narration.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">06 · INQUIRY</div>
+      <h3 class="feat__title">Socratic <em>Debug</em></h3>
+      <p class="feat__desc">Never gives the answer. Five graduated hint levels — observation, localization, concept nudge, micro-exercise, explicit fix — configurable by the professor.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">07 · COMPETITION</div>
+      <h3 class="feat__title">Challenge <em>Arena</em></h3>
+      <p class="feat__desc">Model Bake-Off, Adversarial Debug, Explain-It-To-Win. Competitive coding that teaches intuition, not just syntax.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">08 · RESEARCH</div>
+      <h3 class="feat__title">Paper to <em>Playground</em></h3>
+      <p class="feat__desc">Upload any ML paper. AI generates an interactive tiered implementation — overview, guided building, experimentation sandbox.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">09 · EXPERIMENTATION</div>
+      <h3 class="feat__title">Lab <em>Notebook</em></h3>
+      <p class="feat__desc">Auto-logs every execution with hyperparameters, results, and AI analysis. Exports as portfolio-ready documents.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">10 · SYNTHESIS</div>
+      <h3 class="feat__title">Scenario <em>Simulator</em></h3>
+      <p class="feat__desc">Real-world ML scenarios students walk through — dataset corruption, deployment drift, adversarial attacks. Learn by facing the situation.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">11 · CROSS-DOMAIN</div>
+      <h3 class="feat__title"><em>Bridges</em></h3>
+      <p class="feat__desc">Maps ML concepts to other domains — gradient descent ↔ supply chain optimization. Parallel visualizations with linked parameters. Perfect for NEP 2020.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">12 · COLLABORATION</div>
+      <h3 class="feat__title">Study Groups <em>AI</em></h3>
+      <p class="feat__desc">Intelligent group formation based on complementary knowledge gaps. Students learn from peers strategically, not randomly.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">13 · ECOSYSTEM</div>
+      <h3 class="feat__title">Content <em>Marketplace</em></h3>
+      <p class="feat__desc">Three-tier sharing — department-private, university-commons, global marketplace. Effectiveness scores from anonymized learning data drive discovery.</p>
+    </div>
+
+    <div class="feat">
+      <div class="feat__num">14 · CAREER</div>
+      <h3 class="feat__title"><em>LaunchPad</em></h3>
+      <p class="feat__desc">AI mock interviews personalized from actual projects. System design sandbox. Auto-generated portfolios from Lab Notebook and Challenge Arena.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="outcomes">
+  <div class="section__head">
+    <div class="section__eyebrow reveal"><span class="section__eyebrow-dot"></span>Projected Outcomes</div>
+    <h2 class="section__title reveal">
+      Measurable change, <em>in one semester.</em>
+    </h2>
+  </div>
+
+  <div class="outcomes__grid reveal-stagger">
+
+    <div class="outcome">
+      <div class="outcome__big"><em>30%+</em></div>
+      <div class="outcome__label">Faster Concept Mastery</div>
+      <div class="outcome__desc">AI-personalized learning paths versus traditional lectures, measured in pre/post assessments.</div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome__big"><em>&gt;70%</em></div>
+      <div class="outcome__label">Daily Active Usage</div>
+      <div class="outcome__desc">Gamification plus personalized content drives habitual engagement beyond class time.</div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome__big"><em>60%</em></div>
+      <div class="outcome__label">Professor Time Saved</div>
+      <div class="outcome__desc">Auto-grading, auto-content generation, and AI analytics replace hours of manual work.</div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome__big"><em>100%</em></div>
+      <div class="outcome__label">Learning Gap Visibility</div>
+      <div class="outcome__desc">Real-time Concept DNA tracking for every student. Nothing falls through the cracks.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section class="impl" id="impl">
+  <div class="section__head">
+    <div class="section__eyebrow reveal"><span class="section__eyebrow-dot"></span>Implementation</div>
+    <h2 class="section__title reveal">
+      Phased rollout, <em>from pilot to national scale.</em>
+    </h2>
+  </div>
+
+  <div class="impl__phases reveal-stagger">
+
+    <div class="phase">
+      <div class="phase__num">Phase 01</div>
+      <div class="phase__timeframe">Month 1 – 6</div>
+      <h3 class="phase__title">Pilot <em>Program</em></h3>
+      <div class="phase__desc">
+        <ul>
+          <li>2–3 select IITs or NITs</li>
+          <li>200–500 students, 10–15 professors</li>
+          <li>Full platform deployment</li>
+          <li>Controlled outcome study vs traditional cohort</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase__num">Phase 02</div>
+      <div class="phase__timeframe">Month 7 – 12</div>
+      <h3 class="phase__title">Validated <em>Expansion</em></h3>
+      <div class="phase__desc">
+        <ul>
+          <li>Publish pilot results &amp; case studies</li>
+          <li>Expand to 10–15 government institutions</li>
+          <li>Activate Content Marketplace</li>
+          <li>Faculty training cohorts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase__num">Phase 03</div>
+      <div class="phase__timeframe">Month 13 – 24</div>
+      <h3 class="phase__title">National <em>Scale</em></h3>
+      <div class="phase__desc">
+        <ul>
+          <li>Roll out across 50+ universities</li>
+          <li>Integration with UGC and AICTE systems</li>
+          <li>Cross-university content sharing</li>
+          <li>State-level partnerships</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase__num">Phase 04</div>
+      <div class="phase__timeframe">Year 3+</div>
+      <h3 class="phase__title">Full <em>Ecosystem</em></h3>
+      <div class="phase__desc">
+        <ul>
+          <li>All government CS and AI departments</li>
+          <li>Indian language support via BHASHINI</li>
+          <li>Export model to other developing nations</li>
+          <li>Research collaboration networks</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARTNERSHIP -->
+<section class="partnership">
+  <div class="section__head">
+    <div class="section__eyebrow reveal"><span class="section__eyebrow-dot"></span>Partnership Proposal</div>
+    <h2 class="section__title reveal">
+      What we bring. <em>What we seek.</em>
+    </h2>
+  </div>
+
+  <div class="partnership__layout">
+    <div class="partnership__col reveal">
+      <h3>What We Bring</h3>
+      <ul class="partnership__list">
+        <li>Full NeuroLink v2 platform deployment</li>
+        <li>Free pilot period for selected institutions</li>
+        <li>Dedicated onboarding, training, and support</li>
+        <li>Custom integrations with existing university systems</li>
+        <li>Data-driven learning outcome reports</li>
+        <li>Indian data sovereignty — all data hosted in India</li>
+        <li>Engineering collaboration on research publication</li>
+      </ul>
+    </div>
+    <div class="partnership__col reveal">
+      <h3>What We Seek</h3>
+      <ul class="partnership__list">
+        <li>MoU for pilot deployment at 2–3 IITs or NITs</li>
+        <li>Access to CS and AI department faculty for feedback</li>
+        <li>A student cohort for the controlled outcome study</li>
+        <li>Letter of intent for post-pilot expansion</li>
+        <li>Co-branding for case study publications</li>
+        <li>Pathway to UGC or AICTE recognition</li>
+        <li>Introductions to state education departments</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq__layout">
+    <div class="faq__head">
+      <div class="section__eyebrow reveal" style="justify-content:center;"><span class="section__eyebrow-dot"></span>FAQ</div>
+      <h2 class="section__title reveal">
+        Questions deans <em>ask us.</em>
+      </h2>
+    </div>
+
+    <div class="faq__list">
+      <details class="faq__item">
+        <summary class="faq__q">
+          Do we need to buy GPUs or any new infrastructure?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">No. NeuroLink v2 runs entirely on cloud APIs — Google Gemini 3.1 Pro for the AI layer, Neo4j cloud for the knowledge graph, standard web hosting for the application. Universities need a browser. That's it. No GPU procurement, no server maintenance, no capex.</div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          How does this integrate with our existing LMS or academic systems?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">NeuroLink can function as a complete standalone platform or as a layer on top of existing LMS systems like Moodle, Canvas, or national platforms like DIKSHA. For government universities, we have a roadmap for integration with UGC and AICTE systems. Authentication supports Google Workspace, SAML SSO, and Active Directory.</div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Does it only work for CS and AI, or broader fields?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">NeuroLink v2 is optimized for Computer Science, Machine Learning, and AI curricula. The Bridges feature explicitly maps ML concepts to other domains, which extends its utility to data-adjacent fields like Operations Research, Computational Biology, and Quantitative Finance. Full support for humanities and pure sciences is on our roadmap.</div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Where is student data stored? Is it safe?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">All data is stored in Indian data centers — data sovereignty is non-negotiable for government institutions. DPDPA-compliant from day one. Student data is tenant-isolated and never used to train shared models. Each institution's data stays with that institution.</div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          What do professors actually have to do differently?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">Less, not more. Professors upload their existing lecture materials — slides, PDFs, papers — and the AI transforms them. The Socratic Debug hint levels, the rubric for evaluation, and the challenge types are all configurable, but default settings are designed to require zero setup. Many professors spend less time grading and more time mentoring within the first month.</div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Can we run this for a single department before a university-wide rollout?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">Yes, and we strongly recommend it. Our standard pilot structure starts with a single CS or AI department, one semester, roughly 200–500 students. Success is measured against a control cohort using standard assessments. Scale-up decisions happen based on evidence, not enthusiasm.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta__bg-glow"></div>
+  <div class="cta__content">
+    <h2 class="cta__title reveal">
+      Let's build India's AI workforce <em>together.</em>
+    </h2>
+    <p class="cta__sub reveal">
+      A pilot at your institution. Free during the pilot period. Real outcome measurement. A scale plan based on what actually works.
+    </p>
+    <div class="cta__ctas reveal">
+      <a href="mailto:info@shambhavilabs.com?subject=NeuroLink%20v2%20Pilot%20Enquiry" class="btn btn--primary">
+        Partner for a Pilot
+        <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="mailto:info@shambhavilabs.com?subject=NeuroLink%20v2%20Information" class="btn btn--ghost">Download the Deck</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__layout">
+    <div class="footer__brand">
+      <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#f1ece0" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="80" cy="60" r="16" fill="#d99133"/>
+        <circle cx="80" cy="60" r="5.5" fill="#f1ece0"/>
+      </svg>
+      <div class="footer__tagline">NeuroLink v2 — a Shambhavi Innovation Lab product.</div>
+    </div>
+    <div class="footer__col">
+      <h4>NeuroLink v2</h4>
+      <ul>
+        <li><a href="#features">14 Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#impl">Implementation</a></li>
+        <li><a href="#cta">Partner</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Shambhavi</h4>
+      <ul>
+        <li><a href="index.html">About the Lab</a></li>
+        <li><a href="index.html#products">All Products</a></li>
+        <li><a href="about.html">Founders</a></li>
+        <li><a href="blog/">Journal</a></li>
+        <li><a href="index.html#cta">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:info@shambhavilabs.com">info@shambhavilabs.com</a></li>
+        <li><a href="mailto:info@shambhavilabs.com">info@shambhavilabs.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Press Kit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Shambhavi Innovation Lab. NeuroLink v2 is a registered trademark.</span>
+    <span><span class="footer__devanagari">दृष्टि</span> &nbsp;·&nbsp; See further.</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => { if (window.scrollY > 24) nav.classList.add('nav--scrolled'); else nav.classList.remove('nav--scrolled'); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('reveal--in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

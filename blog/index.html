@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Journal — Shambhavi Innovation Lab</title>
+<meta name="description" content="Notes, essays, and research from the team at Shambhavi Innovation Lab. Thinking out loud as we build AI-native platforms for how India learns, works, and builds." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 120'><path d='M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z' stroke='%231a1840' stroke-width='6' fill='none'/><circle cx='80' cy='60' r='16' fill='%23d99133'/><circle cx='80' cy='60' r='5.5' fill='%231a1840'/></svg>" />
+
+<link rel="canonical" href="https://shambhavilabs.com/blog/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Shambhavi Innovation Lab" />
+<meta property="og:title" content="Journal — Shambhavi Innovation Lab" />
+<meta property="og:description" content="Notes, essays, and research from the team at Shambhavi Innovation Lab." />
+<meta property="og:url" content="https://shambhavilabs.com/blog/" />
+<meta property="og:image" content="https://shambhavilabs.com/og-default.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Journal — Shambhavi Innovation Lab" />
+<meta name="twitter:description" content="Notes, essays, and research from the team at Shambhavi Innovation Lab." />
+<meta name="twitter:image" content="https://shambhavilabs.com/og-default.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Shambhavi Journal",
+  "description": "Notes, essays, and research from the team at Shambhavi Innovation Lab.",
+  "url": "https://shambhavilabs.com/blog/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Shambhavi Innovation Lab",
+    "url": "https://shambhavilabs.com",
+    "logo": "https://shambhavilabs.com/og-default.png"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Manrope:wght@300..800&family=Noto+Serif+Devanagari:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #1a1840; --navy-deep: #0f0e2a; --navy-12: rgba(26, 24, 64, 0.12);
+  --saffron: #d99133; --saffron-soft: #f5c179; --saffron-glow: rgba(217, 145, 51, 0.15);
+  --paper: #f5f1e8; --cream: #faf7ef; --ink: #0a0920;
+  --on-dark: #f1ece0; --on-dark-muted: rgba(241, 236, 224, 0.65); --on-dark-faint: rgba(241, 236, 224, 0.35);
+  --on-light: #1a1840; --on-light-muted: rgba(26, 24, 64, 0.7); --on-light-faint: rgba(26, 24, 64, 0.4);
+  --display: 'Fraunces', serif; --body: 'Manrope', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace; --devanagari: 'Noto Serif Devanagari', serif;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--body); background: var(--paper); color: var(--on-light); line-height: 1.55; font-size: 17px; letter-spacing: -0.005em; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--saffron); color: var(--navy); }
+a { color: inherit; text-decoration: none; }
+img, svg { max-width: 100%; display: block; }
+
+/* NAV — light variant since blog index is on paper background */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem var(--gutter);
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 400ms var(--ease-out);
+  background: rgba(245, 241, 232, 0.82); backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--navy-12); }
+.nav__brand { display: flex; align-items: center; gap: 0.75rem; }
+.nav__logo { width: 38px; }
+.nav__wordmark { font-family: var(--display); font-size: 1.05rem; font-weight: 500;
+  font-variation-settings: "opsz" 14, "SOFT" 30; letter-spacing: -0.015em; color: var(--navy); }
+.nav__wordmark em { font-style: italic; font-weight: 400; color: var(--saffron); }
+.nav__product { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--saffron); font-weight: 600; padding-left: 0.85rem; margin-left: 0.5rem;
+  border-left: 1px solid var(--navy-12); }
+.nav__links { display: flex; gap: 2rem; align-items: center; }
+.nav__links a { font-size: 0.85rem; color: var(--on-light-muted); font-weight: 500;
+  transition: color 200ms var(--ease-out); }
+.nav__links a:hover { color: var(--navy); }
+.nav__cta { font-size: 0.82rem; font-weight: 600; padding: 0.58rem 1.1rem;
+  border: 1px solid var(--saffron); color: var(--saffron); border-radius: 999px;
+  transition: all 200ms var(--ease-out); background: transparent; }
+.nav__cta:hover { background: var(--saffron); color: var(--navy); }
+@media (max-width: 900px) { .nav__links, .nav__product { display: none; } }
+
+/* HEADER — centered editorial masthead */
+.masthead { padding: 9rem var(--gutter) 4rem; text-align: center;
+  border-bottom: 1px solid var(--navy-12); background: var(--paper); }
+.masthead__crumb {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.76rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--saffron); font-weight: 600; margin-bottom: 2rem;
+}
+.masthead__crumb a { color: var(--on-light-muted); }
+.masthead__crumb-sep { color: var(--on-light-faint); }
+.masthead__devanagari {
+  font-family: var(--devanagari);
+  font-size: 2rem;
+  color: var(--saffron); opacity: 0.45;
+  margin-bottom: 1.25rem;
+}
+.masthead__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  font-size: clamp(3rem, 7vw, 5.5rem); line-height: 0.98; font-weight: 330;
+  letter-spacing: -0.035em; margin-bottom: 1.5rem; color: var(--navy);
+}
+.masthead__title em {
+  font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; font-weight: 370;
+}
+.masthead__sub {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40, "SOFT" 30; font-style: italic;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: var(--on-light-muted); max-width: 56ch; margin: 0 auto;
+  line-height: 1.55; font-weight: 400;
+}
+
+/* POSTS LIST */
+.posts {
+  max-width: 1100px; margin: 0 auto; padding: 5rem var(--gutter) 8rem;
+}
+.posts__list {
+  list-style: none;
+  display: flex; flex-direction: column;
+}
+
+.post {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--navy-12);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 3rem;
+  align-items: start;
+  transition: all 300ms var(--ease-out);
+}
+.post:first-child { padding-top: 0; }
+.post:last-child { border-bottom: none; }
+@media (max-width: 780px) { .post { grid-template-columns: 1fr; gap: 1rem; padding: 2.5rem 0; } }
+
+.post__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+.post__pillar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+}
+.post__pillar::before {
+  content: ""; width: 16px; height: 1px; background: var(--saffron);
+}
+.post__date {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--on-light-muted);
+  letter-spacing: 0.06em;
+}
+.post__readtime {
+  font-size: 0.8rem;
+  color: var(--on-light-faint);
+  font-style: italic;
+}
+
+.post__body { display: block; }
+.post__body:hover .post__title { color: var(--saffron); }
+.post__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 450;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  color: var(--navy);
+  transition: color 300ms var(--ease-out);
+  max-width: 30ch;
+}
+.post__title em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 96, "SOFT" 80, "WONK" 1; }
+
+.post__excerpt {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--on-light-muted);
+  max-width: 62ch;
+  margin-bottom: 1.5rem;
+}
+.post__link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+  transition: gap 200ms var(--ease-out);
+}
+.post__body:hover .post__link { gap: 0.85rem; }
+
+/* Upcoming / placeholder posts */
+.post--draft {
+  opacity: 0.55;
+}
+.post--draft .post__title {
+  color: var(--on-light-muted);
+}
+.post--draft .post__pillar {
+  color: var(--on-light-faint);
+}
+.post--draft .post__pillar::before {
+  background: var(--on-light-faint);
+}
+.post--draft .post__link {
+  color: var(--on-light-faint);
+  pointer-events: none;
+}
+.post--draft .post__body:hover .post__title {
+  color: var(--on-light-muted);
+}
+
+.coming-label {
+  display: inline-block;
+  margin-left: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  background: rgba(26, 24, 64, 0.08);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-light-faint);
+  border-radius: 2px;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+/* Section divider for upcoming posts */
+.posts__divider {
+  margin: 4rem 0 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--navy-12);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--on-light-faint);
+  font-weight: 600;
+}
+
+/* CTA / SUBSCRIBE */
+.subscribe {
+  background: var(--navy); color: var(--on-dark);
+  padding: 5rem var(--gutter);
+  text-align: center;
+}
+.subscribe__content { max-width: 700px; margin: 0 auto; }
+.subscribe__eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.subscribe__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.subscribe__title em { font-style: italic; color: var(--saffron);
+  font-variation-settings: "opsz" 96, "SOFT" 80, "WONK" 1; }
+.subscribe__body {
+  color: var(--on-dark-muted); font-size: 1rem; line-height: 1.55;
+  margin-bottom: 2rem;
+}
+.subscribe__link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--saffron);
+  color: var(--saffron);
+  border-radius: 999px;
+  font-weight: 600; font-size: 0.92rem;
+  transition: all 200ms var(--ease-out);
+}
+.subscribe__link:hover {
+  background: var(--saffron); color: var(--navy); transform: translateY(-1px);
+}
+
+/* FOOTER */
+.footer { background: var(--ink); padding: 4.5rem var(--gutter) 2rem;
+  color: var(--on-dark-muted); font-size: 0.88rem; }
+.footer__layout { max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(241,236,224,0.06); }
+@media (max-width: 860px) { .footer__layout { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+@media (max-width: 520px) { .footer__layout { grid-template-columns: 1fr; } }
+.footer__brand { display: flex; flex-direction: column; gap: 1.25rem; }
+.footer__brand .nav__logo { width: 48px; }
+.footer__tagline { font-family: var(--display); font-variation-settings: "opsz" 20;
+  font-size: 1rem; font-style: italic; line-height: 1.4; max-width: 28ch; color: var(--on-dark); }
+.footer__col h4 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 600; color: var(--saffron); margin-bottom: 1.25rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.footer__col a { color: var(--on-dark-muted); }
+.footer__col a:hover { color: var(--on-dark); }
+.footer__bottom { max-width: 1400px; margin: 2rem auto 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: rgba(241,236,224,0.35); flex-wrap: wrap; gap: 1rem; }
+.footer__devanagari { font-family: var(--devanagari); color: var(--saffron); font-size: 1rem; opacity: 0.6; }
+
+.reveal { opacity: 0; transform: translateY(25px);
+  transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out); }
+.reveal--in { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="../index.html" class="nav__brand" aria-label="Back to Shambhavi Innovation Lab">
+    <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#1a1840" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+      <circle cx="80" cy="60" r="16" fill="#d99133"/>
+      <circle cx="80" cy="60" r="5.5" fill="#1a1840"/>
+    </svg>
+    <span class="nav__wordmark">Shambhavi <em>Innovation Lab</em></span>
+    <span class="nav__product">Journal</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="../index.html#products">Products</a>
+    <a href="../about.html">About</a>
+    <a href="/blog/">Journal</a>
+  </nav>
+  <a href="../index.html#cta" class="nav__cta">Get in Touch</a>
+</header>
+
+<section class="masthead">
+  <div class="masthead__crumb">
+    <a href="../index.html">Shambhavi Labs</a>
+    <span class="masthead__crumb-sep">/</span>
+    <span>Journal</span>
+  </div>
+  <div class="masthead__devanagari">शब्द</div>
+  <h1 class="masthead__title">
+    Notes and essays <em>from the Lab.</em>
+  </h1>
+  <p class="masthead__sub">
+    Research, arguments, and occasional admissions from the team at Shambhavi — as we build AI-native software for how India learns, works, and builds.
+  </p>
+</section>
+
+<section class="posts">
+  <ul class="posts__list">
+
+    <!-- POST 1 — The Shambhavi Thesis -->
+    <li class="post reveal">
+      <div class="post__meta">
+        <span class="post__pillar">Company</span>
+        <span class="post__date">19 April 2026</span>
+        <span class="post__readtime">13 min read</span>
+      </div>
+      <a href="the-shambhavi-thesis/" class="post__body">
+        <h2 class="post__title">Why we built <em>four products</em> instead of one: the Shambhavi Thesis.</h2>
+        <p class="post__excerpt">
+          India's paradox: world-class AI is built here, but most Indians have never used AI in their own language, for their own problems. Across four life stages — student, undergraduate, working professional, engineer — the gap is the same. Here's our thesis for why one company should work on all four at once.
+        </p>
+        <span class="post__link">
+          Read the essay
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+    </li>
+
+    <div class="posts__divider">Coming up</div>
+
+    <!-- Upcoming posts — greyed out placeholders -->
+    <li class="post post--draft">
+      <div class="post__meta">
+        <span class="post__pillar">Work</span>
+        <span class="post__date">Forthcoming</span>
+      </div>
+      <div class="post__body">
+        <h2 class="post__title">
+          What DPDPA 2023 actually <em>means for Indian enterprise HR.</em>
+          <span class="coming-label">Coming soon</span>
+        </h2>
+        <p class="post__excerpt">
+          A practical guide for CHROs. What changes, what doesn't, and what the rules actually require when you store employee PII.
+        </p>
+      </div>
+    </li>
+
+    <li class="post post--draft">
+      <div class="post__meta">
+        <span class="post__pillar">Learn</span>
+        <span class="post__date">Forthcoming</span>
+      </div>
+      <div class="post__body">
+        <h2 class="post__title">
+          The anatomy of a crisis detection system: <em>how AspiremsAI responds in under two seconds.</em>
+          <span class="coming-label">Coming soon</span>
+        </h2>
+        <p class="post__excerpt">
+          Two layers, one goal — make sure no student in distress is alone longer than two seconds. How we built it, why it's designed not to judge, and the privacy boundary we refused to cross.
+        </p>
+      </div>
+    </li>
+
+    <li class="post post--draft">
+      <div class="post__meta">
+        <span class="post__pillar">Build</span>
+        <span class="post__date">Forthcoming</span>
+      </div>
+      <div class="post__body">
+        <h2 class="post__title">
+          Self-healing tests aren't magic: <em>how InsightTest AI actually works.</em>
+          <span class="coming-label">Coming soon</span>
+        </h2>
+        <p class="post__excerpt">
+          A plain-English walkthrough of what "self-healing automation" means, what it does and doesn't do, and how we score confidence when we rewrite a selector.
+        </p>
+      </div>
+    </li>
+
+    <li class="post post--draft">
+      <div class="post__meta">
+        <span class="post__pillar">Learn</span>
+        <span class="post__date">Forthcoming</span>
+      </div>
+      <div class="post__body">
+        <h2 class="post__title">
+          The 3.9 lakh problem: <em>India admits more CS engineers than it can teach.</em>
+          <span class="coming-label">Coming soon</span>
+        </h2>
+        <p class="post__excerpt">
+          AICTE data, the AI talent crunch, and what a real fix looks like.
+        </p>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+<section class="subscribe">
+  <div class="subscribe__content">
+    <span class="subscribe__eyebrow">Stay in the loop</span>
+    <h2 class="subscribe__title">
+      Writing, <em>not shipping.</em>
+    </h2>
+    <p class="subscribe__body">
+      We publish once every week or two. If you'd like to know when new posts are out, say hello — we'll add you to a small list of people who want to follow along.
+    </p>
+    <a href="mailto:info@shambhavilabs.com?subject=Add%20me%20to%20the%20Shambhavi%20Journal%20list" class="subscribe__link">
+      Email us to subscribe
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__layout">
+    <div class="footer__brand">
+      <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#f1ece0" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="80" cy="60" r="16" fill="#d99133"/>
+        <circle cx="80" cy="60" r="5.5" fill="#f1ece0"/>
+      </svg>
+      <div class="footer__tagline">AI-native software for how India learns, works, and builds.</div>
+    </div>
+    <div class="footer__col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="../aspirems.html">AspiremsAI</a></li>
+        <li><a href="../neurolink.html">NeuroLink v2</a></li>
+        <li><a href="../sanadeep.html">Sanadeep</a></li>
+        <li><a href="../insighttest.html">InsightTest AI</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../about.html#founders">Founders</a></li>
+        <li><a href="/blog/">Journal</a></li>
+        <li><a href="mailto:info@shambhavilabs.com">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:info@shambhavilabs.com">info@shambhavilabs.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Press Kit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Shambhavi Innovation Lab. Designed and built in India.</span>
+    <span><span class="footer__devanagari">दृष्टि</span> &nbsp;·&nbsp; See further.</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('reveal--in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
