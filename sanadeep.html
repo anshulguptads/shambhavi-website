@@ -1,0 +1,1795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sanadeep — The AI-Native HRMS for Indian Enterprise | Shambhavi Innovation Lab</title>
+<meta name="description" content="Sanadeep is the AI-native HRMS built for Indian mid-market and enterprise. 19 modules, nearly 600 AI features, statutory payroll across India, UAE, UK, and US — one platform." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 120'><path d='M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z' stroke='%231a1840' stroke-width='6' fill='none'/><circle cx='80' cy='60' r='16' fill='%23d99133'/><circle cx='80' cy='60' r='5.5' fill='%231a1840'/></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Manrope:wght@300..800&family=Noto+Serif+Devanagari:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #1a1840;
+  --navy-deep: #0f0e2a;
+  --navy-12: rgba(26, 24, 64, 0.12);
+  --saffron: #d99133;
+  --saffron-soft: #f5c179;
+  --saffron-glow: rgba(217, 145, 51, 0.15);
+
+  --paper: #f5f1e8;
+  --paper-warm: #ede6d3;
+  --bone: #e8e2d3;
+  --ink: #0a0920;
+  --cream: #faf7ef;
+
+  --on-dark: #f1ece0;
+  --on-dark-muted: rgba(241, 236, 224, 0.65);
+  --on-dark-faint: rgba(241, 236, 224, 0.35);
+
+  --on-light: #1a1840;
+  --on-light-muted: rgba(26, 24, 64, 0.7);
+  --on-light-faint: rgba(26, 24, 64, 0.4);
+
+  --display: 'Fraunces', 'Times New Roman', serif;
+  --body: 'Manrope', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --devanagari: 'Noto Serif Devanagari', serif;
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section-pad: clamp(5rem, 10vh, 9rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--navy);
+  color: var(--on-dark);
+  line-height: 1.55;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--saffron); color: var(--navy); }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.grain::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 0.88 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem var(--gutter);
+  display: flex; justify-content: space-between; align-items: center;
+  transition: background 400ms var(--ease-out), backdrop-filter 400ms var(--ease-out), padding 400ms var(--ease-out);
+}
+.nav--scrolled {
+  background: rgba(15, 14, 42, 0.78);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(241, 236, 224, 0.06);
+}
+.nav__brand { display: flex; align-items: center; gap: 0.75rem; }
+.nav__logo { width: 38px; height: auto; }
+.nav__wordmark {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-variation-settings: "opsz" 14, "SOFT" 30;
+  letter-spacing: -0.015em;
+  color: var(--on-dark);
+}
+.nav__wordmark em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--saffron-soft);
+}
+.nav__product {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+  padding-left: 0.85rem;
+  margin-left: 0.5rem;
+  border-left: 1px solid rgba(241, 236, 224, 0.2);
+}
+.nav__links { display: flex; gap: 2rem; align-items: center; }
+.nav__links a {
+  font-size: 0.85rem;
+  color: var(--on-dark-muted);
+  transition: color 200ms var(--ease-out);
+  font-weight: 500;
+}
+.nav__links a:hover { color: var(--on-dark); }
+.nav__cta {
+  font-size: 0.82rem; font-weight: 600;
+  padding: 0.58rem 1.1rem;
+  border: 1px solid var(--saffron);
+  color: var(--saffron);
+  border-radius: 999px;
+  transition: all 200ms var(--ease-out);
+}
+.nav__cta:hover { background: var(--saffron); color: var(--navy); }
+@media (max-width: 900px) { .nav__links { display: none; } .nav__product { display: none; } }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  padding: 8rem var(--gutter) 4rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 75% 30%, rgba(217,145,51,0.12) 0%, transparent 55%), var(--navy);
+}
+.hero__grid {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  position: relative; z-index: 2;
+  flex: 1;
+}
+@media (max-width: 1000px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 4rem; }
+}
+
+.hero__crumb {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+.hero__crumb-sep { color: var(--on-dark-faint); }
+
+.hero__wordmark {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 0;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.9;
+  font-weight: 340;
+  letter-spacing: -0.04em;
+  color: var(--on-dark);
+  margin-bottom: 1.5rem;
+}
+.hero__wordmark em {
+  font-style: italic;
+  color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  font-weight: 380;
+}
+
+.hero__tagline {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--on-dark);
+  margin-bottom: 1.75rem;
+  max-width: 26ch;
+}
+
+.hero__sub {
+  color: var(--on-dark-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin-bottom: 2.5rem;
+  max-width: 44ch;
+}
+
+.hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn {
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: transform 200ms var(--ease-out), background 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--primary { background: var(--saffron); color: var(--navy); }
+.btn--primary:hover { background: var(--saffron-soft); }
+.btn--ghost { border: 1px solid rgba(241, 236, 224, 0.25); color: var(--on-dark); }
+.btn--ghost:hover { border-color: var(--on-dark); }
+.btn__arrow { width: 16px; height: 16px; transition: transform 300ms var(--ease-out); }
+.btn:hover .btn__arrow { transform: translateX(3px); }
+
+/* Hero visual: the constellation */
+.hero__viz {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 520px;
+  margin-left: auto;
+  width: 100%;
+}
+.hero__viz svg { width: 100%; height: 100%; overflow: visible; }
+.hero__viz .ring {
+  fill: none;
+  stroke: rgba(241,236,224,0.08);
+  stroke-width: 1;
+}
+.hero__viz .ring-accent {
+  stroke: rgba(217, 145, 51, 0.25);
+  stroke-dasharray: 3 6;
+}
+.hero__viz .spoke {
+  stroke: rgba(241,236,224,0.1);
+  stroke-width: 0.8;
+}
+.hero__viz .node {
+  fill: var(--on-dark);
+  opacity: 0.55;
+  transition: opacity 400ms var(--ease-out);
+}
+.hero__viz .node-ai {
+  fill: var(--saffron);
+  opacity: 0.9;
+}
+.hero__viz .label {
+  font-family: var(--body);
+  font-size: 8px;
+  fill: var(--on-dark-muted);
+  letter-spacing: 0.5px;
+}
+.hero__viz .label-ai { fill: var(--saffron-soft); }
+.hero__viz .center-core {
+  fill: var(--saffron);
+  filter: drop-shadow(0 0 20px rgba(217, 145, 51, 0.6));
+}
+.hero__viz .center-pupil {
+  fill: var(--navy);
+}
+.hero__viz .pulse-ring {
+  fill: none;
+  stroke: var(--saffron);
+  opacity: 0;
+  animation: heroPulse 4s ease-out infinite;
+}
+.hero__viz .pulse-ring:nth-child(2) { animation-delay: 1.3s; }
+.hero__viz .pulse-ring:nth-child(3) { animation-delay: 2.6s; }
+
+@keyframes heroPulse {
+  0% { opacity: 0.6; r: 28; }
+  100% { opacity: 0; r: 180; }
+}
+
+.hero__stats {
+  width: 100%;
+  max-width: 1400px;
+  margin: 3rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  z-index: 2;
+  border-top: 1px solid rgba(241, 236, 224, 0.12);
+  padding-top: 2rem;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .hero__stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+}
+.stat__num {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 350;
+  color: var(--saffron);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+.stat__label {
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+  font-weight: 500;
+}
+
+/* ============================================================
+   SECTIONS - SHARED
+   ============================================================ */
+.section__head {
+  max-width: 1400px; margin: 0 auto 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+@media (max-width: 780px) {
+  .section__head { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+.section__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.section__eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--saffron); }
+.section__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 30;
+  font-weight: 350;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+.section__title em {
+  font-style: italic;
+  color: var(--saffron);
+  font-variation-settings: "opsz" 96, "SOFT" 80, "WONK" 1;
+}
+
+/* ============================================================
+   MODULES
+   ============================================================ */
+.modules {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--paper);
+  color: var(--on-light);
+  position: relative;
+}
+.modules .section__eyebrow { color: var(--navy); }
+.modules .section__title em { color: var(--saffron); }
+
+.module__clusters {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 3rem;
+}
+.cluster {
+  display: grid;
+  grid-template-columns: 1fr 2.2fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--navy-12);
+  align-items: start;
+}
+.cluster:last-child { border-bottom: none; padding-bottom: 0; }
+@media (max-width: 900px) { .cluster { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+.cluster__label {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-style: italic;
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  line-height: 1.1;
+  color: var(--saffron);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.cluster__label-num {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--on-light-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.cluster__modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+}
+.module {
+  padding: 1.25rem 1.1rem;
+  background: var(--cream);
+  border: 1px solid var(--navy-12);
+  border-radius: 3px;
+  transition: all 300ms var(--ease-out);
+  position: relative;
+}
+.module:hover {
+  background: #fff;
+  border-color: var(--saffron);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -18px rgba(26, 24, 64, 0.25);
+}
+.module__name {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 20;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+  line-height: 1.2;
+}
+.module__feats {
+  font-size: 0.75rem;
+  color: var(--on-light-muted);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.module__ai-dot {
+  position: absolute;
+  top: 1.25rem; right: 1.1rem;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(217, 145, 51, 0.15);
+}
+
+.modules__footnote {
+  max-width: 1400px;
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--navy-12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.modules__footnote-key {
+  display: flex; align-items: center; gap: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--on-light-muted);
+}
+.modules__footnote-key .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(217, 145, 51, 0.15);
+}
+.modules__count {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--navy);
+}
+
+/* ============================================================
+   AI CAPABILITIES
+   ============================================================ */
+.ai-caps {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--navy-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-caps__grid {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(241, 236, 224, 0.08);
+  border-top: 1px solid rgba(241, 236, 224, 0.08);
+  border-bottom: 1px solid rgba(241, 236, 224, 0.08);
+}
+@media (max-width: 780px) { .ai-caps__grid { grid-template-columns: 1fr; } }
+
+.ai-cap {
+  padding: 3rem 2.25rem;
+  background: var(--navy-deep);
+  transition: background 400ms var(--ease-out);
+  position: relative;
+}
+.ai-cap:hover { background: #13122f; }
+
+.ai-cap__label {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  margin-bottom: 1.5rem;
+  font-family: var(--mono);
+}
+.ai-cap__label::before {
+  content: "";
+  width: 18px; height: 1px;
+  background: var(--saffron);
+}
+.ai-cap__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: clamp(1.65rem, 2.5vw, 2.15rem);
+  line-height: 1.12;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  margin-bottom: 1.25rem;
+  max-width: 24ch;
+}
+.ai-cap__title em {
+  font-style: italic;
+  color: var(--saffron);
+  font-variation-settings: "opsz" 96, "SOFT" 80, "WONK" 1;
+}
+.ai-cap__desc {
+  color: var(--on-dark-muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  max-width: 44ch;
+  margin-bottom: 1.75rem;
+}
+.ai-cap__example {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--saffron-soft);
+  padding: 0.9rem 1rem;
+  background: rgba(217, 145, 51, 0.07);
+  border-left: 2px solid var(--saffron);
+  border-radius: 2px;
+  line-height: 1.5;
+}
+.ai-cap__example .arrow { color: var(--saffron); font-weight: 500; }
+
+/* ============================================================
+   GLOBAL (multi-country)
+   ============================================================ */
+.global {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--paper);
+  color: var(--on-light);
+}
+.global .section__eyebrow { color: var(--navy); }
+.global .section__title em { color: var(--saffron); }
+
+.global__countries {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+@media (max-width: 900px) { .global__countries { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .global__countries { grid-template-columns: 1fr; } }
+
+.country {
+  padding: 2rem 1.75rem;
+  background: var(--cream);
+  border: 1px solid var(--navy-12);
+  border-radius: 4px;
+  transition: all 300ms var(--ease-out);
+  position: relative;
+  min-height: 260px;
+  display: flex; flex-direction: column;
+}
+.country:hover {
+  border-color: var(--saffron);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -18px rgba(26, 24, 64, 0.25);
+}
+.country__code {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--on-light-muted);
+  margin-bottom: 1.25rem;
+}
+.country__name {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.country__tagline {
+  font-size: 0.88rem;
+  color: var(--on-light-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.country__chips {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin-top: auto;
+}
+.chip {
+  padding: 0.3rem 0.65rem;
+  background: rgba(26, 24, 64, 0.06);
+  border: 1px solid rgba(26, 24, 64, 0.08);
+  border-radius: 3px;
+  font-size: 0.72rem;
+  color: var(--navy);
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.languages {
+  max-width: 1400px; margin: 0 auto;
+  padding-top: 3rem;
+  border-top: 1px solid var(--navy-12);
+}
+.languages__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--on-light-muted);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.languages__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: baseline;
+}
+.lang {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--on-light);
+}
+.lang.rtl {
+  color: var(--saffron);
+  font-style: italic;
+}
+.lang-rtl-note {
+  font-size: 0.72rem;
+  color: var(--on-light-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  align-self: center;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--navy-12);
+  border-radius: 3px;
+  margin-left: 0.25rem;
+}
+
+/* ============================================================
+   TRUST
+   ============================================================ */
+.trust {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.trust__layout {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+@media (max-width: 900px) { .trust__layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+.trust__copy .section__title { margin-top: 1.25rem; margin-bottom: 1.5rem; }
+.trust__body {
+  color: var(--on-dark-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.trust__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+@media (max-width: 540px) { .trust__list { grid-template-columns: 1fr; } }
+.trust__item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(241, 236, 224, 0.1);
+  padding-right: 1.5rem;
+}
+.trust__item:nth-child(2n) { padding-right: 0; padding-left: 1.5rem; border-left: 1px solid rgba(241, 236, 224, 0.1); }
+@media (max-width: 540px) {
+  .trust__item:nth-child(2n) { padding-left: 0; border-left: none; }
+}
+.trust__item-icon {
+  width: 22px; height: 22px; margin-bottom: 0.85rem;
+  color: var(--saffron);
+}
+.trust__item-name {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+.trust__item-desc {
+  font-size: 0.86rem;
+  color: var(--on-dark-muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PLANS
+   ============================================================ */
+.plans {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--paper);
+  color: var(--on-light);
+}
+.plans .section__eyebrow { color: var(--navy); }
+.plans .section__title em { color: var(--saffron); }
+.plans__head { text-align: center; }
+.plans__head .section__eyebrow { justify-content: center; }
+.plans__head .section__title { max-width: 32ch; margin: 1.25rem auto 0; }
+
+.plans__grid {
+  max-width: 1200px; margin: 4rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) { .plans__grid { grid-template-columns: 1fr; } }
+
+.plan {
+  padding: 2.25rem 2rem;
+  background: var(--cream);
+  border: 1px solid var(--navy-12);
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  transition: all 300ms var(--ease-out);
+}
+.plan--featured {
+  background: var(--navy);
+  color: var(--on-dark);
+  border-color: var(--navy);
+  position: relative;
+  box-shadow: 0 20px 50px -25px rgba(26, 24, 64, 0.35);
+}
+.plan--featured::before {
+  content: "Most Common";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--saffron);
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.plan__name {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+.plan__target {
+  font-size: 0.85rem;
+  color: inherit;
+  opacity: 0.7;
+  margin-bottom: 1.75rem;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+.plan__price {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 48, "SOFT" 30;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--saffron);
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.95;
+}
+.plan--featured .plan__price { color: var(--saffron); opacity: 1; }
+.plan--featured .plan__price + * { border-color: rgba(241,236,224,0.1); }
+
+.plan__features {
+  list-style: none;
+  margin-bottom: 2rem;
+  flex: 1;
+  display: flex; flex-direction: column; gap: 0.55rem;
+}
+.plan__features li {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 0.6rem;
+}
+.plan__features li::before {
+  content: "→";
+  color: var(--saffron);
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+
+.plan__cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.9rem; font-weight: 600;
+  transition: all 200ms var(--ease-out);
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  text-align: center;
+}
+.plan__cta:hover { background: var(--navy); color: var(--on-dark); }
+.plan--featured .plan__cta { border-color: var(--saffron); background: var(--saffron); color: var(--navy); }
+.plan--featured .plan__cta:hover { background: var(--saffron-soft); }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--navy-deep);
+}
+.faq__layout {
+  max-width: 1100px; margin: 0 auto;
+}
+.faq__head { text-align: center; margin-bottom: 4rem; }
+.faq__head .section__eyebrow { justify-content: center; }
+.faq__head .section__title { max-width: 30ch; margin: 1.25rem auto 0; }
+
+.faq__list {
+  border-top: 1px solid rgba(241, 236, 224, 0.08);
+}
+.faq__item {
+  border-bottom: 1px solid rgba(241, 236, 224, 0.08);
+}
+.faq__q {
+  width: 100%;
+  text-align: left;
+  padding: 1.75rem 0;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 2rem;
+  font-family: var(--display);
+  font-variation-settings: "opsz" 24, "SOFT" 30;
+  font-size: 1.15rem;
+  font-weight: 450;
+  letter-spacing: -0.015em;
+  color: var(--on-dark);
+  transition: color 200ms var(--ease-out);
+}
+.faq__q:hover { color: var(--saffron); }
+.faq__icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--saffron);
+  transition: transform 300ms var(--ease-out);
+}
+.faq__item[open] .faq__icon { transform: rotate(45deg); }
+.faq__a {
+  padding: 0 0 1.75rem;
+  color: var(--on-dark-muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+  max-width: 80ch;
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta {
+  padding: var(--section-pad) var(--gutter);
+  background: var(--navy);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta__bg-glow {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, var(--saffron-glow) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.cta__content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+.cta__title {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.05;
+  font-weight: 340;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.75rem;
+}
+.cta__title em {
+  font-style: italic;
+  color: var(--saffron);
+  font-variation-settings: "opsz" 144, "SOFT" 80, "WONK" 1;
+}
+.cta__sub {
+  color: var(--on-dark-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2.75rem;
+  max-width: 52ch; margin-left: auto; margin-right: auto;
+  line-height: 1.5;
+}
+.cta__ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--ink);
+  padding: 4.5rem var(--gutter) 2rem;
+  color: var(--on-dark-muted);
+  font-size: 0.88rem;
+}
+.footer__layout {
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(241,236,224,0.06);
+}
+@media (max-width: 860px) { .footer__layout { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+@media (max-width: 520px) { .footer__layout { grid-template-columns: 1fr; } }
+.footer__brand { display: flex; flex-direction: column; gap: 1.25rem; }
+.footer__brand .nav__logo { width: 48px; }
+.footer__tagline {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 20;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.4;
+  max-width: 28ch;
+  color: var(--on-dark);
+}
+.footer__col h4 {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--saffron);
+  margin-bottom: 1.25rem;
+}
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.footer__col a:hover { color: var(--on-dark); }
+.footer__bottom {
+  max-width: 1400px; margin: 2rem auto 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem;
+  color: var(--on-dark-faint);
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer__devanagari {
+  font-family: var(--devanagari);
+  color: var(--saffron);
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+/* Reveals */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+.reveal--in { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(25px); transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out); }
+.reveal-stagger.reveal--in > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.reveal--in > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.reveal--in > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger.reveal--in > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger.reveal--in > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger.reveal--in > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger.reveal--in > *:nth-child(6) { transition-delay: 400ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="index.html" class="nav__brand" aria-label="Back to Shambhavi Innovation Lab">
+    <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#f1ece0" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+      <circle cx="80" cy="60" r="16" fill="#d99133"/>
+      <circle cx="80" cy="60" r="5.5" fill="#f1ece0"/>
+    </svg>
+    <span class="nav__wordmark">Shambhavi <em>Innovation Lab</em></span>
+    <span class="nav__product">Sanadeep</span>
+  </a>
+  <nav class="nav__links" aria-label="Page sections">
+    <a href="#modules">Modules</a>
+    <a href="#ai">AI Capabilities</a>
+    <a href="#global">Global</a>
+    <a href="#plans">Plans</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a href="#cta" class="nav__cta">Book a Demo</a>
+</header>
+
+<!-- HERO -->
+<section class="hero grain">
+  <div class="hero__grid">
+    <div class="hero__copy">
+      <div class="hero__crumb">
+        <a href="index.html" style="color: var(--on-dark-muted);">Shambhavi Labs</a>
+        <span class="hero__crumb-sep">/</span>
+        <span>Work</span>
+        <span class="hero__crumb-sep">/</span>
+        <span>Sanadeep</span>
+      </div>
+      <h1 class="hero__wordmark">Sana<em>deep</em></h1>
+      <p class="hero__tagline">
+        The AI-native HRMS, <em style="font-style: italic; color: var(--saffron);">engineered in India, ready for the world.</em>
+      </p>
+      <p class="hero__sub">
+        Nineteen connected modules. Nearly six hundred AI-powered features. Statutory payroll across four countries. One platform, one login, one source of truth for every employee decision.
+      </p>
+      <div class="hero__ctas">
+        <a href="#cta" class="btn btn--primary">
+          Book an Enterprise Demo
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#modules" class="btn btn--ghost">Explore the Platform</a>
+      </div>
+    </div>
+
+    <div class="hero__viz" aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rings -->
+        <circle class="ring" cx="200" cy="200" r="180"/>
+        <circle class="ring ring-accent" cx="200" cy="200" r="130"/>
+        <circle class="ring" cx="200" cy="200" r="80"/>
+
+        <!-- Pulse rings -->
+        <circle class="pulse-ring" cx="200" cy="200" r="28"/>
+        <circle class="pulse-ring" cx="200" cy="200" r="28"/>
+        <circle class="pulse-ring" cx="200" cy="200" r="28"/>
+
+        <!-- Spokes -->
+        <g>
+          <line class="spoke" x1="200" y1="200" x2="200" y2="20"/>
+          <line class="spoke" x1="200" y1="200" x2="327" y2="73"/>
+          <line class="spoke" x1="200" y1="200" x2="380" y2="200"/>
+          <line class="spoke" x1="200" y1="200" x2="327" y2="327"/>
+          <line class="spoke" x1="200" y1="200" x2="200" y2="380"/>
+          <line class="spoke" x1="200" y1="200" x2="73" y2="327"/>
+          <line class="spoke" x1="200" y1="200" x2="20" y2="200"/>
+          <line class="spoke" x1="200" y1="200" x2="73" y2="73"/>
+        </g>
+
+        <!-- Outer ring modules -->
+        <g>
+          <circle class="node" cx="200" cy="20" r="4"/>
+          <text class="label" x="200" y="12" text-anchor="middle">CORE HR</text>
+
+          <circle class="node node-ai" cx="327" cy="73" r="5"/>
+          <text class="label label-ai" x="340" y="65">PAYROLL</text>
+
+          <circle class="node" cx="380" cy="200" r="4"/>
+          <text class="label" x="388" y="204">TIME</text>
+
+          <circle class="node node-ai" cx="327" cy="327" r="5"/>
+          <text class="label label-ai" x="340" y="340">PERF.</text>
+
+          <circle class="node" cx="200" cy="380" r="4"/>
+          <text class="label" x="200" y="395" text-anchor="middle">LEAVE</text>
+
+          <circle class="node node-ai" cx="73" cy="327" r="5"/>
+          <text class="label label-ai" x="60" y="340" text-anchor="end">TALENT</text>
+
+          <circle class="node" cx="20" cy="200" r="4"/>
+          <text class="label" x="12" y="204" text-anchor="end">L&amp;D</text>
+
+          <circle class="node node-ai" cx="73" cy="73" r="5"/>
+          <text class="label label-ai" x="60" y="65" text-anchor="end">COMPLI.</text>
+        </g>
+
+        <!-- Inner ring modules -->
+        <g>
+          <circle class="node" cx="200" cy="70" r="3" opacity="0.4"/>
+          <circle class="node" cx="292" cy="108" r="3" opacity="0.4"/>
+          <circle class="node" cx="330" cy="200" r="3" opacity="0.4"/>
+          <circle class="node" cx="292" cy="292" r="3" opacity="0.4"/>
+          <circle class="node" cx="200" cy="330" r="3" opacity="0.4"/>
+          <circle class="node" cx="108" cy="292" r="3" opacity="0.4"/>
+          <circle class="node" cx="70" cy="200" r="3" opacity="0.4"/>
+          <circle class="node" cx="108" cy="108" r="3" opacity="0.4"/>
+        </g>
+
+        <!-- Center core: the eye -->
+        <circle class="center-core" cx="200" cy="200" r="28"/>
+        <circle class="center-pupil" cx="200" cy="200" r="10"/>
+        <circle fill="#fff" opacity="0.9" cx="195" cy="195" r="2.5"/>
+
+        <!-- Devanagari label -->
+        <text x="200" y="212" text-anchor="middle" fill="#0f0e2a" font-family="Noto Serif Devanagari" font-size="9" font-weight="500">दृष्टि</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero__stats">
+    <div>
+      <div class="stat__num">19</div>
+      <div class="stat__label">Modules</div>
+    </div>
+    <div>
+      <div class="stat__num">1,958</div>
+      <div class="stat__label">Total Features</div>
+    </div>
+    <div>
+      <div class="stat__num">584</div>
+      <div class="stat__label">AI-Powered Features</div>
+    </div>
+    <div>
+      <div class="stat__num">4</div>
+      <div class="stat__label">Countries Supported</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules" id="modules">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      The Platform
+    </div>
+    <h2 class="section__title reveal">
+      Nineteen modules, <em>arranged the way HR actually works.</em>
+    </h2>
+  </div>
+
+  <div class="module__clusters">
+
+    <!-- Cluster 1: Foundation -->
+    <div class="cluster reveal">
+      <div class="cluster__label">
+        <span class="cluster__label-num">01 · Foundation</span>
+        <em>People, from day zero.</em>
+      </div>
+      <div class="cluster__modules">
+        <div class="module">
+          <div class="module__name">Cold Start &amp; Setup</div>
+          <div class="module__feats">91 features · 15 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Core HR &amp; People Data</div>
+          <div class="module__feats">177 features · 42 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Platform &amp; Experience</div>
+          <div class="module__feats">139 features · 34 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cluster 2: Time & Work -->
+    <div class="cluster reveal">
+      <div class="cluster__label">
+        <span class="cluster__label-num">02 · Time &amp; Work</span>
+        <em>Every hour, every absence, accounted for.</em>
+      </div>
+      <div class="cluster__modules">
+        <div class="module">
+          <div class="module__name">Time &amp; Attendance</div>
+          <div class="module__feats">162 features · 46 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Leave Management</div>
+          <div class="module__feats">138 features · 45 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Daily Work Logging</div>
+          <div class="module__feats">111 features · 37 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cluster 3: Talent -->
+    <div class="cluster reveal">
+      <div class="cluster__label">
+        <span class="cluster__label-num">03 · Talent Lifecycle</span>
+        <em>Hire, grow, keep.</em>
+      </div>
+      <div class="cluster__modules">
+        <div class="module">
+          <div class="module__name">Talent Acquisition</div>
+          <div class="module__feats">119 features · 40 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Onboarding &amp; Offboarding</div>
+          <div class="module__feats">88 features · 29 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Performance &amp; Growth</div>
+          <div class="module__feats">102 features · 36 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Learning &amp; Development</div>
+          <div class="module__feats">72 features · 28 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Engagement &amp; Culture</div>
+          <div class="module__feats">107 features · 38 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cluster 4: Pay -->
+    <div class="cluster reveal">
+      <div class="cluster__label">
+        <span class="cluster__label-num">04 · Pay</span>
+        <em>Correct, on time, every time.</em>
+      </div>
+      <div class="cluster__modules">
+        <div class="module">
+          <div class="module__name">Payroll Processing</div>
+          <div class="module__feats">123 features · 33 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Compensation &amp; Rewards</div>
+          <div class="module__feats">91 features · 31 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Expense Management</div>
+          <div class="module__feats">93 features · 27 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cluster 5: Intelligence -->
+    <div class="cluster reveal">
+      <div class="cluster__label">
+        <span class="cluster__label-num">05 · Intelligence</span>
+        <em>Strategic HR, made operational.</em>
+      </div>
+      <div class="cluster__modules">
+        <div class="module">
+          <div class="module__name">Compliance &amp; Audit</div>
+          <div class="module__feats">98 features · 25 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Workforce Planning</div>
+          <div class="module__feats">79 features · 27 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Integrations &amp; API</div>
+          <div class="module__feats">70 features · 15 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">People Analytics &amp; BI</div>
+          <div class="module__feats">76 features · 27 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+        <div class="module">
+          <div class="module__name">Demo &amp; Sandbox</div>
+          <div class="module__feats">22 features · 9 AI</div>
+          <span class="module__ai-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modules__footnote reveal">
+    <div class="modules__footnote-key">
+      <span class="dot"></span>
+      AI-powered features present in every module.
+    </div>
+    <div class="modules__count">19 modules · 1,958 features · 584 powered by AI</div>
+  </div>
+</section>
+
+<!-- AI CAPABILITIES -->
+<section class="ai-caps grain" id="ai">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      AI Capabilities
+    </div>
+    <h2 class="section__title reveal">
+      AI isn't a feature. <em>It's the substrate.</em>
+    </h2>
+  </div>
+
+  <div class="ai-caps__grid">
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">01 · Payroll Anomaly Detection</div>
+      <h3 class="ai-cap__title">Catch the error <em>before payroll runs,</em> not after.</h3>
+      <p class="ai-cap__desc">
+        Sanadeep's AI reviews every payroll run against historical patterns per employee. It flags calculation errors, duplicate payments, missed statutory deductions, and unusual amounts — before anything is finalized. Your HR team reviews a pre-audit report, not a lawsuit.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> Flagged: Employee #1842's HRA exemption looks 3× their historical average. Manager approval required before finalization.
+      </div>
+    </article>
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">02 · Predictive Compliance</div>
+      <h3 class="ai-cap__title">Know what is changing <em>before it changes you.</em></h3>
+      <p class="ai-cap__desc">
+        Sanadeep monitors labor law and regulatory updates across every country you operate in. When new legislation lands, it predicts the policy updates, cost impact, and deadline — and shows you what to change, where, and by when.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> Alert: UAE Wage Protection System rule change effective 1 June. 2 policies to update. Estimated configuration time: 15 minutes.
+      </div>
+    </article>
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">03 · Smart Document Parser</div>
+      <h3 class="ai-cap__title">Stop keying in data <em>from scanned documents.</em></h3>
+      <p class="ai-cap__desc">
+        Upload a national ID, an offer letter, a visa copy, a medical certificate — our OCR plus NLP engine auto-extracts every relevant field, normalizes formats across languages, and populates the employee record. Confidence scores on each field, manual review for edge cases.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> Extracted 14 fields from Aadhaar card · Confidence 98% · Auto-populated to employee profile
+      </div>
+    </article>
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">04 · AI Org Designer</div>
+      <h3 class="ai-cap__title">The restructure, <em>simulated before it is signed.</em></h3>
+      <p class="ai-cap__desc">
+        Moving a department? Flattening reporting layers? Merging two teams? The AI Org Designer uses performance data, collaboration patterns, and cost signals to suggest optimal structures — and simulates reporting load, communication overhead, and cost changes before you commit.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> Suggestion: 12 direct reports exceeds recommended span. Proposed split: 2 teams of 6 with intermediate lead.
+      </div>
+    </article>
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">05 · Succession Readiness</div>
+      <h3 class="ai-cap__title">The ones who are almost ready, <em>named.</em></h3>
+      <p class="ai-cap__desc">
+        For every leadership and critical role, Sanadeep scores internal candidates on skills, performance trajectory, tenure, and recent development activity. The output is not a replacement plan. It is a shortlist of the people within reach, and the specific gaps to close.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> 3 candidates ready in 12 months for VP Engineering. Key gap: cross-functional leadership exposure.
+      </div>
+    </article>
+
+    <article class="ai-cap reveal">
+      <div class="ai-cap__label">06 · Team Insights Brief</div>
+      <h3 class="ai-cap__title">A monthly digest of <em>what your team actually needs.</em></h3>
+      <p class="ai-cap__desc">
+        Every manager gets an auto-generated brief once a month: tenure distribution, upcoming milestones, at-risk employees, compliance gaps, comp equity flags, org health deltas since last month. Proactive, not reactive. Ten minutes of reading saves four hours of reporting.
+      </p>
+      <div class="ai-cap__example">
+        <span class="arrow">→</span> 2 team members reach probation-end this week · 1 visa expires in 45 days · Comp gap detected in role band D4
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- GLOBAL -->
+<section class="global" id="global">
+  <div class="section__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      Global by Design
+    </div>
+    <h2 class="section__title reveal">
+      One platform. <em>Four countries.</em> Eight languages. One source of truth.
+    </h2>
+  </div>
+
+  <div class="global__countries reveal-stagger">
+
+    <div class="country">
+      <div class="country__code">IN · भारत</div>
+      <div class="country__name">India</div>
+      <div class="country__tagline">Full statutory coverage with automated filings and NEFT salary disbursement.</div>
+      <div class="country__chips">
+        <span class="chip">PF</span>
+        <span class="chip">ESI</span>
+        <span class="chip">Form 16</span>
+        <span class="chip">PT</span>
+        <span class="chip">NEFT</span>
+        <span class="chip">DPDPA</span>
+      </div>
+    </div>
+
+    <div class="country">
+      <div class="country__code">AE · الإمارات</div>
+      <div class="country__name">UAE</div>
+      <div class="country__tagline">Wage Protection System compliant with Arabic right-to-left interface.</div>
+      <div class="country__chips">
+        <span class="chip">WPS</span>
+        <span class="chip">GOSI</span>
+        <span class="chip">End-of-Service</span>
+        <span class="chip">Arabic RTL</span>
+      </div>
+    </div>
+
+    <div class="country">
+      <div class="country__code">UK · United Kingdom</div>
+      <div class="country__name">UK</div>
+      <div class="country__tagline">PAYE-ready with real-time submissions to HMRC and year-end reporting.</div>
+      <div class="country__chips">
+        <span class="chip">PAYE</span>
+        <span class="chip">P60</span>
+        <span class="chip">P45</span>
+        <span class="chip">NI</span>
+        <span class="chip">HMRC</span>
+      </div>
+    </div>
+
+    <div class="country">
+      <div class="country__code">US · United States</div>
+      <div class="country__name">USA</div>
+      <div class="country__tagline">Federal and state-level tax handling with W-2, 1099, and FICA compliance.</div>
+      <div class="country__chips">
+        <span class="chip">W-2</span>
+        <span class="chip">1099</span>
+        <span class="chip">FICA</span>
+        <span class="chip">State Tax</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="languages reveal">
+    <div class="languages__label">Supported Interface Languages</div>
+    <div class="languages__list">
+      <span class="lang">English</span>
+      <span class="lang">हिन्दी</span>
+      <span class="lang rtl">العربية</span>
+      <span class="lang-rtl-note">RTL</span>
+      <span class="lang">Español</span>
+      <span class="lang">Français</span>
+      <span class="lang">Deutsch</span>
+      <span class="lang">中文</span>
+      <span class="lang">Português</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust grain">
+  <div class="trust__layout">
+    <div class="trust__copy">
+      <div class="section__eyebrow reveal">
+        <span class="section__eyebrow-dot"></span>
+        Trust &amp; Data
+      </div>
+      <h2 class="section__title reveal">
+        Your employees' data is the most sensitive data in the company. <em>We treat it that way.</em>
+      </h2>
+      <p class="trust__body reveal">
+        Sanadeep is built on a zero-trust architecture with field-level access controls, end-to-end encryption, and a complete audit trail of every data mutation. DPDPA-compliant from day one. Your data stays in India by default, with regional hosting options for multi-country deployments.
+      </p>
+    </div>
+
+    <div class="trust__list reveal-stagger">
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="trust__item-name">DPDPA-Compliant</div>
+        <div class="trust__item-desc">Consent management, retention rules, and erasure workflows built into every module.</div>
+      </div>
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div class="trust__item-name">Encryption Everywhere</div>
+        <div class="trust__item-desc">AES-256 at rest, TLS 1.3 in transit. PII encrypted at the field level.</div>
+      </div>
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div class="trust__item-name">Data Sovereignty</div>
+        <div class="trust__item-desc">Indian customer data stays in Indian data centers. Regional options for multi-country.</div>
+      </div>
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6M22 8h-6M22 14h-6"/></svg>
+        <div class="trust__item-name">Field-Level Access</div>
+        <div class="trust__item-desc">Who sees salary, national ID, bank details? You decide, per field, per role.</div>
+      </div>
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="trust__item-name">Complete Audit Trail</div>
+        <div class="trust__item-desc">Every mutation logged: who, when, what, old value, new value. Immutable by design.</div>
+      </div>
+
+      <div class="trust__item">
+        <svg class="trust__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+        <div class="trust__item-name">Right to Erasure</div>
+        <div class="trust__item-desc">One-click data export and portability. Tombstone records on lawful request.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="plans" id="plans">
+  <div class="plans__head">
+    <div class="section__eyebrow reveal">
+      <span class="section__eyebrow-dot"></span>
+      Plans
+    </div>
+    <h2 class="section__title reveal">
+      Three ways to <em>start with Sanadeep.</em>
+    </h2>
+  </div>
+
+  <div class="plans__grid">
+
+    <div class="plan">
+      <div class="plan__name">Essential</div>
+      <div class="plan__target">50 – 200 employees</div>
+      <div class="plan__price">Starts at <strong>₹89</strong><br>per employee, per month</div>
+      <ul class="plan__features">
+        <li>Core HR, Time, Leave, and Payroll modules</li>
+        <li>Statutory compliance for India (PF, ESI, Form 16)</li>
+        <li>Employee self-service and manager portals</li>
+        <li>Standard AI features across all included modules</li>
+        <li>Email support with 24-hour response SLA</li>
+        <li>Data residency: India</li>
+      </ul>
+      <a href="#cta" class="plan__cta">Request Pricing</a>
+    </div>
+
+    <div class="plan plan--featured">
+      <div class="plan__name">Growth</div>
+      <div class="plan__target">200 – 2,000 employees</div>
+      <div class="plan__price">Starts at <strong>₹149</strong><br>per employee, per month</div>
+      <ul class="plan__features">
+        <li>All 19 modules, full AI capabilities enabled</li>
+        <li>Multi-country payroll (India + 1 additional country)</li>
+        <li>Talent Acquisition, Performance, L&amp;D suites</li>
+        <li>Custom workflows, approvals, and branding</li>
+        <li>Predictive Compliance and Smart Document Parser</li>
+        <li>Dedicated CSM and chat support with 4-hour SLA</li>
+      </ul>
+      <a href="#cta" class="plan__cta">Book a Demo</a>
+    </div>
+
+    <div class="plan">
+      <div class="plan__name">Enterprise</div>
+      <div class="plan__target">2,000+ employees · Multi-country</div>
+      <div class="plan__price">Custom<br>tailored to your scale</div>
+      <ul class="plan__features">
+        <li>Unlimited employees across all supported countries</li>
+        <li>SSO (SAML / AD), white-label, custom integrations</li>
+        <li>99.9% uptime SLA with financial guarantees</li>
+        <li>Dedicated infrastructure options available</li>
+        <li>On-premise and private cloud deployments</li>
+        <li>24×7 priority support with named engineers</li>
+      </ul>
+      <a href="#cta" class="plan__cta">Talk to Sales</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq grain" id="faq">
+  <div class="faq__layout">
+    <div class="faq__head">
+      <div class="section__eyebrow reveal" style="justify-content:center;">
+        <span class="section__eyebrow-dot"></span>
+        Frequently Asked
+      </div>
+      <h2 class="section__title reveal">
+        The questions enterprise buyers <em>always ask us.</em>
+      </h2>
+    </div>
+
+    <div class="faq__list">
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Is Sanadeep truly DPDPA-compliant, or is it "compliance-ready"?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          DPDPA compliance is built into the product, not added as documentation. That means field-level consent tracking, automated retention rules, the right to erasure with tombstoning, explicit purpose limitation on AI-processed data, and a complete audit trail of every PII access. Our Compliance Dashboard runs six automated checks continuously and surfaces gaps before they become incidents.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Can Sanadeep integrate with the systems we already use?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          Yes. Sanadeep ships with an Integrations and API Platform module — REST APIs for every data object, webhook support for event streams, and pre-built connectors for common financial systems, ATS tools, identity providers (Google Workspace, SAML SSO, Active Directory on Growth and Enterprise plans), and banking for salary disbursement. Custom integrations are straightforward with our engineering team.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          How long does implementation actually take?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          Most Essential and Growth implementations go live in 4 to 6 weeks end-to-end. The first 2 weeks cover data migration and policy configuration, weeks 3 and 4 are manager and employee onboarding with parallel testing, and weeks 5 to 6 are the first parallel payroll run before go-live. Enterprise deployments with multi-entity and cross-country rollouts typically run 8 to 14 weeks.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          We operate across India and the UAE. Does one instance handle both?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          One instance, multiple legal entities. Each entity has its own policy framework, payroll engine, statutory filings, and language defaults — while consolidation and reporting happen at the group level. An employee transfer from India to UAE is a native workflow, with data migration and compliance handling automated. This is available on Growth and Enterprise plans.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          Where is our data stored? Can we keep it in India?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          By default, Indian customer data is stored in Indian data centers — full stop. For multi-country deployments, we offer regional hosting options so that UAE, UK, or US operations can store data in-region where local regulations require. Enterprise customers can request dedicated infrastructure or on-premise deployments.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          How does the AI actually learn? What happens to our data?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          Sanadeep's AI features are tenant-isolated by default. Your data is never used to train shared models or improve the product for other customers. Each AI capability runs against your data alone. For organization-wide benchmarks (such as compensation equity comparisons), we use aggregated and anonymized industry datasets from licensed third-party sources — never customer data.
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary class="faq__q">
+          What languages does the interface support, and how good is the localization?
+          <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <div class="faq__a">
+          Eight interface languages today: English, Hindi, Arabic (with full right-to-left layout), Spanish, French, German, Mandarin, and Portuguese. Localization extends beyond translated labels — date formats, number formats, currency, working week conventions (Sun–Thu in GCC, for example), and statutory form templates all adapt automatically per entity.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta__bg-glow"></div>
+  <div class="cta__content">
+    <h2 class="cta__title reveal">
+      Show your HR team <em>what this could look like</em> at your company.
+    </h2>
+    <p class="cta__sub reveal">
+      A 45-minute demo with a Sanadeep specialist. Real data, your industry, your countries, your modules. No slides unless you ask for them.
+    </p>
+    <div class="cta__ctas reveal">
+      <a href="mailto:sales@shambhavilabs.com?subject=Sanadeep%20Enterprise%20Demo%20Request" class="btn btn--primary">
+        Book an Enterprise Demo
+        <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="mailto:sales@shambhavilabs.com?subject=Sanadeep%20Pricing%20Request" class="btn btn--ghost">Request Custom Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__layout">
+    <div class="footer__brand">
+      <svg class="nav__logo" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="#f1ece0" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="80" cy="60" r="16" fill="#d99133"/>
+        <circle cx="80" cy="60" r="5.5" fill="#f1ece0"/>
+      </svg>
+      <div class="footer__tagline">Sanadeep — the AI-native HRMS, a Shambhavi Innovation Lab product.</div>
+    </div>
+    <div class="footer__col">
+      <h4>Sanadeep</h4>
+      <ul>
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#ai">AI Capabilities</a></li>
+        <li><a href="#global">Multi-Country</a></li>
+        <li><a href="#plans">Plans</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Shambhavi</h4>
+      <ul>
+        <li><a href="index.html">The Lab</a></li>
+        <li><a href="about.html">About &amp; Founders</a></li>
+        <li><a href="aspirems.html">AspiremsAI</a></li>
+        <li><a href="neurolink.html">NeuroLink v2</a></li>
+        <li><a href="insighttest.html">InsightTest AI</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:sales@shambhavilabs.com">sales@shambhavilabs.com</a></li>
+        <li><a href="mailto:hello@shambhavilabs.com">hello@shambhavilabs.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Press Kit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Shambhavi Innovation Lab. Sanadeep is a registered trademark.</span>
+    <span>
+      <span class="footer__devanagari">दृष्टि</span> &nbsp;·&nbsp; See further.
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 24) nav.classList.add('nav--scrolled');
+    else nav.classList.remove('nav--scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal--in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
