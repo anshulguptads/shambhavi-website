@@ -28,3 +28,12 @@ Thumbs.db
 
 # Local legacy reference (old HTML files kept for porting)
 _legacy/
+
+# Playwright MCP working directory (screenshots, traces, etc.)
+.playwright-mcp/
+
+# Root-level test screenshots (from Playwright visual testing)
+/desktop-*.png
+/mobile-*.png
+/fix-*.png
+/page-*.png

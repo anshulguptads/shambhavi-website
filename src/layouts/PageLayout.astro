@@ -5,18 +5,19 @@ import Footer from '@components/layout/Footer.astro';
 import type { SeoProps } from '@lib/seo';
 
 interface Props extends SeoProps {
-  headerVariant?: 'light' | 'dark';
+  /** How the header behaves:
+   *  - 'over-dark'  = starts transparent over a dark hero, swaps to cream when scrolled (default)
+   *  - 'solid-light'= always solid cream with dark text (for pages with no dark hero) */
+  headerMode?: 'over-dark' | 'solid-light';
   footerVariant?: 'light' | 'dark';
-  transparentHeader?: boolean;
   schemas?: unknown[];
   theme?: 'light' | 'dark';
   bodyClass?: string;
 }
 
 const {
-  headerVariant = 'light',
+  headerMode = 'over-dark',
   footerVariant = 'dark',
-  transparentHeader = true,
   schemas,
   theme,
   bodyClass,
@@ -25,7 +26,7 @@ const {
 ---
 
 <BaseLayout {...seoProps} schemas={schemas} theme={theme} bodyClass={bodyClass}>
-  <Header variant={headerVariant} transparent={transparentHeader} />
+  <Header mode={headerMode} />
   <main id="main-content" class="min-h-screen">
     <slot />
   </main>

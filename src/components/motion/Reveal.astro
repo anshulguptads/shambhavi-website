@@ -23,27 +23,50 @@ const fromClass = {
 </Tag>
 
 <script>
+  const REVEAL_CLASSES_TO_REMOVE = ['opacity-0', 'translate-y-4', '-translate-x-4', 'translate-x-4'];
+
+  const showElement = (el: Element) => {
+    el.classList.remove(...REVEAL_CLASSES_TO_REMOVE);
+    el.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
+  };
+
   const observe = () => {
-    const els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      els.forEach((el) => el.classList.add('is-visible'));
+    const els = Array.from(document.querySelectorAll('.reveal.opacity-0'));
+    if (els.length === 0) return;
+
+    // Respect reduced motion — show everything immediately, skip the animation
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(showElement);
       return;
     }
+
+    // No IntersectionObserver support? Show everything
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(showElement);
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            el.classList.remove('opacity-0', 'translate-y-4', '-translate-x-4', 'translate-x-4');
-            el.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
-            io.unobserve(el);
+            showElement(entry.target);
+            io.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
     );
     els.forEach((el) => io.observe(el));
+
+    // Safety net: anything still hidden after 4s (page loaded but observer never fired)
+    // ensures content always becomes visible — critical for fullPage screenshots, slow
+    // JS execution, adblockers that suppress observers, and print/PDF exports.
+    setTimeout(() => {
+      document.querySelectorAll('.reveal.opacity-0').forEach(showElement);
+    }, 4000);
   };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', observe);
   } else {
