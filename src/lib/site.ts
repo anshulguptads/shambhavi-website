@@ -4,7 +4,7 @@ export const site = {
   url: 'https://shambhavilabs.com',
   tagline: 'AI-native software for how India learns, works, and builds.',
   description:
-    'Shambhavi Innovation Lab builds AI-native platforms for learning, working, and building — from K-12 to enterprise. Founded in India, designed for the world.',
+    'Shambhavi Innovation Lab builds AI-native platforms for learning, working, and building — from K-12 to enterprise. Designed in India. Built for the world.',
   email: 'info@shambhavilabs.com',
   founded: '2026',
   foundingLocation: 'India',

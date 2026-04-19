@@ -1,0 +1,250 @@
+---
+name: InsightTest AI
+tagline: "Low-code, AI-powered testing that cuts QA effort by 60–70%. Unified tests for mobile, web, API, and analytics."
+eyebrow: "BUILD · ENGINEERING"
+description: "Drag-and-drop builder, AI-generated test cases, self-healing automation. One platform for mobile, web, API, and analytics — instead of five separate tools."
+longDescription: "Built for the engineering teams shipping software weekly but fighting 2015-era testing tools. AI test generation lets a product manager contribute a test; self-healing automation adapts when UIs change; one unified platform replaces the patchwork."
+icon: check-grid
+accentColor: saffron
+order: 4
+forWhom: "For engineering heads, QA leads, and product teams at companies shipping software weekly — worldwide."
+keyCapabilities:
+  - title: "AI Test Generation"
+    description: "Feed a user story, a Figma flow, a Jira ticket, or an existing screen recording — our NLP engine generates the test cases, selects appropriate assertions, and populates realistic test data. What used to be a day of scripting is now a 10-minute review."
+  - title: "Self-Healing Automation"
+    description: "When a developer renames a class or restructures a component, the healer analyzes the DOM, identifies the new element using visual, semantic, and positional signals, and updates the selector automatically. The test keeps running. The engineer gets a notification, not a 2 AM page."
+  - title: "Anomaly Detection"
+    description: "Not every red test is a bug. InsightTest learns your suite's baseline — timing, failure patterns, flake rate per test — and distinguishes genuine regressions from environmental flukes. Your team triages real issues, not yesterday's network hiccup."
+  - title: "Analytics Validation"
+    description: "Scheduled validation on Adobe, RudderStack, and MoEngage pipelines — firing events, checking payloads, confirming downstream receipt. Marketing teams learn about broken tracking before the campaign is live, not after."
+outcomes:
+  - "Anyone on the team can build tests with drag-and-drop — no code required"
+  - "AI generates tests from user stories, specs, and existing behavior"
+  - "Self-healing selectors adapt when your UI changes"
+  - "One platform for mobile, web, API, and analytics validation"
+  - "Anomaly detection flags real regressions, not flaky noise"
+  - "QA becomes a velocity enabler, not a release blocker"
+proofPoints:
+  - metric: "60–70%"
+    label: "QA effort reduction"
+  - metric: "4"
+    label: "surfaces — mobile, web, API, analytics"
+  - metric: "0"
+    label: "code required"
+  - metric: "Serverless"
+    label: "AWS Lambda execution"
+faqs:
+  - q: "Is the 60-70% effort reduction claim real?"
+    a: "It's measured across teams using InsightTest for three sprints or more, comparing time spent writing and maintaining tests against their prior baseline. The biggest gains are from self-healing (which eliminates most maintenance cycles) and AI generation (which removes the from-scratch writing cost). Smaller suites see smaller gains; mature suites with hundreds of tests see the largest."
+  - q: "Can non-engineers actually write useful tests with this?"
+    a: "Product managers, designers, and QA analysts can build meaningful end-to-end tests through the drag-and-drop builder and natural-language generation. For complex assertions, data-driven scenarios, and deep API contract testing, engineers still drive. The point isn't to replace engineers — it's to let every team member contribute coverage they couldn't before."
+  - q: "How does self-healing know it hasn't healed to the wrong element?"
+    a: "Every auto-healed selector gets a confidence score from visual, semantic, and positional analysis. Below a configurable threshold (default 85%), the test pauses for human review rather than proceeding silently. Every heal is logged, reversible, and auditable — so if the platform ever makes a bad call, you see it before it lands in your report."
+  - q: "Will this replace our existing test framework (Playwright, Cypress, Appium)?"
+    a: "It doesn't have to. InsightTest can coexist with your existing frameworks — some teams use it for new feature coverage while keeping their legacy suites running, others migrate gradually. We support import from Playwright, Cypress, Selenium, and Appium test definitions so migration is incremental, not a big bang."
+  - q: "Where does our test data go? Is it secure?"
+    a: "Test data is tenant-isolated and encrypted at rest and in transit. For regulated industries, we offer self-hosted and private VPC deployments so test data never leaves your infrastructure. The AI models that parse test intent never see production customer data — only test artifacts."
+  - q: "How does pricing work? Per user, per test, per execution?"
+    a: "Our pricing combines a platform fee based on team size (unlimited test authoring) with a pay-per-execution model for test runs (tiered by volume). No surprise overages — budget caps and alerts are built in. Enterprise plans offer fixed-cost execution pools. Contact our team for a quote specific to your scale."
+ogImage: "/og-insighttest.png"
+ctaLabel: "See InsightTest in Action"
+ctaHref: "mailto:info@shambhavilabs.com?subject=InsightTest%20Demo"
+status: active
+---
+
+## The problem
+
+AI-powered testing for teams that would rather *ship* than write scripts.
+
+A low-code platform that cuts QA effort 60-70%. AI generates your tests. Self-healing automation adapts when your UI changes. Mobile, web, API, and analytics — one unified flow.
+
+QA is the bottleneck. Not because teams are slow — because the tools haven't caught up.
+
+### Traditional QA: hand-coded test suites that break every sprint
+
+- Every test requires a senior SDET to write and maintain
+- UI change breaks selectors — half your suite goes red overnight
+- Mobile, web, API, and analytics need four different frameworks
+- Test coverage falls behind feature velocity, always
+- Flaky tests erode confidence and get disabled one by one
+- QA becomes a cost center, not a quality function
+
+### InsightTest AI: AI writes the tests. AI heals the tests. Your team ships.
+
+- Anyone on the team can build tests with drag-and-drop — no code required
+- AI generates tests from user stories, specs, and existing behavior
+- Self-healing selectors adapt when your UI changes
+- One platform for mobile, web, API, and analytics validation
+- Anomaly detection flags real regressions, not flaky noise
+- QA becomes a velocity enabler, not a release blocker
+
+## AI capabilities — four things our AI does that hand-coded QA doesn't
+
+### 01 · AI Test Generation — describe the behavior. Get the test.
+
+Feed a user story, a Figma flow, a Jira ticket, or an existing screen recording — our NLP engine generates the test cases, selects appropriate assertions, and populates realistic test data. What used to be a day of scripting is now a 10-minute review.
+
+```
+input →  "User should be able to apply a promo code and see the updated total at checkout."
+output → 4 test cases generated · 12 assertions · 3 edge cases identified
+```
+
+### 02 · Self-Healing Automation — the test adapts when your UI doesn't
+
+When a developer renames a class or restructures a component, traditional test suites turn red. InsightTest AI's healer analyzes the DOM, identifies the new element using visual, semantic, and positional signals, and updates the selector automatically. The test keeps running. The engineer gets a notification, not a 2 AM page.
+
+```
+healed → .checkout-btn (not found) → #pay-now (visual + semantic match, 96% confidence)
+```
+
+### 03 · Anomaly Detection — the real regression, not the flaky noise
+
+Not every red test is a bug. InsightTest learns your suite's baseline — timing, failure patterns, flake rate per test — and distinguishes genuine regressions from environmental flukes. Your team triages real issues, not yesterday's network hiccup.
+
+```
+flagged → Login test · 12% latency spike vs 30-day baseline · likely regression (not flake)
+```
+
+### 04 · Analytics Validation — events fire where they should, or you know immediately
+
+Marketing teams depend on event tracking nobody validates until the campaign is already live and broken. InsightTest runs scheduled validation on your Adobe, RudderStack, and MoEngage pipelines — firing events, checking payloads, confirming downstream receipt. Marketing sleeps easier.
+
+```
+verified → add_to_cart · RudderStack · payload intact · 3 downstream destinations OK
+```
+
+## Unified testing — four surfaces. One builder. One login. One report.
+
+### Mobile
+
+Flutter and native iOS/Android testing with device-farm integration via BrowserStack.
+
+Tags: Flutter · Android · iOS · BrowserStack
+
+### Web
+
+Modern web apps, progressive web apps, and legacy sites. Cross-browser and responsive validation.
+
+Tags: Chrome · Safari · Firefox · Edge
+
+### API
+
+REST, GraphQL, and webhook testing with contract validation, load simulation, and schema drift detection.
+
+Tags: REST · GraphQL · OpenAPI · Webhooks
+
+### Analytics
+
+Event payloads, downstream deliverability, and campaign readiness — validated before the launch, not after.
+
+Tags: Adobe · RudderStack · MoEngage · Amplitude
+
+## Live test run — what it looks like
+
+A typical `checkout_flow_e2e.test` run:
+
+- Login with valid credentials — 1.2s — passed
+- Add item to cart — 0.8s — passed
+- Apply promo code — 0.4s — passed
+- Complete checkout — running…
+
+**Auto-healed:** checkout button moved from `.btn-primary` → `#pay-now`. Selector updated, test continued without failure.
+
+36 tests queued · 18 passed · 1 running · 17 pending.
+
+## Integrations — plugs into the tools your team already uses
+
+### CI / CD — ship on every commit
+
+- GitHub Actions & GitLab CI
+- Jenkins pipelines
+- CircleCI & Bitbucket
+- Webhook-triggered runs
+
+### Device Farms — real devices at scale
+
+- BrowserStack (native)
+- Sauce Labs
+- AWS Device Farm
+- Custom device pools
+
+### Issue Tracking — bugs in the right place
+
+- Jira & Linear auto-creation
+- Slack & Microsoft Teams alerts
+- PagerDuty for regressions
+- Email digests
+
+### Analytics Platforms — campaign-ready event data
+
+- Adobe Analytics & Launch
+- RudderStack customer data
+- MoEngage marketing events
+- Amplitude & Mixpanel
+
+### Observability — full trace, full visibility
+
+- Datadog & New Relic export
+- Sentry error correlation
+- Custom Prometheus metrics
+- OpenTelemetry spans
+
+### Source of Truth — test cases where your work lives
+
+- Jira test management sync
+- TestRail import/export
+- Notion & Confluence docs
+- Figma flow import
+
+## Architecture — built for serious engineering, priced for rational teams
+
+InsightTest AI is engineered on a **serverless-first microservices architecture** designed to scale from a 5-person team to a 500-engineer organization without architectural rewrites.
+
+The execution layer runs on **AWS Lambda**, spinning up test workers on demand — you pay for executions, not idle capacity. The AI layer combines NLP models for test-intent parsing and purpose-built anomaly detection models trained on QA-specific signals.
+
+**Deploy anywhere.** The full platform runs on AWS, Azure, or lightweight Railway for smaller teams — or on your own VPC for enterprises that require it.
+
+### Stack
+
+| Layer | Technology |
+| --- | --- |
+| Frontend | React + TypeScript LCNC builder |
+| Backend | Java / Spring Boot + Node.js microservices |
+| Data | SQL (PostgreSQL) + NoSQL (MongoDB) |
+| Execution | AWS Lambda + containerized runners |
+| AI Layer | NLP models + anomaly detection engine |
+| Device Farm | BrowserStack native integration |
+
+### Deployment targets
+
+AWS · Azure · Railway · Self-hosted · Private VPC
+
+## FAQ — questions engineering leads ask us
+
+### Is the 60-70% effort reduction claim real?
+
+It's measured across teams using InsightTest for three sprints or more, comparing time spent writing and maintaining tests against their prior baseline. The biggest gains are from self-healing (which eliminates most maintenance cycles) and AI generation (which removes the from-scratch writing cost). Smaller suites see smaller gains; mature suites with hundreds of tests see the largest.
+
+### Can non-engineers actually write useful tests with this?
+
+Product managers, designers, and QA analysts can build meaningful end-to-end tests through the drag-and-drop builder and natural-language generation. For complex assertions, data-driven scenarios, and deep API contract testing, engineers still drive. The point isn't to replace engineers — it's to let every team member contribute coverage they couldn't before.
+
+### How does self-healing know it hasn't "healed" to the wrong element?
+
+Every auto-healed selector gets a confidence score from visual, semantic, and positional analysis. Below a configurable threshold (default 85%), the test pauses for human review rather than proceeding silently. Every heal is logged, reversible, and auditable — so if the platform ever makes a bad call, you see it before it lands in your report.
+
+### Will this replace our existing test framework (Playwright, Cypress, Appium)?
+
+It doesn't have to. InsightTest can coexist with your existing frameworks — some teams use it for new feature coverage while keeping their legacy suites running, others migrate gradually. We support import from Playwright, Cypress, Selenium, and Appium test definitions so migration is incremental, not a big bang.
+
+### Where does our test data go? Is it secure?
+
+Test data is tenant-isolated and encrypted at rest and in transit. For regulated industries, we offer self-hosted and private VPC deployments so test data never leaves your infrastructure. The AI models that parse test intent never see production customer data — only test artifacts.
+
+### How does pricing work? Per user, per test, per execution?
+
+Our pricing combines a platform fee based on team size (unlimited test authoring) with a pay-per-execution model for test runs (tiered by volume). No surprise overages — budget caps and alerts are built in. Enterprise plans offer fixed-cost execution pools. Contact our team for a quote specific to your scale.
+
+## Give your QA team a real force multiplier
+
+A 30-minute technical demo with one of our engineers. Bring a real test scenario from your product — we'll build it live, run it, and show you how it heals when things break.

@@ -22,18 +22,18 @@ const blog = defineCollection({
 });
 
 const products = defineCollection({
-  type: 'data',
+  type: 'content',
   schema: z.object({
-    slug: z.string(),
     name: z.string(),
     tagline: z.string(),
     eyebrow: z.string(),
     description: z.string(),
     longDescription: z.string(),
-    icon: z.string(),
+    icon: z.string().default('sparkles'),
     accentColor: z.enum(['saffron', 'maroon', 'teal', 'violet']),
     order: z.number(),
     forWhom: z.string(),
+    heroDeck: z.string().optional(),
     keyCapabilities: z.array(
       z.object({
         title: z.string(),
@@ -41,6 +41,22 @@ const products = defineCollection({
       })
     ),
     outcomes: z.array(z.string()),
+    proofPoints: z
+      .array(
+        z.object({
+          metric: z.string(),
+          label: z.string(),
+        })
+      )
+      .default([]),
+    faqs: z
+      .array(
+        z.object({
+          q: z.string(),
+          a: z.string(),
+        })
+      )
+      .default([]),
     ogImage: z.string().optional(),
     ctaLabel: z.string().default('Request a Demo'),
     ctaHref: z.string().default('/#contact'),
