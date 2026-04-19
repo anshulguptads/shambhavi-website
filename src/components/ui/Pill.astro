@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant?: 'default' | 'saffron' | 'outline' | 'outline-dark';
+  class?: string;
+}
+const { variant = 'default', class: className = '' } = Astro.props;
+
+const style = {
+  default: 'bg-cream-200 text-ink-primary',
+  saffron: 'bg-saffron-400/15 text-saffron-600 border border-saffron-400/30',
+  outline: 'border border-navy/20 text-ink-secondary',
+  'outline-dark': 'border border-cream/20 text-onDark-secondary',
+}[variant];
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] uppercase tracking-eyebrow font-medium',
+    style,
+    className,
+  ]}
+>
+  <slot />
+</span>

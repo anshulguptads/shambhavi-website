@@ -1,0 +1,25 @@
+---
+interface Props {
+  variant?: 'light' | 'dark' | 'saffron';
+  class?: string;
+  withLine?: boolean;
+}
+const { variant = 'light', class: className = '', withLine = false } = Astro.props;
+
+const color = {
+  light: 'text-ink-muted',
+  dark: 'text-onDark-muted',
+  saffron: 'text-saffron-500',
+}[variant];
+
+const lineColor = {
+  light: 'bg-navy/20',
+  dark: 'bg-cream/20',
+  saffron: 'bg-saffron-400/40',
+}[variant];
+---
+
+<p class:list={['eyebrow inline-flex items-center gap-3', color, className]}>
+  {withLine && <span aria-hidden="true" class:list={['h-px w-8', lineColor]}></span>}
+  <slot />
+</p>

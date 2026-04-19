@@ -1,0 +1,30 @@
+# Astro
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Superpowers brainstorm artifacts
+.superpowers/
+
+# Local legacy reference (old HTML files kept for porting)
+_legacy/

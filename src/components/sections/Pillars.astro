@@ -1,0 +1,80 @@
+---
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+
+const pillars = [
+  {
+    num: '01',
+    label: 'Learn',
+    title: 'Learn.',
+    desc: 'AI-native learning for every stage — from a student in a village school discovering their first dream, to a university engineer training on tomorrow\'s models.',
+    products: ['AspiremsAI', 'NeuroLink v2'],
+  },
+  {
+    num: '02',
+    label: 'Work',
+    title: 'Work.',
+    desc: 'The workplace rebuilt with intelligence at its core — payroll, performance, people, and compliance across countries, languages, and regulations.',
+    products: ['SanaDeep'],
+  },
+  {
+    num: '03',
+    label: 'Build',
+    title: 'Build.',
+    desc: 'AI for the people who build the software that runs the world — test generation, self-healing automation, and analytics validation at engineering scale.',
+    products: ['InsightTest AI'],
+  },
+];
+---
+
+<section class="section-pad bg-cream text-ink-primary relative grain-overlay" id="pillars" aria-labelledby="pillars-heading">
+  <div class="container-page">
+    <div class="max-w-3xl">
+      <Reveal>
+        <Eyebrow withLine={true}>Three Pillars</Eyebrow>
+      </Reveal>
+      <Reveal delay={100}>
+        <h2 id="pillars-heading" class="mt-6 font-serif fraunces-display text-display-lg text-navy text-balance">
+          One thesis. <em class="italic font-light text-saffron-500">Three stages of human potential.</em> Four products that turn it real.
+        </h2>
+      </Reveal>
+    </div>
+
+    <div class="mt-16 md:mt-20 grid md:grid-cols-3 gap-6 md:gap-8">
+      {pillars.map((pillar, i) => (
+        <Reveal delay={i * 120}>
+          <article class="group relative h-full rounded-3xl bg-cream-50 border border-navy/8 p-8 md:p-9 flex flex-col transition-all duration-500 ease-out-expo hover:border-saffron-400/40 hover:shadow-lift hover:-translate-y-1">
+            <div class="flex items-baseline gap-3 text-xs font-mono text-ink-muted mb-6">
+              <span class="text-saffron-500 font-semibold">{pillar.num}</span>
+              <span class="h-px flex-1 bg-navy/10"></span>
+              <span class="uppercase tracking-eyebrow">{pillar.label}</span>
+            </div>
+
+            <h3 class="font-serif fraunces-display text-display-md text-navy italic font-light">
+              {pillar.title}
+            </h3>
+
+            <p class="mt-5 text-base leading-relaxed text-ink-secondary text-pretty">
+              {pillar.desc}
+            </p>
+
+            <div class="mt-auto pt-8">
+              <p class="eyebrow text-ink-faint mb-3">{pillar.products.length === 1 ? 'Product' : 'Products'}</p>
+              <ul class="space-y-2">
+                {pillar.products.map((product) => (
+                  <li class="flex items-center gap-2 text-sm font-medium text-navy">
+                    <span class="w-1 h-1 rounded-full bg-saffron-400"></span>
+                    {product}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Hover accent line */}
+            <span aria-hidden="true" class="absolute left-8 right-8 bottom-0 h-[2px] bg-gradient-signature origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out-expo"></span>
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

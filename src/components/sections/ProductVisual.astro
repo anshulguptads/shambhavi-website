@@ -1,0 +1,224 @@
+---
+interface Props {
+  slug: 'aspirems' | 'neurolink' | 'sanadeep' | 'insighttest';
+  variant?: 'light' | 'dark';
+}
+const { slug, variant = 'dark' } = Astro.props;
+---
+
+{slug === 'aspirems' && (
+  <div class="product-visual aspirems-visual h-full w-full bg-gradient-to-br from-navy-deep to-navy-elevated p-6 md:p-8 flex items-center justify-center">
+    <div class="w-full max-w-sm space-y-3">
+      <div class="flex flex-col gap-2">
+        <div class="chat-bubble self-end max-w-[80%] px-4 py-3 rounded-2xl rounded-br-md bg-cream/10 text-onDark-primary text-sm leading-relaxed border border-cream/5" style="animation-delay: 100ms">
+          Sir, explain DNA structure?
+        </div>
+        <div class="chat-bubble self-start max-w-[92%] px-4 py-3 rounded-2xl rounded-bl-md bg-saffron-400 text-navy text-sm leading-relaxed font-medium" style="animation-delay: 700ms">
+          Since you want to be a doctor, imagine DNA as a recipe book for the human body — every cell reads it to know what to make.
+        </div>
+        <div class="chat-bubble self-end max-w-[60%] px-4 py-3 rounded-2xl rounded-br-md bg-cream/10 text-onDark-primary text-sm leading-relaxed border border-cream/5" style="animation-delay: 1400ms">
+          <span lang="hi" class="font-devanagari">क्या आप इसे हिंदी में समझा सकते हैं?</span>
+        </div>
+        <div class="chat-bubble self-start text-xs text-onDark-muted italic" style="animation-delay: 2100ms">
+          <span class="inline-flex gap-1 items-center">
+            <span class="typing-dot w-1.5 h-1.5 rounded-full bg-saffron-300"></span>
+            <span class="typing-dot w-1.5 h-1.5 rounded-full bg-saffron-300"></span>
+            <span class="typing-dot w-1.5 h-1.5 rounded-full bg-saffron-300"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{slug === 'neurolink' && (
+  <div class="product-visual neurolink-visual h-full w-full bg-gradient-to-br from-navy-deepest to-navy p-6 md:p-8 flex flex-col justify-center items-center">
+    <svg viewBox="0 0 400 320" class="w-full max-w-sm h-auto" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      <g stroke="#d99133" stroke-opacity="0.4" stroke-width="1" fill="none">
+        <line x1="200" y1="60" x2="100" y2="140" class="edge" style="animation-delay: 200ms" />
+        <line x1="200" y1="60" x2="300" y2="140" class="edge" style="animation-delay: 300ms" />
+        <line x1="100" y1="140" x2="60" y2="240" class="edge" style="animation-delay: 400ms" />
+        <line x1="100" y1="140" x2="160" y2="240" class="edge" style="animation-delay: 500ms" />
+        <line x1="300" y1="140" x2="240" y2="240" class="edge" style="animation-delay: 600ms" />
+        <line x1="300" y1="140" x2="340" y2="240" class="edge" style="animation-delay: 700ms" />
+        <line x1="200" y1="60" x2="200" y2="160" class="edge" style="animation-delay: 350ms" />
+        <line x1="200" y1="160" x2="160" y2="240" class="edge" style="animation-delay: 550ms" />
+        <line x1="200" y1="160" x2="240" y2="240" class="edge" style="animation-delay: 650ms" />
+      </g>
+      <g fill="#d99133">
+        <circle cx="200" cy="60" r="9" class="node" style="animation-delay: 100ms" />
+        <circle cx="200" cy="60" r="12" fill="none" stroke="#d99133" stroke-width="1" opacity="0.4" class="pulse-ring" />
+      </g>
+      <g fill="#faf7ef">
+        <circle cx="100" cy="140" r="6" class="node" style="animation-delay: 250ms" />
+        <circle cx="300" cy="140" r="6" class="node" style="animation-delay: 350ms" />
+      </g>
+      <g fill="#faf7ef" opacity="0.7">
+        <circle cx="200" cy="160" r="4" class="node" style="animation-delay: 500ms" />
+        <circle cx="60" cy="240" r="4" class="node" style="animation-delay: 600ms" />
+        <circle cx="160" cy="240" r="4" class="node" style="animation-delay: 700ms" />
+        <circle cx="240" cy="240" r="4" class="node" style="animation-delay: 800ms" />
+        <circle cx="340" cy="240" r="4" class="node" style="animation-delay: 900ms" />
+      </g>
+      <circle cx="160" cy="240" r="8" fill="none" stroke="#d99133" stroke-width="1" opacity="0.3" class="pulse-ring" style="animation-delay: 1200ms" />
+      <text x="200" y="300" fill="#faf7ef" opacity="0.5" font-family="Manrope, sans-serif" font-size="10" text-anchor="middle" letter-spacing="3">CONCEPT DNA</text>
+    </svg>
+  </div>
+)}
+
+{slug === 'sanadeep' && (
+  <div class="product-visual sanadeep-visual h-full w-full bg-gradient-to-br from-[#3a0f20] to-navy p-6 md:p-8 flex items-center justify-center">
+    <div class="grid grid-cols-4 gap-2 w-full max-w-sm text-[10px] md:text-xs font-sans font-medium">
+      {[
+        { label: 'Core HR', ai: false },
+        { label: 'Payroll', ai: true },
+        { label: 'Time', ai: false },
+        { label: 'Leave', ai: false },
+        { label: 'Talent', ai: true },
+        { label: 'Onboard', ai: false },
+        { label: 'Perf.', ai: true },
+        { label: 'L&D', ai: false },
+        { label: 'Comp.', ai: false },
+        { label: 'Expense', ai: true },
+        { label: 'Compli.', ai: true },
+        { label: 'Analytics', ai: false },
+      ].map((mod, i) => (
+        <div
+          class:list={[
+            'module-cell aspect-square flex items-center justify-center rounded-lg text-center leading-tight px-1',
+            mod.ai
+              ? 'bg-saffron-400/15 text-saffron-200 border border-saffron-400/40'
+              : 'bg-cream/5 text-onDark-secondary border border-cream/10',
+          ]}
+          style={`animation-delay: ${i * 60}ms`}
+        >
+          {mod.label}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+{slug === 'insighttest' && (
+  <div class="product-visual insighttest-visual h-full w-full bg-gradient-to-br from-navy-deep to-navy p-6 md:p-8 flex items-center justify-center">
+    <div class="grid grid-cols-6 gap-1.5 md:gap-2 w-full max-w-xs">
+      {Array.from({ length: 36 }).map((_, i) => {
+        const passPositions = [0, 1, 2, 7, 8, 9, 10, 14, 15, 16, 19, 20, 22, 23, 25, 28, 31, 32];
+        const runPositions = [33, 34];
+        const isPass = passPositions.includes(i);
+        const isRun = runPositions.includes(i);
+        return (
+          <div
+            class:list={[
+              'matrix-cell aspect-square rounded-sm',
+              isPass ? 'bg-saffron-400/90' : isRun ? 'bg-cream/50 animate-gentle-pulse' : 'bg-cream/10',
+            ]}
+            style={`animation-delay: ${i * 40}ms`}
+          ></div>
+        );
+      })}
+    </div>
+  </div>
+)}
+
+<style>
+  .chat-bubble {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: slide-up 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-play-state: paused;
+  }
+
+  .product-visual.in-view .chat-bubble {
+    animation-play-state: running;
+  }
+
+  .typing-dot {
+    animation: typing 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  .neurolink-visual .edge {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: draw-edge 800ms ease-out forwards;
+    animation-play-state: paused;
+  }
+  .product-visual.in-view .edge {
+    animation-play-state: running;
+  }
+
+  .neurolink-visual .node {
+    transform-origin: center;
+    transform: scale(0);
+    animation: pop-in 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-play-state: paused;
+  }
+  .product-visual.in-view .node {
+    animation-play-state: running;
+  }
+
+  .neurolink-visual .pulse-ring {
+    animation: pulse-out 2.2s ease-out infinite;
+  }
+
+  .module-cell, .matrix-cell {
+    opacity: 0;
+    transform: scale(0.9);
+    animation: pop-in 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-play-state: paused;
+  }
+  .product-visual.in-view .module-cell,
+  .product-visual.in-view .matrix-cell {
+    animation-play-state: running;
+  }
+
+  @keyframes slide-up {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes typing {
+    0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-2px); }
+  }
+  @keyframes draw-edge {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes pop-in {
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pulse-out {
+    0% { opacity: 0.6; transform: scale(0.9); transform-origin: center; }
+    100% { opacity: 0; transform: scale(2); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chat-bubble, .node, .edge, .module-cell, .matrix-cell {
+      opacity: 1 !important;
+      transform: none !important;
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Play-when-in-view for product visuals
+  const visuals = document.querySelectorAll('.product-visual');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    visuals.forEach((v) => io.observe(v));
+  } else {
+    visuals.forEach((v) => v.classList.add('in-view'));
+  }
+</script>

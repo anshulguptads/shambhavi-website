@@ -1,0 +1,25 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import Pillars from '@components/sections/Pillars.astro';
+import ProductsGrid from '@components/sections/ProductsGrid.astro';
+import WhyShambhavi from '@components/sections/WhyShambhavi.astro';
+import Founders from '@components/sections/Founders.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+---
+
+<PageLayout
+  title={undefined}
+  description="Shambhavi Innovation Lab builds AI-native platforms for learning, working, and building — from K-12 to enterprise. Founded in India, designed for the world."
+  canonical="/"
+  ogImage="/og-default.png"
+  headerVariant="dark"
+  transparentHeader={true}
+>
+  <Hero />
+  <Pillars />
+  <ProductsGrid />
+  <WhyShambhavi />
+  <Founders />
+  <CtaSection />
+</PageLayout>

@@ -1,0 +1,109 @@
+---
+import { site, footerLinks } from '@lib/site';
+
+interface Props {
+  variant?: 'light' | 'dark';
+}
+const { variant = 'dark' } = Astro.props;
+const year = new Date().getFullYear();
+
+const isDark = variant === 'dark';
+---
+
+<footer
+  class:list={[
+    'relative overflow-hidden grain-overlay',
+    isDark ? 'bg-navy-deepest text-onDark-primary' : 'bg-navy text-cream',
+  ]}
+>
+  <div class="container-page py-16 md:py-24">
+    {/* Top: brand + wordmark */}
+    <div class="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-16 mb-16">
+      <div class="space-y-5">
+        <a href="/" class="inline-flex items-baseline gap-2 group">
+          <span class="font-serif text-2xl tracking-tight">Shambhavi</span>
+          <span class="text-saffron-300">·</span>
+          <span class="text-xs uppercase tracking-eyebrow font-medium text-onDark-muted">Labs</span>
+        </a>
+        <p class="text-sm leading-relaxed text-onDark-secondary max-w-sm">
+          AI-native platforms for how India learns, works, and builds. Founded in {site.founded}, designed for the world.
+        </p>
+        <p class="text-xs font-devanagari text-saffron-200/70 tracking-wide" lang="sa">
+          विद्या ददाति विनयम्
+        </p>
+      </div>
+
+      <nav aria-label="Platforms">
+        <h3 class="eyebrow text-onDark-muted mb-5">Platforms</h3>
+        <ul class="space-y-3">
+          {footerLinks.platforms.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-onDark-secondary hover:text-saffron-300 transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Company">
+        <h3 class="eyebrow text-onDark-muted mb-5">Company</h3>
+        <ul class="space-y-3">
+          {footerLinks.company.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-onDark-secondary hover:text-saffron-300 transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Resources">
+        <h3 class="eyebrow text-onDark-muted mb-5">Resources</h3>
+        <ul class="space-y-3">
+          {footerLinks.resources.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-onDark-secondary hover:text-saffron-300 transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href={`mailto:${site.email}`}
+              class="text-sm text-onDark-secondary hover:text-saffron-300 transition-colors"
+            >
+              {site.email}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    {/* Oversized wordmark */}
+    <div class="relative border-t border-cream/10 pt-12 overflow-hidden">
+      <p
+        aria-hidden="true"
+        class="font-serif text-[clamp(4rem,18vw,16rem)] leading-[0.85] tracking-tightest text-cream/5 select-none pointer-events-none -mx-2"
+      >
+        शाम्भवी
+      </p>
+      <div class="relative mt-6 md:mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-onDark-muted">
+        <p>© {year} {site.name}. Crafted in {site.foundingLocation}.</p>
+        <p>
+          <span class="text-onDark-faint">v2</span> · Built with intent.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

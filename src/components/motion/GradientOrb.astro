@@ -1,0 +1,27 @@
+---
+interface Props {
+  class?: string;
+  color?: 'saffron' | 'maroon' | 'mixed';
+  size?: 'sm' | 'md' | 'lg';
+}
+const { class: className = '', color = 'saffron', size = 'lg' } = Astro.props;
+
+const sizeClass = {
+  sm: 'w-64 h-64',
+  md: 'w-[32rem] h-[32rem]',
+  lg: 'w-[48rem] h-[48rem]',
+}[size];
+
+const gradient = {
+  saffron: 'radial-gradient(circle at center, rgba(217, 145, 51, 0.25) 0%, rgba(217, 145, 51, 0.08) 35%, transparent 70%)',
+  maroon: 'radial-gradient(circle at center, rgba(168, 50, 84, 0.2) 0%, rgba(168, 50, 84, 0.06) 35%, transparent 70%)',
+  mixed: 'radial-gradient(circle at center, rgba(217, 145, 51, 0.22) 0%, rgba(168, 50, 84, 0.1) 40%, transparent 72%)',
+}[color];
+---
+
+<div
+  aria-hidden="true"
+  class:list={['absolute pointer-events-none blur-3xl opacity-90 animate-gentle-pulse', sizeClass, className]}
+  style={`background: ${gradient};`}
+>
+</div>

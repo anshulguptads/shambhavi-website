@@ -1,0 +1,39 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+---
+
+<PageLayout
+  title="Page not found"
+  description="We couldn't find the page you were looking for."
+  canonical="/404"
+  noindex={true}
+  headerVariant="dark"
+  transparentHeader={true}
+>
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay min-h-screen flex items-center">
+    <GradientOrb class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" color="mixed" size="lg" />
+
+    <div class="container-page relative z-10 text-center max-w-2xl mx-auto py-32">
+      <p class="eyebrow text-saffron-300 mb-6">404 · Page Not Found</p>
+
+      <h1 class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[0.95]">
+        This page <em class="italic font-light text-saffron-300">drifted away.</em>
+      </h1>
+
+      <p class="mt-8 text-lead text-onDark-secondary text-pretty">
+        The URL you followed might be outdated, or the page may have moved. Let's get you back to something real.
+      </p>
+
+      <div class="mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <Button href="/" variant="primary" size="lg">Back to homepage</Button>
+        <Button href="/journal" variant="ghost-dark" size="lg" icon="none">Read the journal</Button>
+      </div>
+
+      <p class="mt-16 font-devanagari text-saffron-200/40 text-5xl md:text-7xl" aria-hidden="true">
+        दृष्टि
+      </p>
+    </div>
+  </section>
+</PageLayout>

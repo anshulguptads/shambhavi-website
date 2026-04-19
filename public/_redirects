@@ -1,0 +1,15 @@
+# Legacy .html URLs → clean URLs (301 permanent)
+/index.html         /                            301
+/about.html         /about                       301
+/aspirems.html      /platforms/aspirems          301
+/neurolink.html     /platforms/neurolink         301
+/sanadeep.html      /platforms/sanadeep          301
+/insighttest.html   /platforms/insighttest       301
+
+# Journal (blog)
+/blog               /journal                     301
+/blog/              /journal                     301
+/blog/index.html    /journal                     301
+/blog/:slug.html    /journal/:slug               301
+/blog/:slug         /journal/:slug               301
+/blog/:slug/        /journal/:slug               301

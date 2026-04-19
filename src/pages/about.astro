@@ -1,0 +1,295 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Shambhavi Innovation Lab',
+  description:
+    'The story, founders, and values behind Shambhavi Innovation Lab — an India-born AI company building platforms for learning, working, and building.',
+  url: 'https://shambhavilabs.com/about',
+};
+
+const timeline = [
+  {
+    year: '2023',
+    title: 'The first conversations.',
+    body: "The idea for Shambhavi Innovation Lab began in conversations — between educators, technologists, and young people who felt India's education system had stopped listening to its students. We started with one question: what would it take for every student, not just the privileged, to have a real mentor?",
+  },
+  {
+    year: '2024',
+    title: 'Building, quietly.',
+    body: 'We prototyped AspiremsAI in small schools and with early pilot groups. What started as a tutor became something more — a persona engine, a crisis-detection system, a full learning platform. A year of listening to students, teachers, and parents, and rebuilding based on what we heard.',
+  },
+  {
+    year: '2025',
+    title: 'The thesis expanded.',
+    body: 'If AI could transform how a school student learns, it could transform every stage of human development. We began building for universities (NeuroLink v2), for the workplace (SanaDeep), and for the engineering teams that ship software to the rest of the world (InsightTest AI). Four products. One conviction.',
+  },
+  {
+    year: '2026',
+    title: 'Shambhavi Innovation Lab, officially.',
+    body: 'Formally incorporated in 2026 — the legal beginning of what has been, in practice, three years of work. AspiremsAI is live in schools. SanaDeep is deployed. NeuroLink v2 is in pilot. InsightTest AI is shipping to engineering teams. The Lab has just begun.',
+  },
+];
+
+const values = [
+  {
+    num: '01',
+    title: 'Access, not privilege.',
+    titleEm: 'not privilege.',
+    body: "Every product starts from one question: can this reach the person who would benefit most, not just the one who can afford most? We don't build for the few. We build for the many who have been left out, and we let the few come along.",
+  },
+  {
+    num: '02',
+    title: 'AI in service of humans.',
+    titleEm: 'in service of humans.',
+    body: 'Our products use AI to amplify human potential — the student who wants to learn, the manager who wants to lead, the engineer who wants to ship. The moment AI stops serving the person, it stops being intelligence. It becomes surveillance.',
+  },
+  {
+    num: '03',
+    title: 'Specific over abstract.',
+    titleEm: 'over abstract.',
+    body: "We prefer a real feature that works today to a grand claim that might ship eventually. Our products are measured against things we can prove — crisis response times, test effort saved, statutory filings completed. Abstract is easy. Specific is what we sell.",
+  },
+  {
+    num: '04',
+    title: 'India at the centre.',
+    titleEm: 'at the centre.',
+    body: "Hindi, Arabic RTL, DPDPA, WPS, PF, Form 16 — the regulatory and linguistic realities other companies treat as afterthoughts, we treat as the foundation. India isn't a market for us. It's the ground we stand on.",
+  },
+  {
+    num: '05',
+    title: 'Build what you wish existed.',
+    titleEm: 'what you wish existed.',
+    body: 'Every product at Shambhavi started with someone on our team saying: "I wish this had existed when I was in school / at that job / on that team." The best products come from founders solving their own unmet needs, at scale, for everyone else like them.',
+  },
+  {
+    num: '06',
+    title: 'Ship with empathy.',
+    titleEm: 'with empathy.',
+    body: "Our products touch students in distress, employees at risk, engineers at 2 AM. We build with the awareness that behind every feature is a real human having a real moment. Empathy isn't a soft value. It's an engineering requirement.",
+  },
+];
+
+const founderBios = [
+  {
+    name: 'Shalki Sharma',
+    role: 'Founder',
+    subtitle: 'Shambhavi Innovation Lab · Founded 2026 · India',
+    image: '/images/shalki.jpg',
+    paragraphs: [
+      "When I started Shambhavi Innovation Lab, I didn't want to build just another software company. I wanted to build a place where the best technology serves *everyone* — not just the already-served.",
+      'The finest mentors, the most advanced learning platforms, the most thoughtful HR systems, the smartest engineering tools — these have always existed. But only for some students, in some universities, in some companies. That is a problem worth solving, and I believe AI is how we solve it — in India, for India, and eventually for the world.',
+      'Our products are different from one another. Our mission across all of them is the same: help everyone learn, grow, and build — together.',
+    ],
+  },
+  {
+    name: 'Aman Verma',
+    role: 'Co-Founder',
+    subtitle: 'Product & Vision · Shambhavi Innovation Lab',
+    image: '/images/aman.jpg',
+    paragraphs: [
+      'Since childhood, I have envisioned myself as a mentor — one who guides not by authority, but through understanding. My purpose has always been to reach beyond judgments and help others discover clarity, confidence, and meaning in their own stories.',
+      'Through MUNs, workshops, and countless sessions of heartfelt interaction, I realised that mentorship is not about teaching people *what* to think, but *how* to think — and how to become. That realisation planted the seed for a new idea: a space where learning, working, and building could all feel deeply human, yet future-driven.',
+      'From that seed, Shambhavi Innovation Lab was born — not merely as a company, but as a belief that every student, every professional, every builder, when guided with empathy and purpose, can become a star in their own journey.',
+    ],
+  },
+];
+
+function renderItalics(text: string): string {
+  return text.replace(/\*([^*]+)\*/g, '<em class="italic font-light text-saffron-500">$1</em>');
+}
+---
+
+<PageLayout
+  title="About"
+  description="The story, founders, and values behind Shambhavi Innovation Lab — an India-born AI company building platforms for learning, working, and building."
+  canonical="/about"
+  schemas={[aboutSchema]}
+  headerVariant="dark"
+  transparentHeader={true}
+>
+  {/* Hero */}
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-40 pb-24 md:pb-32">
+    <GradientOrb class="-top-40 right-0" color="saffron" size="lg" />
+    <div class="container-page relative max-w-4xl">
+      <Reveal>
+        <nav aria-label="Breadcrumb" class="flex items-center gap-3 text-xs uppercase tracking-eyebrow text-onDark-muted mb-10">
+          <a href="/" class="hover:text-saffron-300 transition-colors">Shambhavi Labs</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-onDark-primary">About</span>
+        </nav>
+      </Reveal>
+
+      <Reveal delay={100}>
+        <p class="font-devanagari text-saffron-200 text-lg md:text-xl mb-8 tracking-wide" lang="sa">
+          शाम्भवी दृष्टि
+        </p>
+      </Reveal>
+
+      <Reveal delay={150}>
+        <h1 class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]">
+          We were built on a simple idea: <em class="italic font-light text-saffron-300">that everyone deserves access</em> to the same quality of tools.
+        </h1>
+      </Reveal>
+
+      <Reveal delay={250}>
+        <p class="mt-10 max-w-2xl text-lead text-onDark-secondary text-pretty">
+          Shambhavi Innovation Lab is an India-born company building AI-native platforms for learning, working, and building — because the gap between those who have great technology and those who don't has never been wider, and we intend to close it.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* Mission quote */}
+  <section class="section-pad bg-cream-100 text-ink-primary">
+    <div class="container-page">
+      <div class="max-w-4xl mx-auto text-center">
+        <Reveal>
+          <Eyebrow withLine={true} class="justify-center">Our Mission</Eyebrow>
+        </Reveal>
+        <Reveal delay={100}>
+          <blockquote class="mt-8 font-serif fraunces-display text-display-lg text-navy text-balance leading-[1.1]">
+            To build something for <em class="italic font-light text-saffron-500">everyone</em> — so that everyone can <em class="italic font-light text-saffron-500">learn, grow, and build</em> together.
+          </blockquote>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* Timeline */}
+  <section class="section-pad bg-cream text-ink-primary" id="timeline" aria-labelledby="timeline-heading">
+    <div class="container-page">
+      <div class="max-w-3xl">
+        <Reveal>
+          <Eyebrow withLine={true}>Our Story</Eyebrow>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 id="timeline-heading" class="mt-6 font-serif fraunces-display text-display-lg text-navy text-balance">
+            From an idea in 2023 <em class="italic font-light text-saffron-500">to four live platforms in 2026.</em>
+          </h2>
+        </Reveal>
+      </div>
+
+      <ol class="mt-16 md:mt-20 relative">
+        <div aria-hidden="true" class="absolute left-8 md:left-24 top-0 bottom-0 w-px bg-navy/10"></div>
+        {timeline.map((item, i) => (
+          <Reveal delay={i * 80}>
+            <li class="relative grid grid-cols-[4rem_1fr] md:grid-cols-[12rem_1fr] gap-6 md:gap-10 pb-12 md:pb-16 last:pb-0">
+              <div class="relative">
+                <div class="absolute left-8 md:left-24 top-2 w-3 h-3 -translate-x-1/2 rounded-full bg-saffron-400 ring-4 ring-cream"></div>
+                <div class="font-serif fraunces-display text-3xl md:text-4xl text-saffron-500 font-light tabular-nums">
+                  {item.year}
+                </div>
+              </div>
+              <div>
+                <h3 class="font-serif fraunces-display text-display-sm text-navy text-balance">
+                  {item.title.split(/(\s)/).map((part, idx, arr) => {
+                    // italic-ize the last word or phrase after first word
+                    return idx >= 2 ? <em class="italic font-light text-saffron-500">{part}</em> : <>{part}</>;
+                  })}
+                </h3>
+                <p class="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-ink-secondary text-pretty">
+                  {item.body}
+                </p>
+              </div>
+            </li>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* Founders — detailed bios */}
+  <section class="section-pad bg-cream-100 text-ink-primary" id="founders" aria-labelledby="founders-heading">
+    <div class="container-page">
+      <div class="max-w-3xl mb-16 md:mb-20">
+        <Reveal>
+          <Eyebrow withLine={true}>The Founders</Eyebrow>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 id="founders-heading" class="mt-6 font-serif fraunces-display text-display-lg text-navy text-balance">
+            Two people. <em class="italic font-light text-saffron-500">One conviction.</em> A lot of work ahead.
+          </h2>
+        </Reveal>
+      </div>
+
+      <div class="space-y-16 md:space-y-24">
+        {founderBios.map((founder, i) => (
+          <Reveal>
+            <article class="grid md:grid-cols-[18rem_1fr] gap-8 md:gap-14 items-start">
+              <aside class="md:sticky md:top-28 rounded-3xl bg-cream-50 border border-navy/8 p-6 md:p-8 text-center md:text-left">
+                <div class="relative mx-auto md:mx-0 w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden ring-2 ring-saffron-400/30 ring-offset-4 ring-offset-cream-50">
+                  <img
+                    src={founder.image}
+                    alt={`${founder.name}, ${founder.role} of Shambhavi Innovation Lab`}
+                    width="144"
+                    height="144"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 class="mt-5 font-serif text-2xl text-navy">{founder.name}</h3>
+                <p class="mt-1 text-sm text-ink-muted">{founder.role}</p>
+                <div class="my-4 h-px w-10 bg-saffron-400/40 mx-auto md:mx-0"></div>
+                <p class="text-xs leading-relaxed text-ink-muted whitespace-pre-line">{founder.subtitle}</p>
+              </aside>
+
+              <div class="space-y-5 text-base md:text-lg leading-relaxed text-ink-secondary text-pretty">
+                {founder.paragraphs.map((p, idx) => (
+                  <p
+                    class:list={[idx === 0 && 'text-lg md:text-xl text-navy font-medium']}
+                    set:html={renderItalics(p)}
+                  ></p>
+                ))}
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Values */}
+  <section class="section-pad bg-cream text-ink-primary" id="values" aria-labelledby="values-heading">
+    <div class="container-page">
+      <div class="max-w-3xl mb-16">
+        <Reveal>
+          <Eyebrow withLine={true}>What Drives Us</Eyebrow>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 id="values-heading" class="mt-6 font-serif fraunces-display text-display-lg text-navy text-balance">
+            The values that <em class="italic font-light text-saffron-500">hold our products together.</em>
+          </h2>
+        </Reveal>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {values.map((value, i) => (
+          <Reveal delay={(i % 3) * 100}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-8 flex flex-col group hover:border-saffron-400/40 hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out-expo">
+              <div class="font-mono text-xs text-saffron-500 font-semibold tracking-wider mb-6">
+                {value.num}
+              </div>
+              <h3 class="font-serif text-2xl text-navy text-balance leading-snug">
+                {value.title.replace(value.titleEm, '')}<em class="italic font-light text-saffron-500">{value.titleEm}</em>
+              </h3>
+              <p class="mt-4 text-sm leading-relaxed text-ink-secondary text-pretty">
+                {value.body}
+              </p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>

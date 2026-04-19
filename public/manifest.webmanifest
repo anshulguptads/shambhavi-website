@@ -1,0 +1,17 @@
+{
+  "name": "Shambhavi Innovation Lab",
+  "short_name": "Shambhavi",
+  "description": "AI-native software for how India learns, works, and builds.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf7ef",
+  "theme_color": "#1a1840",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

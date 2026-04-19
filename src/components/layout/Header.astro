@@ -1,0 +1,234 @@
+---
+import { nav, site } from '@lib/site';
+
+interface Props {
+  variant?: 'light' | 'dark';
+  transparent?: boolean;
+}
+
+const { variant = 'light', transparent = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const linkClass =
+  variant === 'dark'
+    ? 'text-onDark-secondary hover:text-onDark-primary'
+    : 'text-ink-secondary hover:text-navy';
+
+const headerBgBase = transparent
+  ? 'bg-transparent'
+  : variant === 'dark'
+    ? 'bg-navy-deepest/80 backdrop-blur-md'
+    : 'bg-cream/80 backdrop-blur-md';
+
+const borderClass = variant === 'dark' ? 'border-cream/10' : 'border-navy/10';
+---
+
+<header
+  id="site-header"
+  class:list={[
+    'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out-expo border-b',
+    headerBgBase,
+    'border-transparent',
+  ]}
+  data-variant={variant}
+>
+  <div class="container-page">
+    <nav class="flex items-center justify-between py-4 md:py-5" aria-label="Primary navigation">
+      {/* Logo */}
+      <a
+        href="/"
+        class="flex items-center gap-2 font-serif text-xl md:text-[1.35rem] font-medium tracking-tight group"
+        aria-label={`${site.shortName} — homepage`}
+      >
+        <span class="relative">
+          <span class={variant === 'dark' ? 'text-onDark-primary' : 'text-navy'}>Shambhavi</span>
+          <span class="absolute -bottom-0.5 left-0 right-0 h-px bg-saffron-400 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out-expo"></span>
+        </span>
+        <span class={variant === 'dark' ? 'text-saffron-300' : 'text-saffron-500'}>·</span>
+        <span class={`text-xs uppercase tracking-eyebrow font-sans font-medium ${variant === 'dark' ? 'text-onDark-muted' : 'text-ink-muted'}`}>Labs</span>
+      </a>
+
+      {/* Desktop nav */}
+      <ul class="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium">
+        {nav.primary.map((link) => {
+          const isActive =
+            link.href === currentPath ||
+            (link.href !== '/' && currentPath.startsWith(link.href.replace('#', '/').split('/')[1] ? link.href.split('#')[0] : link.href));
+          return (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  linkClass,
+                  'transition-colors duration-200 relative py-1',
+                  isActive && 'text-saffron-400',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Desktop CTA */}
+      <div class="hidden md:block">
+        <a
+          href={nav.cta.href}
+          class:list={[
+            'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ease-out-expo',
+            variant === 'dark'
+              ? 'bg-saffron-400 text-navy hover:bg-saffron-300 hover:shadow-glow'
+              : 'bg-navy text-cream hover:bg-navy-elevated',
+          ]}
+        >
+          {nav.cta.label}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+
+      {/* Mobile menu toggle */}
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        class:list={[
+          'md:hidden relative flex flex-col items-center justify-center w-10 h-10 rounded-md transition-colors',
+          variant === 'dark' ? 'text-onDark-primary hover:bg-cream/10' : 'text-navy hover:bg-navy/5',
+        ]}
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <span class="menu-bar block w-5 h-[1.5px] bg-current transition-all duration-300 ease-out-expo" style="transform: translateY(-4px)"></span>
+        <span class="menu-bar block w-5 h-[1.5px] bg-current transition-all duration-300 ease-out-expo" style="transform: translateY(0)"></span>
+        <span class="menu-bar block w-5 h-[1.5px] bg-current transition-all duration-300 ease-out-expo" style="transform: translateY(4px)"></span>
+      </button>
+    </nav>
+  </div>
+
+  {/* Mobile menu panel */}
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed inset-x-0 top-[64px] bottom-0 z-40 pointer-events-none opacity-0 translate-y-2 transition-all duration-300 ease-out-expo"
+    aria-hidden="true"
+  >
+    <div
+      class:list={[
+        'h-full overflow-y-auto border-t',
+        variant === 'dark' ? 'bg-navy-deepest/98 backdrop-blur-xl border-cream/10' : 'bg-cream/98 backdrop-blur-xl border-navy/10',
+      ]}
+    >
+      <div class="container-page py-8 flex flex-col gap-8">
+        <div class="flex flex-col gap-1">
+          <p class="eyebrow text-ink-muted mb-4">Navigate</p>
+          {nav.primary.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'flex items-center justify-between py-4 border-b text-xl font-serif transition-colors',
+                variant === 'dark'
+                  ? 'border-cream/10 text-onDark-primary hover:text-saffron-300'
+                  : 'border-navy/10 text-navy hover:text-saffron-500',
+              ]}
+            >
+              {link.label}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          ))}
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <p class="eyebrow text-ink-muted mb-4">Platforms</p>
+          {nav.products.map((product) => (
+            <a
+              href={product.href}
+              class:list={[
+                'flex flex-col gap-0.5 py-3 border-b transition-colors',
+                variant === 'dark'
+                  ? 'border-cream/5 text-onDark-secondary hover:text-saffron-300'
+                  : 'border-navy/5 text-ink-secondary hover:text-saffron-500',
+              ]}
+            >
+              <span class="text-base font-medium">{product.label}</span>
+              <span class={`text-xs ${variant === 'dark' ? 'text-onDark-muted' : 'text-ink-muted'}`}>{product.description}</span>
+            </a>
+          ))}
+        </div>
+
+        <a
+          href={nav.cta.href}
+          class="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-saffron-400 text-navy px-6 py-4 text-base font-medium shadow-glow"
+        >
+          {nav.cta.label}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8h12m0 0L9 3m5 5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Scroll-based header styling
+  const header = document.getElementById('site-header');
+  if (header) {
+    const variant = header.dataset.variant;
+    const updateHeader = () => {
+      const scrolled = window.scrollY > 8;
+      if (scrolled) {
+        header.classList.add(variant === 'dark' ? 'border-cream/10' : 'border-navy/10');
+        header.classList.remove('border-transparent');
+      } else {
+        header.classList.add('border-transparent');
+        header.classList.remove(variant === 'dark' ? 'border-cream/10' : 'border-navy/10');
+      }
+    };
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+  }
+
+  // Mobile menu toggle
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const bars = toggle?.querySelectorAll('.menu-bar') as NodeListOf<HTMLElement> | undefined;
+
+  if (toggle && menu && bars) {
+    let isOpen = false;
+    const setOpen = (open: boolean) => {
+      isOpen = open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      menu.setAttribute('aria-hidden', String(!open));
+      if (open) {
+        menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
+        menu.classList.add('opacity-100', 'translate-y-0');
+        document.body.style.overflow = 'hidden';
+        bars[0].style.transform = 'translateY(0) rotate(45deg)';
+        bars[1].style.opacity = '0';
+        bars[2].style.transform = 'translateY(0) rotate(-45deg)';
+      } else {
+        menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
+        menu.classList.remove('opacity-100', 'translate-y-0');
+        document.body.style.overflow = '';
+        bars[0].style.transform = 'translateY(-4px) rotate(0)';
+        bars[1].style.opacity = '1';
+        bars[2].style.transform = 'translateY(4px) rotate(0)';
+      }
+    };
+
+    toggle.addEventListener('click', () => setOpen(!isOpen));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) setOpen(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && isOpen) setOpen(false);
+    });
+  }
+</script>

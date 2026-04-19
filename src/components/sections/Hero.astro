@@ -1,0 +1,217 @@
+---
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+---
+
+<section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay min-h-[min(100svh,900px)] flex items-center pt-28 md:pt-32 pb-24 md:pb-32" id="hero" aria-labelledby="hero-title">
+  {/* Ambient gradient orbs */}
+  <GradientOrb class="-top-40 -right-20 md:-right-40 -z-0" color="saffron" size="lg" />
+  <GradientOrb class="bottom-0 -left-40 -z-0" color="maroon" size="md" />
+
+  {/* Grid pattern */}
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 opacity-[0.04] pointer-events-none"
+    style="background-image: linear-gradient(rgba(250,247,239,1) 1px, transparent 1px), linear-gradient(90deg, rgba(250,247,239,1) 1px, transparent 1px); background-size: 72px 72px;"
+  >
+  </div>
+
+  <div class="container-page relative z-10">
+    <div class="grid lg:grid-cols-[1.35fr_1fr] gap-12 lg:gap-16 xl:gap-24 items-center">
+
+      {/* Copy */}
+      <div class="order-2 lg:order-1">
+        <div class="animate-fade-up" style="animation-delay: 80ms">
+          <Eyebrow variant="dark" withLine={true}>
+            Shambhavi Drishti · <span class="font-devanagari text-saffron-200 normal-case tracking-normal">दृष्टि</span>
+          </Eyebrow>
+        </div>
+
+        <h1
+          id="hero-title"
+          class="mt-6 md:mt-8 font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[0.95]"
+        >
+          <span class="block animate-fade-up" style="animation-delay: 160ms">AI-native software</span>
+          <span class="block animate-fade-up" style="animation-delay: 260ms">for how India <em class="font-light italic text-saffron-200">learns,</em></span>
+          <span class="block animate-fade-up" style="animation-delay: 360ms"><em class="font-light italic text-saffron-200">works,</em> and <em class="font-light italic text-saffron-200">builds.</em></span>
+        </h1>
+
+        <p class="mt-7 md:mt-9 max-w-xl text-lead text-onDark-secondary text-pretty animate-fade-up" style="animation-delay: 480ms">
+          Shambhavi Innovation Lab builds AI-native platforms for schools, universities, enterprises, and engineering teams — designed in India, built for the world.
+        </p>
+
+        <div class="mt-9 md:mt-11 flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up" style="animation-delay: 580ms">
+          <Button href="#platforms" variant="primary" size="lg">Explore our platforms</Button>
+          <Button href="#contact" variant="ghost-dark" size="lg" icon="none">Request a demo</Button>
+        </div>
+
+        <div class="mt-14 md:mt-16 flex items-center gap-8 animate-fade-in" style="animation-delay: 820ms">
+          <div class="text-xs font-medium uppercase tracking-eyebrow text-onDark-muted">Trusted by builders at</div>
+          <div class="h-px flex-1 bg-cream/10"></div>
+          <div class="flex items-center gap-6 text-onDark-muted text-sm font-serif italic">
+            <span>Schools</span>
+            <span class="text-saffron-300/40">·</span>
+            <span>Universities</span>
+            <span class="text-saffron-300/40">·</span>
+            <span>Enterprises</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Eye visual */}
+      <div class="order-1 lg:order-2 relative flex justify-center lg:justify-end animate-fade-in" style="animation-delay: 340ms">
+        <div class="relative w-full max-w-[360px] md:max-w-[420px] aspect-[4/3]">
+          {/* Glow behind eye */}
+          <div class="absolute inset-0 rounded-full bg-saffron-400/20 blur-3xl scale-75 animate-gentle-pulse"></div>
+
+          <svg
+            class="hero-eye relative w-full h-full"
+            viewBox="0 0 160 120"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <radialGradient id="iris-gradient" cx="0.5" cy="0.45" r="0.5">
+                <stop offset="0%" stop-color="#f5b556" />
+                <stop offset="60%" stop-color="#d99133" />
+                <stop offset="100%" stop-color="#b87627" />
+              </radialGradient>
+            </defs>
+
+            {/* Eye outline — animated */}
+            <path
+              class="eye-outline"
+              d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z"
+              stroke="#faf7ef"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+              fill="none"
+              pathLength="1"
+            />
+
+            {/* Cardinal guide lines — very faint */}
+            <g stroke="#faf7ef" stroke-opacity="0.22" stroke-width="0.5">
+              <line x1="18" y1="60" x2="142" y2="60" />
+              <line x1="80" y1="22" x2="80" y2="98" />
+            </g>
+
+            {/* Iris with gradient */}
+            <circle class="eye-iris" cx="80" cy="60" r="16" fill="url(#iris-gradient)" />
+
+            {/* Iris inner ring */}
+            <circle cx="80" cy="60" r="16" fill="none" stroke="#b87627" stroke-width="0.6" opacity="0.5" />
+
+            {/* Pupil (tracks cursor) */}
+            <circle class="eye-pupil" id="hero-pupil" cx="80" cy="60" r="5.5" fill="#1a1840" />
+
+            {/* Highlight */}
+            <circle cx="76" cy="56" r="1.8" fill="#faf7ef" opacity="0.9" />
+
+            {/* Cardinal points */}
+            <g fill="#faf7ef">
+              <circle cx="18" cy="60" r="2.4" opacity="0.8" />
+              <circle cx="142" cy="60" r="2.4" opacity="0.8" />
+              <circle cx="80" cy="22" r="2.4" opacity="0.6" />
+              <circle cx="80" cy="98" r="2.4" opacity="0.6" />
+            </g>
+          </svg>
+
+          {/* Devanagari label */}
+          <div
+            aria-hidden="true"
+            class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-devanagari text-7xl md:text-8xl text-saffron-200/20 select-none pointer-events-none"
+            lang="sa"
+          >
+            दृष्टि
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Scroll indicator */}
+    <div
+      aria-hidden="true"
+      class="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-3 text-onDark-faint animate-fade-in"
+      style="animation-delay: 1200ms"
+    >
+      <span class="eyebrow text-[10px]">Scroll</span>
+      <span class="block h-10 w-px bg-onDark-faint/50 origin-top">
+        <span class="block h-1/3 w-full bg-saffron-300 animate-gentle-pulse"></span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-eye .eye-outline {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw-outline 1400ms cubic-bezier(0.22, 1, 0.36, 1) 400ms forwards;
+  }
+
+  .hero-eye .eye-iris {
+    transform-origin: 80px 60px;
+    transform: scale(0);
+    animation: grow 600ms cubic-bezier(0.22, 1, 0.36, 1) 1000ms forwards;
+  }
+
+  @keyframes draw-outline {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes grow {
+    to { transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eye .eye-outline, .hero-eye .eye-iris {
+      animation: none !important;
+      stroke-dashoffset: 0 !important;
+      transform: scale(1) !important;
+    }
+  }
+</style>
+
+<script>
+  const eye = document.querySelector('.hero-eye') as SVGElement | null;
+  const pupil = document.getElementById('hero-pupil') as unknown as SVGCircleElement | null;
+
+  if (eye && pupil && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const centerCx = 80;
+    const centerCy = 60;
+    const maxOffset = 5;
+    let targetX = centerCx;
+    let targetY = centerCy;
+    let curX = centerCx;
+    let curY = centerCy;
+    let rafId: number | null = null;
+
+    const move = (clientX: number, clientY: number) => {
+      const rect = eye.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = clientX - cx;
+      const dy = clientY - cy;
+      const mag = Math.hypot(dx, dy) || 1;
+      const norm = Math.min(mag / 600, 1);
+      targetX = centerCx + (dx / mag) * maxOffset * norm;
+      targetY = centerCy + (dy / mag) * maxOffset * norm;
+    };
+
+    const follow = () => {
+      curX += (targetX - curX) * 0.1;
+      curY += (targetY - curY) * 0.1;
+      pupil.setAttribute('cx', curX.toFixed(2));
+      pupil.setAttribute('cy', curY.toFixed(2));
+      rafId = requestAnimationFrame(follow);
+    };
+
+    window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY), { passive: true });
+    follow();
+
+    window.addEventListener('beforeunload', () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    });
+  }
+</script>

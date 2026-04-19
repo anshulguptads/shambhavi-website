@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '@layouts/PageLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import Pill from '@components/ui/Pill.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p.slug !== featured?.slug);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<PageLayout
+  title="Journal"
+  description="Essays and notes from Shambhavi Innovation Lab — on AI, India, education, enterprise software, and the thesis behind our four platforms."
+  canonical="/journal"
+  headerVariant="dark"
+  transparentHeader={true}
+>
+  {/* Hero */}
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-40 pb-20 md:pb-28">
+    <GradientOrb class="-top-40 left-1/2 -translate-x-1/2" color="mixed" size="lg" />
+
+    <div class="container-page relative max-w-4xl text-center">
+      <Reveal>
+        <Eyebrow variant="dark" withLine={true} class="justify-center">The Journal</Eyebrow>
+      </Reveal>
+      <Reveal delay={100}>
+        <h1 class="mt-6 font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]">
+          Essays from <em class="italic font-light text-saffron-300">the lab.</em>
+        </h1>
+      </Reveal>
+      <Reveal delay={200}>
+        <p class="mt-8 max-w-2xl mx-auto text-lead text-onDark-secondary text-pretty">
+          Long-form writing on AI, India, and the gap between what world-class software can do and who gets to use it.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* Featured */}
+  {featured && (
+    <section class="section-pad bg-cream text-ink-primary">
+      <div class="container-page">
+        <Reveal>
+          <a
+            href={`/journal/${featured.slug}`}
+            class="group block rounded-3xl bg-cream-50 border border-navy/8 p-8 md:p-14 hover:shadow-lift hover:border-saffron-400/40 transition-all duration-500 ease-out-expo"
+          >
+            <div class="flex items-center gap-3 mb-6">
+              <Pill variant="saffron">Featured</Pill>
+              {featured.data.category && <Pill variant="outline">{featured.data.category}</Pill>}
+            </div>
+
+            <h2 class="font-serif fraunces-display text-display-lg text-navy text-balance leading-[1.05] max-w-4xl">
+              {featured.data.title}
+            </h2>
+
+            <p class="mt-6 max-w-3xl text-lead text-ink-secondary text-pretty">
+              {featured.data.description}
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-5 text-xs uppercase tracking-eyebrow text-ink-muted">
+              <span class="text-navy font-medium">{featured.data.author}</span>
+              <span class="text-ink-faint">·</span>
+              <time datetime={featured.data.publishDate.toISOString()}>{formatDate(featured.data.publishDate)}</time>
+              {featured.data.readingTime && (
+                <>
+                  <span class="text-ink-faint">·</span>
+                  <span>{featured.data.readingTime}</span>
+                </>
+              )}
+              <span class="ml-auto inline-flex items-center gap-2 text-saffron-500 group-hover:text-saffron-600 font-medium text-xs normal-case tracking-normal">
+                Read essay
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                  <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  )}
+
+  {/* Archive */}
+  <section class="pb-section bg-cream text-ink-primary">
+    <div class="container-page">
+      <Reveal>
+        <div class="flex items-end justify-between gap-4 mb-10 pb-6 border-b border-navy/10">
+          <Eyebrow withLine={true}>Archive</Eyebrow>
+          <a href="/rss.xml" class="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-eyebrow text-saffron-500 hover:text-saffron-600">
+            RSS
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 2v2h0a4 4 0 014 4m-4 0h0a8 8 0 018-8M3 7.5a0.5 0.5 0 11-1 0 0.5 0.5 0 011 0z" stroke="currentColor" stroke-width="1" fill="none" />
+            </svg>
+          </a>
+        </div>
+      </Reveal>
+
+      {rest.length === 0 ? (
+        <Reveal>
+          <p class="text-ink-muted italic py-16 text-center">
+            More essays coming. Subscribe to the <a href="/rss.xml" class="text-saffron-500 hover:text-saffron-600 underline underline-offset-2">RSS feed</a> to get new pieces when they drop.
+          </p>
+        </Reveal>
+      ) : (
+        <ul class="divide-y divide-navy/10">
+          {rest.map((post, i) => (
+            <Reveal delay={i * 80}>
+              <li>
+                <a
+                  href={`/journal/${post.slug}`}
+                  class="group grid md:grid-cols-[8rem_1fr_auto] gap-6 py-8 md:py-10 items-start hover:px-4 transition-all duration-300 rounded-xl"
+                >
+                  <time
+                    datetime={post.data.publishDate.toISOString()}
+                    class="font-mono text-xs uppercase tracking-wider text-ink-muted pt-2"
+                  >
+                    {formatDate(post.data.publishDate)}
+                  </time>
+                  <div class="max-w-2xl">
+                    {post.data.category && (
+                      <p class="eyebrow text-saffron-500 mb-2">{post.data.category}</p>
+                    )}
+                    <h3 class="font-serif text-2xl md:text-3xl text-navy text-balance leading-tight group-hover:text-saffron-500 transition-colors">
+                      {post.data.title}
+                    </h3>
+                    <p class="mt-3 text-base text-ink-secondary text-pretty line-clamp-2">
+                      {post.data.description}
+                    </p>
+                  </div>
+                  <div class="md:self-center">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="text-ink-muted group-hover:text-saffron-500 transition-all group-hover:translate-x-1">
+                      <path d="M1 8h14m0 0L9 2m6 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                </a>
+              </li>
+            </Reveal>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</PageLayout>

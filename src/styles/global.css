@@ -1,0 +1,139 @@
+/* ---- Font loading: variable fonts via Google Fonts CDN with display=swap ---- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --grain-opacity: 0.035;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-cream text-ink-primary font-sans;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-saffron-200 text-navy;
+  }
+
+  /* Focus styles — WCAG AA compliant, visible but tasteful */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-saffron-400 rounded-sm;
+    outline-style: solid;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Typographic baseline */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-navy;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  p { text-wrap: pretty; }
+  h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+
+  /* Skip link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-navy focus:text-cream focus:rounded-md;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-gutter;
+  }
+
+  .eyebrow {
+    @apply text-micro uppercase tracking-eyebrow font-sans font-medium;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 ease-out-expo;
+    transition-property: transform, background-color, color, box-shadow, border-color;
+  }
+
+  .btn-primary {
+    @apply btn bg-saffron-400 text-navy hover:bg-saffron-300 hover:shadow-glow active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply btn border border-navy/20 text-navy hover:border-navy/50 hover:bg-navy/5 active:scale-[0.98];
+  }
+
+  .btn-ghost-dark {
+    @apply btn border border-cream/20 text-cream hover:border-cream/50 hover:bg-cream/5 active:scale-[0.98];
+  }
+
+  .btn-link {
+    @apply inline-flex items-center gap-1.5 text-sm font-medium text-saffron-500 hover:text-saffron-600 transition-colors;
+  }
+
+  .section-pad {
+    @apply py-section;
+  }
+
+  /* Grain overlay helper */
+  .grain-overlay {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--grain-url);
+    opacity: var(--grain-opacity);
+    mix-blend-mode: overlay;
+  }
+  .grain-overlay > * { position: relative; z-index: 1; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .font-feature-stylistic {
+    font-feature-settings: 'ss01', 'ss02', 'cv11';
+  }
+
+  /* Variable font axes for Fraunces (editorial feel) */
+  .fraunces-display {
+    font-variation-settings: 'SOFT' 50, 'WONK' 0, 'opsz' 144;
+  }
+
+  .fraunces-text {
+    font-variation-settings: 'SOFT' 30, 'WONK' 0, 'opsz' 24;
+  }
+}

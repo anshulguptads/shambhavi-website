@@ -1,0 +1,46 @@
+---
+import Reveal from '@components/motion/Reveal.astro';
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+---
+
+<section class="relative overflow-hidden bg-navy-deepest text-onDark-primary section-pad grain-overlay" id="contact" aria-labelledby="cta-heading">
+  <GradientOrb class="top-0 left-1/2 -translate-x-1/2 -translate-y-1/3" color="mixed" size="lg" />
+
+  <div class="container-page relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <Reveal>
+        <p class="eyebrow text-saffron-300 mb-5 inline-flex items-center gap-3">
+          <span aria-hidden="true" class="w-8 h-px bg-saffron-300/50"></span>
+          Next
+          <span aria-hidden="true" class="w-8 h-px bg-saffron-300/50"></span>
+        </p>
+      </Reveal>
+
+      <Reveal delay={100}>
+        <h2 id="cta-heading" class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[0.95]">
+          Let's build <em class="italic font-light text-saffron-300">something extraordinary</em> — together.
+        </h2>
+      </Reveal>
+
+      <Reveal delay={200}>
+        <p class="mt-8 max-w-2xl mx-auto text-lead text-onDark-secondary text-pretty">
+          Whether you lead a school, a university, a people function, or an engineering team — we would like to show you what we have built. Book a demo and we will walk you through the platform that matters to you.
+        </p>
+      </Reveal>
+
+      <Reveal delay={300}>
+        <div class="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <Button href="mailto:info@shambhavilabs.com?subject=Demo%20Request" variant="primary" size="lg">Request a demo</Button>
+          <Button href="mailto:info@shambhavilabs.com?subject=Partnership" variant="ghost-dark" size="lg" icon="none">Partnerships & press</Button>
+        </div>
+      </Reveal>
+
+      <Reveal delay={400}>
+        <p class="mt-14 text-xs font-mono uppercase tracking-eyebrow text-onDark-faint">
+          info@shambhavilabs.com
+        </p>
+      </Reveal>
+    </div>
+  </div>
+</section>

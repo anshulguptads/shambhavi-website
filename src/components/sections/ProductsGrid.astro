@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import Pill from '@components/ui/Pill.astro';
+import ProductVisual from './ProductVisual.astro';
+
+const products = (await getCollection('products')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="section-pad bg-cream-100 text-ink-primary relative" id="platforms" aria-labelledby="products-heading">
+  <div class="container-page">
+    <div class="max-w-3xl">
+      <Reveal>
+        <Eyebrow withLine={true}>The Portfolio</Eyebrow>
+      </Reveal>
+      <Reveal delay={100}>
+        <h2 id="products-heading" class="mt-6 font-serif fraunces-display text-display-lg text-navy text-balance">
+          Four platforms. <em class="italic font-light text-saffron-500">One conviction:</em> the best software should reach everyone.
+        </h2>
+      </Reveal>
+    </div>
+
+    <div class="mt-16 md:mt-24 space-y-16 md:space-y-24">
+      {products.map((product, i) => {
+        const { data } = product;
+        const slug = data.slug as 'aspirems' | 'neurolink' | 'sanadeep' | 'insighttest';
+        const reverse = i % 2 === 1;
+
+        return (
+          <Reveal>
+            <article
+              class:list={[
+                'group grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-stretch',
+                'rounded-3xl overflow-hidden border border-navy/8 bg-cream-50 hover:shadow-lift transition-shadow duration-500',
+              ]}
+            >
+              {/* Content */}
+              <div class:list={['flex flex-col p-8 md:p-12 lg:p-14', reverse && 'lg:order-2']}>
+                <div class="flex items-center gap-3 mb-5">
+                  <Pill variant="saffron">{data.eyebrow}</Pill>
+                  {data.status === 'active' && <Pill variant="outline">Live</Pill>}
+                  {data.status === 'beta' && <Pill variant="outline">In Pilot</Pill>}
+                  {data.status === 'coming-soon' && <Pill variant="outline">Coming Soon</Pill>}
+                </div>
+
+                <h3 class="font-serif fraunces-display text-display-md text-navy text-balance">
+                  {data.name.split(' ').map((word, idx) => {
+                    const italicSecond = data.name.includes(' ') && idx === data.name.split(' ').length - 1;
+                    return italicSecond ? (
+                      <>
+                        {' '}
+                        <em class="italic font-light text-saffron-500">{word}</em>
+                      </>
+                    ) : (
+                      <>{idx > 0 ? ' ' : ''}{word}</>
+                    );
+                  })}
+                </h3>
+
+                <p class="mt-5 text-lead text-ink-secondary text-pretty">
+                  {data.tagline}
+                </p>
+
+                <ul class="mt-8 space-y-3.5">
+                  {data.keyCapabilities.slice(0, 4).map((cap) => (
+                    <li class="flex gap-3 text-sm leading-relaxed text-ink-secondary">
+                      <span aria-hidden="true" class="shrink-0 mt-1 w-4 h-4 rounded-full bg-saffron-400/15 flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                          <path d="M1 4l2 2 4-4" stroke="#d99133" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>
+                        <strong class="font-medium text-navy">{cap.title}</strong> — {cap.description}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="mt-auto pt-10 flex flex-wrap gap-4 items-center">
+                  <a
+                    href={`/platforms/${data.slug}`}
+                    class="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-saffron-500 transition-colors group/link"
+                  >
+                    Explore {data.name}
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="transition-transform group-hover/link:translate-x-1">
+                      <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* Visual */}
+              <div class:list={['relative min-h-[280px] md:min-h-[380px] lg:min-h-full', reverse && 'lg:order-1']}>
+                <ProductVisual slug={slug} />
+              </div>
+            </article>
+          </Reveal>
+        );
+      })}
+    </div>
+  </div>
+</section>
