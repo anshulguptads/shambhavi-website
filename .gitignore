@@ -29,6 +29,9 @@ Thumbs.db
 # Local legacy reference (old HTML files kept for porting)
 _legacy/
 
+# Blog import staging (contents extracted from zip, kept for reference)
+.blog-import/
+
 # Playwright MCP working directory (screenshots, traces, etc.)
 .playwright-mcp/
 
