@@ -20,10 +20,13 @@ const isDark = variant === 'dark';
     {/* Top: brand + wordmark */}
     <div class="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-16 mb-16">
       <div class="space-y-5">
-        <a href="/" class="inline-flex items-baseline gap-2 group">
-          <span class="font-serif text-2xl tracking-tight">Shambhavi</span>
-          <span class="text-saffron-300">·</span>
-          <span class="text-xs uppercase tracking-eyebrow font-medium text-onDark-muted">Labs</span>
+        <a href="/" class="inline-flex items-center gap-3 group">
+          <svg class="h-7 w-auto shrink-0 text-cream" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="currentColor" stroke-width="6" fill="none" stroke-linejoin="round" />
+            <circle cx="80" cy="60" r="16" fill="#d99133" />
+            <circle cx="80" cy="60" r="5.5" fill="currentColor" />
+          </svg>
+          <span class="font-serif text-xl md:text-2xl tracking-tight text-cream">Shambhavi Innovation Lab</span>
         </a>
         <p class="text-sm leading-relaxed text-onDark-secondary max-w-sm">
           AI-native platforms for how India learns, works, and builds — shipping to the world. Founded in {site.founded}. Headquartered in India.
@@ -100,9 +103,7 @@ const isDark = variant === 'dark';
       </p>
       <div class="relative mt-6 md:mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-onDark-muted">
         <p>© {year} {site.name}. Crafted in {site.foundingLocation} · Shipping to the world.</p>
-        <p>
-          <span class="text-onDark-faint">v2</span> · Built with intent.
-        </p>
+        <p>Built with intent · Shipping to the world.</p>
       </div>
     </div>
   </div>

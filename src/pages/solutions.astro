@@ -1,0 +1,160 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import Pill from '@components/ui/Pill.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+
+const solutions = [
+  {
+    audience: 'Schools',
+    eyebrow: 'K-12 EDUCATION',
+    title: 'For schools and student wellness teams.',
+    product: 'AspiremsAI',
+    productHref: '/platforms/aspirems',
+    description:
+      'A 24/7 AI mentor in Hindi, English, and 10+ regional languages. Four connected portals — student, teacher, parent, administrator. Crisis detection that reaches a counsellor in under two seconds.',
+    highlights: [
+      'Built for grades 8–12 across public and private schools',
+      'Voice-first, works on ₹5,000 phones — no app required',
+      'Two-layer crisis detection with KIRAN helpline integration',
+      'Psychometric + adaptive quizzes calibrated in real time',
+    ],
+    cta: 'Start a School Pilot',
+  },
+  {
+    audience: 'Universities',
+    eyebrow: 'HIGHER EDUCATION',
+    title: 'For CS and AI programmes.',
+    product: 'NeuroLink',
+    productHref: '/platforms/neurolink',
+    description:
+      'The AI-native learning platform that turns any lecture into an interactive, personalised experience. Every student gets a live knowledge graph. Every professor gets real-time visibility. Zero GPU infrastructure required.',
+    highlights: [
+      'Concept DNA — live per-student knowledge graph',
+      'Ghost Mode lets students watch AI reason step-by-step',
+      'Paper-to-Playground turns research papers into sandboxes',
+      'Runs entirely on cloud APIs — no CUDA, no GPU ops',
+    ],
+    cta: 'Bring NeuroLink to Your Campus',
+  },
+  {
+    audience: 'HR & People Teams',
+    eyebrow: 'ENTERPRISE · WORK',
+    title: 'For CHROs and multi-country enterprises.',
+    product: 'SanaDeep',
+    productHref: '/platforms/sanadeep',
+    description:
+      'The AI-native HRMS built India-first with multi-country payroll from day one. Nineteen modules, hundreds of AI features, statutory coverage across India, UAE, UK, and US — one platform, one login, eight languages including Arabic RTL.',
+    highlights: [
+      'Full-stack HRMS: HR, payroll, performance, talent, L&D',
+      'AI anomaly detection, org designer, predictive compliance',
+      'Native payroll for PF/ESI, WPS, P60, W-2 (India/UAE/UK/US)',
+      'SAML, SCIM, REST integrations with your existing stack',
+    ],
+    cta: 'Book a SanaDeep Walkthrough',
+  },
+  {
+    audience: 'Engineering Teams',
+    eyebrow: 'ENGINEERING · BUILD',
+    title: 'For engineering heads and QA leads.',
+    product: 'InsightTest AI',
+    productHref: '/platforms/insighttest',
+    description:
+      'Low-code, AI-powered testing that cuts QA effort by 60–70%. Drag-and-drop test builder, AI-generated cases, self-healing automation. One platform for mobile, web, API, and analytics validation — instead of five.',
+    highlights: [
+      'Drag-and-drop test builder — no Selenium boilerplate',
+      'AI generates test cases from user stories and Figma flows',
+      'Self-healing selectors adapt when your UI changes',
+      'Mobile, web, API, analytics in one unified flow',
+    ],
+    cta: 'See InsightTest in Action',
+  },
+];
+---
+
+<PageLayout
+  title="Solutions"
+  description="Shambhavi Innovation Lab builds AI-native platforms for four audiences — schools, universities, HR teams, and engineering organisations. One thesis applied to every stage of human potential."
+  canonical="/solutions"
+  headerMode="over-dark"
+>
+  {/* Hero */}
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-40 pb-20 md:pb-24">
+    <GradientOrb class="-top-40 left-1/2 -translate-x-1/2" color="mixed" size="lg" />
+
+    <div class="container-page relative max-w-4xl text-center">
+      <Reveal>
+        <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-3 text-xs uppercase tracking-eyebrow text-onDark-muted mb-10">
+          <a href="/" class="hover:text-saffron-300 transition-colors">Shambhavi Innovation Lab</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-onDark-primary">Solutions</span>
+        </nav>
+      </Reveal>
+      <Reveal delay={100}>
+        <Eyebrow variant="dark" withLine={true} class="justify-center">Solutions</Eyebrow>
+      </Reveal>
+      <Reveal delay={200}>
+        <h1 class="mt-6 font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]">
+          One thesis. <em class="italic font-light text-saffron-300">Four audiences.</em>
+        </h1>
+      </Reveal>
+      <Reveal delay={300}>
+        <p class="mt-8 max-w-2xl mx-auto text-lead text-onDark-secondary text-pretty">
+          Pick the platform that fits your role. Each one is AI-native, built India-first, and shipped to the world — designed for the moment where the best software should reach everyone, everywhere.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* Solutions grid — alternating rows */}
+  <section class="section-pad bg-cream text-ink-primary">
+    <div class="container-page">
+      <div class="space-y-14 md:space-y-20">
+        {solutions.map((sol, i) => {
+          const reverse = i % 2 === 1;
+          return (
+            <Reveal>
+              <article class="grid lg:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 lg:gap-16 items-start rounded-3xl bg-cream-50 border border-navy/8 p-8 md:p-12 lg:p-14 hover:shadow-lift transition-shadow duration-500">
+                <div class:list={[reverse && 'lg:order-2']}>
+                  <Pill variant="saffron">{sol.eyebrow}</Pill>
+                  <h2 class="mt-5 font-serif fraunces-display text-display-md text-navy text-balance">
+                    {sol.title}
+                  </h2>
+                  <p class="mt-5 text-lead text-ink-secondary text-pretty">
+                    {sol.description}
+                  </p>
+                  <div class="mt-8 flex flex-wrap gap-4 items-center">
+                    <Button href={sol.productHref} variant="primary" size="md">Explore {sol.product}</Button>
+                    <Button href={`mailto:info@shambhavilabs.com?subject=${encodeURIComponent(sol.product + ' — ' + sol.audience)}`} variant="ghost" size="md" icon="none">{sol.cta}</Button>
+                  </div>
+                </div>
+
+                <aside class:list={[reverse && 'lg:order-1']}>
+                  <div class="rounded-2xl bg-navy-deepest text-onDark-primary p-8 md:p-10 relative overflow-hidden">
+                    <div class="text-xs uppercase tracking-eyebrow text-saffron-300 mb-3">Audience</div>
+                    <div class="font-serif text-3xl md:text-4xl text-onDark-primary leading-tight">{sol.audience}</div>
+                    <div class="text-xs uppercase tracking-eyebrow text-onDark-muted mt-6 mb-4">What it is</div>
+                    <div class="font-serif text-xl md:text-2xl text-saffron-200 italic font-light">{sol.product}</div>
+                    <ul class="mt-8 space-y-2.5">
+                      {sol.highlights.map((h) => (
+                        <li class="flex gap-2.5 text-sm leading-relaxed text-onDark-secondary">
+                          <span aria-hidden="true" class="shrink-0 mt-1.5 w-3 h-px bg-saffron-300"></span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </aside>
+              </article>
+            </Reveal>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>

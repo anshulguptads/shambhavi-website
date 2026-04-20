@@ -19,15 +19,17 @@ export const site = {
 export const nav = {
   primary: [
     { label: 'Platforms', href: '/#platforms' },
+    { label: 'Solutions', href: '/solutions' },
     { label: 'About', href: '/about' },
     { label: 'Journal', href: '/journal' },
+    { label: 'Contact', href: '/#contact' },
   ],
   cta: { label: 'Request a Pilot', href: '/#contact' },
   products: [
-    { label: 'AspiremsAI', href: '/platforms/aspirems', description: 'Adaptive learning for schools' },
-    { label: 'NeuroLink', href: '/platforms/neurolink', description: 'Knowledge graph intelligence' },
-    { label: 'SanaDeep', href: '/platforms/sanadeep', description: 'Corporate upskilling' },
-    { label: 'InsightTest', href: '/platforms/insighttest', description: 'Assessment & evaluation' },
+    { label: 'AspiremsAI', href: '/platforms/aspirems', description: 'AI mentor for school students' },
+    { label: 'NeuroLink', href: '/platforms/neurolink', description: 'AI learning for universities' },
+    { label: 'SanaDeep', href: '/platforms/sanadeep', description: 'AI-native HRMS for enterprise' },
+    { label: 'InsightTest', href: '/platforms/insighttest', description: 'AI-powered QA testing' },
   ],
 } as const;
 
