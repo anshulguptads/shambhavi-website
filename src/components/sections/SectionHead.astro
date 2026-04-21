@@ -1,0 +1,36 @@
+---
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+
+interface Props {
+  eyebrow: string;
+  variant?: 'light' | 'dark';
+  align?: 'start' | 'center';
+  class?: string;
+  id?: string;
+}
+const { eyebrow, variant = 'light', align = 'start', class: className = '', id } = Astro.props;
+---
+
+<div
+  class:list={[
+    'mb-12 md:mb-16',
+    align === 'center' ? 'text-center max-w-3xl mx-auto' : 'max-w-3xl',
+    className,
+  ]}
+>
+  <Reveal>
+    <Eyebrow variant={variant} withLine={true} class={align === 'center' ? 'justify-center' : ''}>{eyebrow}</Eyebrow>
+  </Reveal>
+  <Reveal delay={100}>
+    <h2
+      id={id}
+      class:list={[
+        'mt-6 font-serif fraunces-display text-display-lg text-balance',
+        variant === 'dark' ? 'text-onDark-primary' : 'text-navy',
+      ]}
+    >
+      <slot />
+    </h2>
+  </Reveal>
+</div>

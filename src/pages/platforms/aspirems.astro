@@ -1,0 +1,531 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import ProductHero from '@components/sections/ProductHero.astro';
+import SectionHead from '@components/sections/SectionHead.astro';
+import FaqList from '@components/sections/FaqList.astro';
+import PricingTier from '@components/sections/PricingTier.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Pill from '@components/ui/Pill.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+import { productSchema, breadcrumbSchema } from '@lib/seo';
+import { site } from '@lib/site';
+
+const url = `${site.url}/platforms/aspirems`;
+const schemas = [
+  productSchema({
+    name: 'AspiremsAI',
+    description: "A 24/7 AI mentor for every school student in India — voice-first in Hindi and 10+ regional languages, built to work on a ₹5,000 phone.",
+    url,
+    image: `${site.url}/og-aspirems.png`,
+  }),
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Platforms', url: `${site.url}/#platforms` },
+    { name: 'AspiremsAI', url },
+  ]),
+];
+
+const heroStats = [
+  { value: '8–12', label: 'Grades' },
+  { value: '10+', label: 'Languages' },
+  { value: '4', label: 'Connected Portals' },
+  { value: '< 2s', label: 'Crisis Response' },
+];
+
+const problemStats = [
+  { value: '1 : 7,300', label: 'counsellor-to-student ratio in government schools' },
+  { value: '< 5%', label: 'students get career guidance before life-defining choices' },
+  { value: '1 : 30–40', label: 'teacher-to-student ratio — no room for personalisation' },
+  { value: 'Zero', label: 'psychometric assessment in most public/private schools' },
+  { value: '60%+', label: 'rural students enter Class 12 without an academic roadmap' },
+];
+
+const journey = [
+  { num: '01', title: 'Register & share the dream.', body: 'A student creates an account in under two minutes — voice-first if reading is hard. Tells us their grade, their school, and what they hope to become.' },
+  { num: '02', title: 'Take a 25-question psychometric assessment.', body: 'Five dimensions: personality (Big Five / OCEAN), learning style (VARK), motivation type, stress management, social skills. ~7 minutes. 85%+ completion rate.' },
+  { num: '03', title: 'The AI builds a persona.', body: '18-dimensional vector. Not a label, not a box — a set of dials that updates with every interaction.' },
+  { num: '04', title: 'Learn with an AI tutor who knows their name.', body: 'Text and voice, 24/7, in Hindi, English, or 10+ regional languages. "Since you want to be a doctor, imagine DNA as a recipe book…"' },
+  { num: '05', title: 'Take adaptive quizzes calibrated to ability.', body: 'IRT-based difficulty adjustment. Spaced repetition that adapts to each subject and each student.' },
+  { num: '06', title: 'Discover a career roadmap.', body: '500+ Indian universities, from IITs and NITs to state institutions. Pathways, eligibility, scholarships — in the language they think in.' },
+  { num: '07', title: 'Build resilience alongside ability.', body: 'Journal prompts, breathing exercises, CBT-based challenges. Emotional fluency taught the same way as algebra: practiced, observed, refined.' },
+];
+
+const crisisTimeline = [
+  { time: '0.0s', label: 'Student writes distress signal' },
+  { time: '< 2.0s', label: 'KIRAN helpline appears on screen' },
+  { time: '+2.0s', label: 'Safety alert created in audit DB' },
+  { time: '+5.0s', label: 'Counsellor email + SMS for critical' },
+  { time: '+10s', label: 'Admin dashboard updates' },
+  { time: '+1h', label: 'AI Coach offers a coping exercise' },
+  { time: '+24h', label: 'Escalates if counsellor unacked' },
+  { time: '7 days', label: 'Daily check-ins, never pushy' },
+];
+
+const helplines = [
+  { name: 'KIRAN', number: '1800-599-0019', context: 'Mental Health · 24×7 · 13 languages' },
+  { name: 'iCall (TISS)', number: '9152-987821', context: 'Counselling · weekday hours' },
+  { name: 'Vandrevala', number: '1860-2662-345', context: 'Mental Health · 24×7' },
+  { name: 'AASRA', number: '9820-466-726', context: 'Suicide prevention · 24×7' },
+  { name: 'CHILDLINE', number: '1098', context: 'Children in distress · 24×7' },
+  { name: 'Emergency', number: '112', context: 'National emergency' },
+];
+
+const portals = [
+  {
+    name: 'Student Portal',
+    eyebrow: 'For Students',
+    accent: 'saffron',
+    features: [
+      'AI tutor — text and voice, 24×7',
+      'Psychometric assessment & persona view',
+      'Career discovery across 500+ universities',
+      'Private journal — never shown to staff or parents',
+      'Gamified streaks and challenges',
+    ],
+  },
+  {
+    name: 'Teacher Portal',
+    eyebrow: 'For Teachers',
+    accent: 'saffron',
+    features: [
+      'Generate AI quizzes from any chapter',
+      'Auto-graded assignments with rubrics',
+      'At-risk student detection (academic + emotional)',
+      'Teaching gap alerts: where the class is stuck',
+      'Skill analytics by topic, by student',
+    ],
+  },
+  {
+    name: 'Parent Portal',
+    eyebrow: 'For Parents',
+    accent: 'saffron',
+    features: [
+      'Real-time grades and assignment status',
+      'Weekly insights — not noise',
+      'Configurable notification cadence',
+      'Journals stay private to the student',
+      'Parent-teacher meeting prep summaries',
+    ],
+  },
+  {
+    name: 'Admin Portal',
+    eyebrow: 'For Principals',
+    accent: 'saffron',
+    features: [
+      'School Health Dashboard (0–100 score)',
+      'Anonymised safety alerts and trends',
+      'DPDPA compliance + audit trail',
+      'Teacher effectiveness analytics',
+      'Multi-section, multi-stream view',
+    ],
+  },
+];
+
+const languages = [
+  { name: 'Hindi', native: 'हिंदी' },
+  { name: 'English', native: 'English' },
+  { name: 'Bengali', native: 'বাংলা' },
+  { name: 'Tamil', native: 'தமிழ்' },
+  { name: 'Telugu', native: 'తెలుగు' },
+  { name: 'Marathi', native: 'मराठी' },
+  { name: 'Kannada', native: 'ಕನ್ನಡ' },
+  { name: 'Gujarati', native: 'ગુજરાતી' },
+  { name: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
+  { name: 'Malayalam', native: 'മലയാളം' },
+  { name: 'Odia', native: 'ଓଡ଼ିଆ' },
+  { name: 'Urdu', native: 'اردو' },
+];
+
+const plans = [
+  {
+    name: 'Basic',
+    price: '₹49',
+    priceUnit: '/student/month',
+    description: 'For government and low-fee schools getting started with student wellness and AI tutoring.',
+    features: [
+      'Layer 1 (deterministic) crisis detection',
+      '10 AI tutor messages per student / month',
+      '1 psychometric assessment per year',
+      'Hindi + English voice support',
+      'Basic admin dashboard',
+    ],
+    ctaLabel: 'Talk to us',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=AspiremsAI%20Basic',
+  },
+  {
+    name: 'Standard',
+    price: '₹99',
+    priceUnit: '/student/month',
+    description: 'For mid-market private schools that need parent visibility and richer AI interaction.',
+    features: [
+      'Layer 2 (semantic) crisis detection',
+      'Parent portal included',
+      '50 AI tutor messages per student / month',
+      '2 psychometric assessments per year',
+      'Spaced repetition + adaptive quizzing',
+      'Hindi, English, and 4 regional languages',
+    ],
+    ctaLabel: 'Start a pilot',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=AspiremsAI%20Standard',
+  },
+  {
+    name: 'Pro',
+    price: '₹199',
+    priceUnit: '/student/month',
+    description: 'For premium private schools and CBSE-mandate compliance with full counsellor augmentation.',
+    features: [
+      'AI voice tutor in 10+ regional languages',
+      'Unlimited messages, full quiz library',
+      'Career planning across 500+ universities',
+      'Teaching Gap Alerts for educators',
+      'Mood-aware Gentle Mode',
+      'School Health Dashboard with trend lines',
+    ],
+    ctaLabel: 'Book a walkthrough',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=AspiremsAI%20Pro',
+    featured: true,
+    badge: 'Recommended',
+  },
+  {
+    name: 'Enterprise',
+    price: '₹349',
+    priceUnit: '/student/month',
+    description: 'For school chains, foundations, and state-level partnerships with custom integrations.',
+    features: [
+      'White-label, SAML SSO, custom domain',
+      'Unlimited AI usage, custom curricula',
+      'Multi-entity rollups & cross-campus benchmarking',
+      'Dedicated CSM + onboarding squad',
+      'Priority KIRAN integration & escalation tuning',
+      '99.9% uptime SLA',
+    ],
+    ctaLabel: 'Talk to sales',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=AspiremsAI%20Enterprise',
+  },
+];
+
+const faqs = [
+  { q: 'What devices and internet speeds does AspiremsAI need?', a: 'Any browser on any device. We tested the platform on entry-level Android phones around ₹5,000 running on 4G networks. Voice responses arrive in 2–5 seconds. No app download required — students use a web link. For schools with unreliable connectivity, we offer lightweight offline modes for quizzes and journaling.' },
+  { q: 'How does crisis detection protect students without violating their privacy?', a: 'Journal entries are never visible to parents or teachers. Only a safety alert — "distress signal detected" — is sent to the counsellor. The content of what the student wrote is not shared. This boundary is enforced in product architecture, not just policy. Parents see academic data. The emotional space is private.' },
+  { q: 'Is student data used to train AI models?', a: 'No. Student data is tenant-isolated and is never used to train shared models. DPDPA compliance is built into the product with consent management, retention rules, and right-to-erasure workflows. Each school\'s data stays with that school.' },
+  { q: 'How does government school pricing work?', a: 'Government school partnerships are structured case-by-case, typically through state education departments or as part of pilot programs with organisations like NITI Aayog. Please contact us and we\'ll discuss what works for your district or state.' },
+  { q: 'How does the AI handle subjects beyond the Indian curriculum?', a: 'AspiremsAI aligns with CBSE, ICSE, and state board curricula for grades 8 through 12 by default. For international boards (IB, Cambridge), we have curricula available on the Pro and Enterprise tiers. Teachers can also upload custom curricula for classroom use.' },
+  { q: 'Can parents trust the AI to say the right things to their child?', a: 'The AI Coach is explicitly designed never to diagnose, prescribe, or give medical advice. It validates feelings, suggests coping strategies from evidence-based frameworks like CBT, and — for anything concerning — directs students to helplines and human counsellors. All conversations are logged and available to school administrators in an anonymised form for auditing.' },
+];
+---
+
+<PageLayout
+  title="AspiremsAI"
+  description="A 24/7 AI mentor for every school student in India — voice-first in Hindi and 10+ regional languages, built to work on a ₹5,000 phone. Four connected portals, two-layer crisis detection, full DPDPA compliance."
+  canonical="/platforms/aspirems"
+  ogImage="/og-aspirems.png"
+  schemas={schemas}
+  headerMode="over-dark"
+>
+  {/* === HERO === */}
+  <ProductHero
+    eyebrowPills={[{ label: 'LEARN · SCHOOL' }, { label: 'Live', variant: 'outline-dark' }]}
+    nameItalic="AspiremsAI"
+    tagline="A 24/7 AI mentor — for every student in India."
+    description="A hyper-personalised AI learning platform for school students in grades 8 through 12. Voice-first in Hindi and 10+ regional languages. Built to work on a ₹5,000 phone. Live today at aspirems.ai."
+    primaryCta={{ label: 'Start a School Pilot', href: 'mailto:info@shambhavilabs.com?subject=AspiremsAI%20Pilot' }}
+    secondaryCta={{ label: 'See AspiremsAI live', href: 'https://aspirems.ai' }}
+    stats={heroStats}
+    accentColor="saffron"
+    breadcrumbName="AspiremsAI"
+  >
+    <div slot="visual" class="relative w-full max-w-md mx-auto">
+      {/* Student persona card */}
+      <div class="relative rounded-3xl bg-cream/[0.06] backdrop-blur-sm border border-cream/15 p-6 md:p-8 shadow-2xl">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-saffron-300 to-saffron-500 flex items-center justify-center font-serif text-xl text-navy font-medium ring-2 ring-saffron-200/30 ring-offset-2 ring-offset-navy-deepest">
+            A
+          </div>
+          <div>
+            <p class="font-serif text-lg text-onDark-primary leading-tight">Aarti Kumari</p>
+            <p class="text-xs text-onDark-muted">Grade 10 · Patna, Bihar</p>
+          </div>
+          <div class="ml-auto px-2 py-1 rounded-md bg-saffron-400/15 border border-saffron-400/30 text-[10px] font-mono text-saffron-200 uppercase tracking-wider">
+            45-day streak
+          </div>
+        </div>
+
+        <div class="space-y-3.5 text-sm">
+          <div>
+            <p class="eyebrow text-onDark-muted text-[9px] mb-1.5">Dream</p>
+            <p class="text-onDark-primary font-medium">Doctor — NEET 2028</p>
+          </div>
+          <div>
+            <p class="eyebrow text-onDark-muted text-[9px] mb-1.5">Persona — strongest dimensions</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-cream/10 text-onDark-secondary border border-cream/10">Conscientious</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-cream/10 text-onDark-secondary border border-cream/10">Visual learner</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-cream/10 text-onDark-secondary border border-cream/10">Cricket analogies</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-cream/10 text-onDark-secondary border border-cream/10">Exam anxious</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-2">
+            <div class="rounded-lg bg-cream/[0.04] p-2.5 text-center">
+              <div class="font-serif text-saffron-200 text-base">87%</div>
+              <div class="text-[8px] text-onDark-muted uppercase tracking-wider mt-0.5">Biology</div>
+            </div>
+            <div class="rounded-lg bg-cream/[0.04] p-2.5 text-center">
+              <div class="font-serif text-saffron-200 text-base">73%</div>
+              <div class="text-[8px] text-onDark-muted uppercase tracking-wider mt-0.5">Chemistry</div>
+            </div>
+            <div class="rounded-lg bg-cream/[0.04] p-2.5 text-center">
+              <div class="font-serif text-saffron-200 text-base">61%</div>
+              <div class="text-[8px] text-onDark-muted uppercase tracking-wider mt-0.5">Physics</div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-cream/10">
+            <p class="eyebrow text-onDark-muted text-[9px] mb-1.5">Today's check-in</p>
+            <p class="text-onDark-secondary text-xs leading-relaxed italic">"Sleeping better this week. Feeling ready for the chapter test."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ProductHero>
+
+  {/* === PROBLEM === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="problem-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="The Guidance Crisis" id="problem-heading">
+        India doesn't lack talent. <em class="italic font-light text-saffron-500">It lacks a system that cares.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
+        {problemStats.map((stat, i) => (
+          <Reveal delay={i * 80}>
+            <div class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-6 md:p-7 flex flex-col justify-between min-h-[180px]">
+              <div class="font-serif text-3xl md:text-4xl text-saffron-500 font-light tabular-nums leading-none">
+                {stat.value}
+              </div>
+              <p class="mt-4 text-sm leading-relaxed text-ink-secondary">{stat.label}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={500}>
+        <p class="mt-12 max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl text-navy text-balance italic font-light">
+          "The brightest students in India are not falling short because they lack ambition. They are falling short because no one, at scale, has ever tried to listen to them."
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === STUDENT JOURNEY === */}
+  <section class="section-pad bg-cream" aria-labelledby="journey-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="The Student Journey" id="journey-heading">
+        From <em class="italic font-light text-saffron-500">"I don't know what I'm good at"</em> to <em class="italic font-light text-saffron-500">"I know my path."</em>
+      </SectionHead>
+
+      <ol class="relative max-w-4xl mx-auto">
+        <div aria-hidden="true" class="absolute left-7 md:left-12 top-2 bottom-2 w-px bg-saffron-400/25"></div>
+        {journey.map((step, i) => (
+          <Reveal delay={i * 70}>
+            <li class="relative grid grid-cols-[3.5rem_1fr] md:grid-cols-[6rem_1fr] gap-6 md:gap-10 pb-10 md:pb-12 last:pb-0">
+              <div class="relative">
+                <div class="absolute left-7 md:left-12 top-3 w-3 h-3 -translate-x-1/2 rounded-full bg-saffron-400 ring-4 ring-cream"></div>
+                <div class="font-mono text-xs md:text-sm text-saffron-500 font-semibold tabular-nums">{step.num}</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-xl md:text-2xl text-navy text-balance leading-snug">{step.title}</h3>
+                <p class="mt-3 text-base leading-relaxed text-ink-secondary text-pretty max-w-2xl">{step.body}</p>
+              </div>
+            </li>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* === CRISIS DETECTION === */}
+  <section class="section-pad bg-navy-deepest text-onDark-primary grain-overlay relative overflow-hidden" aria-labelledby="crisis-heading">
+    <GradientOrb class="-top-20 right-0" color="maroon" size="md" />
+
+    <div class="container-page relative">
+      <SectionHead eyebrow="When It Matters Most" variant="dark" id="crisis-heading" align="center">
+        The feature <em class="italic font-light text-saffron-300">we hope no student ever needs.</em>
+      </SectionHead>
+
+      <Reveal delay={150}>
+        <p class="max-w-3xl mx-auto text-center text-lead text-onDark-secondary text-pretty mb-16">
+          AspiremsAI monitors every message and journal entry for signs of distress. Two layers, ten seconds, five escalation steps — and one privacy boundary the architecture refuses to cross.
+        </p>
+      </Reveal>
+
+      {/* Two layers */}
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto mb-16">
+        <Reveal>
+          <article class="h-full rounded-2xl bg-cream/[0.04] border border-cream/10 p-8 md:p-10">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="font-mono text-xs text-saffron-300 tracking-wider">LAYER 01</span>
+              <span class="text-[10px] uppercase tracking-eyebrow text-onDark-muted">&lt; 500ms · deterministic</span>
+            </div>
+            <h3 class="font-serif text-2xl md:text-3xl text-onDark-primary leading-tight mb-4">
+              The deterministic net.
+            </h3>
+            <p class="text-base leading-relaxed text-onDark-secondary text-pretty">
+              A curated keyword and phrase system across Hindi, English, and 10+ regional languages. Fires before the AI model ever sees the message. Always the same response, in the same time, in the same tone — no creativity, no hallucination, no delay.
+            </p>
+          </article>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <article class="h-full rounded-2xl bg-cream/[0.04] border border-cream/10 p-8 md:p-10">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="font-mono text-xs text-saffron-300 tracking-wider">LAYER 02</span>
+              <span class="text-[10px] uppercase tracking-eyebrow text-onDark-muted">semantic · 3 thresholds</span>
+            </div>
+            <h3 class="font-serif text-2xl md:text-3xl text-onDark-primary leading-tight mb-4">
+              The semantic model.
+            </h3>
+            <p class="text-base leading-relaxed text-onDark-secondary text-pretty">
+              A fine-tuned model that catches the oblique — "I want to disappear", "what's the point of…". Three confidence thresholds avoid both invasive false positives and silent misses. Per-school tuning, validated with counsellors over six months of pilots.
+            </p>
+          </article>
+        </Reveal>
+      </div>
+
+      {/* Intervention timeline */}
+      <Reveal>
+        <div class="max-w-5xl mx-auto rounded-3xl bg-cream/[0.03] border border-cream/10 p-8 md:p-10">
+          <div class="flex items-center gap-3 mb-8">
+            <Eyebrow variant="dark">The Intervention Chain</Eyebrow>
+            <span class="text-[10px] uppercase tracking-eyebrow text-saffron-300">10 seconds · 7 days</span>
+          </div>
+
+          <ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {crisisTimeline.map((step, i) => (
+              <Reveal delay={i * 60}>
+                <li class="rounded-xl bg-navy-deep/50 border border-cream/10 p-4">
+                  <div class="font-mono text-xs text-saffron-300 mb-2 tabular-nums">{step.time}</div>
+                  <div class="text-sm text-onDark-primary leading-snug">{step.label}</div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </Reveal>
+
+      {/* Helplines */}
+      <Reveal delay={300}>
+        <div class="mt-12 max-w-5xl mx-auto">
+          <p class="eyebrow text-onDark-muted mb-5">Helplines surfaced to the student in distress</p>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {helplines.map((h) => (
+              <div class="flex items-baseline gap-3 p-4 rounded-xl bg-cream/[0.04] border border-cream/8">
+                <div class="flex-1">
+                  <div class="font-serif text-base text-onDark-primary">{h.name}</div>
+                  <div class="text-[11px] text-onDark-muted leading-snug">{h.context}</div>
+                </div>
+                <a href={`tel:${h.number.replace(/\D/g, '')}`} class="font-mono text-saffron-300 text-sm tabular-nums hover:text-saffron-200">
+                  {h.number}
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === FOUR PORTALS === */}
+  <section class="section-pad bg-cream" aria-labelledby="portals-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Four Connected Portals" id="portals-heading" align="center">
+        For every stakeholder <em class="italic font-light text-saffron-500">in a student's growth.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+        {portals.map((portal, i) => (
+          <Reveal delay={i * 100}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-8 md:p-10 flex flex-col group hover:border-saffron-400/40 hover:shadow-lift transition-all duration-500">
+              <div class="flex items-center gap-3 mb-5">
+                <Pill variant="saffron">{portal.eyebrow}</Pill>
+              </div>
+              <h3 class="font-serif text-2xl md:text-3xl text-navy mb-6">{portal.name}</h3>
+              <ul class="space-y-3">
+                {portal.features.map((feature) => (
+                  <li class="flex gap-3 text-sm leading-relaxed text-ink-secondary">
+                    <span aria-hidden="true" class="shrink-0 mt-2 w-3 h-px bg-saffron-400"></span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === LANGUAGES === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="languages-heading">
+    <div class="container-page">
+      <div class="grid lg:grid-cols-[1fr_1.5fr] gap-10 lg:gap-16 items-center">
+        <div>
+          <Eyebrow withLine={true}>Voice-First, Multilingual</Eyebrow>
+          <h2 id="languages-heading" class="mt-6 font-serif fraunces-display text-display-md text-navy text-balance">
+            Students learn in <em class="italic font-light text-saffron-500">the language they think in.</em>
+          </h2>
+          <p class="mt-6 text-lead text-ink-secondary text-pretty">
+            Hindi, English, and 10+ major Indian regional languages. Voice-first responses in 2–5 seconds on a ₹5,000 phone. No app required.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          {languages.map((lang, i) => (
+            <Reveal delay={i * 40}>
+              <div class="aspect-square rounded-2xl bg-cream-50 border border-navy/8 flex flex-col items-center justify-center p-3 text-center hover:bg-saffron-400/10 hover:border-saffron-400/40 transition-all duration-300">
+                <span class="font-serif text-xl md:text-2xl text-navy leading-tight">{lang.native}</span>
+                <span class="text-[10px] uppercase tracking-eyebrow text-ink-muted mt-1.5">{lang.name}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* === PRICING === */}
+  <section class="section-pad bg-cream" aria-labelledby="pricing-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Pricing" id="pricing-heading" align="center">
+        Four tiers. <em class="italic font-light text-saffron-500">Every school, welcome.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {plans.map((plan) => (
+          <Reveal>
+            <PricingTier {...plan} />
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={400}>
+        <p class="mt-10 max-w-2xl mx-auto text-center text-sm text-ink-muted">
+          Government schools and NGOs — talk to us about NITI Aayog-style partnerships and bulk discounts.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === FAQ === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="faq-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Questions" id="faq-heading" align="center">
+        Things principals <em class="italic font-light text-saffron-500">usually ask.</em>
+      </SectionHead>
+
+      <FaqList items={faqs} variant="light" />
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>

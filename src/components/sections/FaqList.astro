@@ -1,0 +1,52 @@
+---
+import Reveal from '@components/motion/Reveal.astro';
+
+interface Props {
+  items: { q: string; a: string }[];
+  variant?: 'light' | 'dark';
+}
+const { items, variant = 'light' } = Astro.props;
+const isLight = variant === 'light';
+---
+
+<ul class:list={['max-w-3xl mx-auto divide-y', isLight ? 'divide-navy/10' : 'divide-cream/10']}>
+  {items.map((faq, i) => (
+    <Reveal delay={i * 60}>
+      <li>
+        <details class="group py-5 md:py-6">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none">
+            <h3
+              class:list={[
+                'font-serif text-lg md:text-xl leading-snug transition-colors',
+                isLight ? 'text-navy group-hover:text-saffron-500' : 'text-onDark-primary group-hover:text-saffron-300',
+              ]}
+            >
+              {faq.q}
+            </h3>
+            <span
+              aria-hidden="true"
+              class:list={[
+                'shrink-0 mt-1 w-7 h-7 rounded-full border flex items-center justify-center transition-all',
+                isLight
+                  ? 'border-navy/20 text-navy group-open:rotate-45 group-open:border-saffron-400 group-open:bg-saffron-400'
+                  : 'border-cream/20 text-cream group-open:rotate-45 group-open:border-saffron-300 group-open:bg-saffron-300 group-open:text-navy',
+              ]}
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </span>
+          </summary>
+          <div
+            class:list={[
+              'mt-4 max-w-2xl text-base leading-relaxed text-pretty',
+              isLight ? 'text-ink-secondary' : 'text-onDark-secondary',
+            ]}
+          >
+            {faq.a}
+          </div>
+        </details>
+      </li>
+    </Reveal>
+  ))}
+</ul>

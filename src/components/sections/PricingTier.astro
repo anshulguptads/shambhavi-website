@@ -1,0 +1,78 @@
+---
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  name: string;
+  price: string;
+  priceUnit?: string;
+  description: string;
+  features: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  featured?: boolean;
+  badge?: string;
+}
+
+const { name, price, priceUnit, description, features, ctaLabel, ctaHref, featured = false, badge } = Astro.props;
+---
+
+<article
+  class:list={[
+    'relative h-full flex flex-col rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out-expo',
+    featured
+      ? 'bg-navy-deepest text-onDark-primary border border-saffron-400/40 shadow-glow lg:-translate-y-2'
+      : 'bg-cream-50 text-ink-primary border border-navy/8 hover:shadow-lift hover:-translate-y-1',
+  ]}
+>
+  {badge && (
+    <span
+      class:list={[
+        'absolute -top-3 left-8 px-3 py-1 rounded-full text-[10px] uppercase tracking-eyebrow font-medium',
+        featured ? 'bg-saffron-400 text-navy' : 'bg-navy text-cream',
+      ]}
+    >
+      {badge}
+    </span>
+  )}
+
+  <div class:list={['eyebrow mb-3', featured ? 'text-saffron-300' : 'text-ink-muted']}>
+    {name}
+  </div>
+
+  <div class="flex items-baseline gap-2 mb-2">
+    <span class:list={['font-serif text-4xl md:text-5xl font-light', featured ? 'text-saffron-200' : 'text-navy']}>
+      {price}
+    </span>
+    {priceUnit && (
+      <span class:list={['text-xs', featured ? 'text-onDark-muted' : 'text-ink-muted']}>{priceUnit}</span>
+    )}
+  </div>
+
+  <p class:list={['text-sm leading-relaxed mb-7 text-pretty', featured ? 'text-onDark-secondary' : 'text-ink-secondary']}>
+    {description}
+  </p>
+
+  <ul class:list={['flex-1 space-y-2.5 text-sm mb-8', featured ? 'text-onDark-secondary' : 'text-ink-secondary']}>
+    {features.map((feature) => (
+      <li class="flex gap-2.5">
+        <span aria-hidden="true" class:list={['shrink-0 mt-1 w-3 h-3 rounded-full flex items-center justify-center', featured ? 'bg-saffron-300/20' : 'bg-saffron-400/15']}>
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+            <path d="M1 4l2 2 4-4" stroke="#d99133" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-auto">
+    <Button
+      href={ctaHref}
+      variant={featured ? 'primary' : 'ghost'}
+      size="md"
+      class="w-full justify-center"
+    >
+      {ctaLabel}
+    </Button>
+  </div>
+</article>

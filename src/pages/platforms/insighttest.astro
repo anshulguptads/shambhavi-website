@@ -1,0 +1,447 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import ProductHero from '@components/sections/ProductHero.astro';
+import SectionHead from '@components/sections/SectionHead.astro';
+import FaqList from '@components/sections/FaqList.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Pill from '@components/ui/Pill.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+import { productSchema, breadcrumbSchema } from '@lib/seo';
+import { site } from '@lib/site';
+
+const url = `${site.url}/platforms/insighttest`;
+const schemas = [
+  productSchema({
+    name: 'InsightTest AI',
+    description: 'AI-powered testing for teams that would rather ship than write scripts. Low-code platform that cuts QA effort 60–70%. Self-healing automation across mobile, web, API, and analytics.',
+    url,
+    image: `${site.url}/og-insighttest.png`,
+  }),
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Platforms', url: `${site.url}/#platforms` },
+    { name: 'InsightTest AI', url },
+  ]),
+];
+
+const heroStats = [
+  { value: '60–70%', label: 'Less QA effort' },
+  { value: '4-in-1', label: 'Mobile · Web · API · Analytics' },
+  { value: '0', label: 'Code required' },
+  { value: 'Serverless', label: 'AWS Lambda execution' },
+];
+
+const traditional = [
+  'Every test requires a senior SDET to write and maintain',
+  'UI change breaks selectors — half your suite goes red overnight',
+  'Mobile, web, API, and analytics need four different frameworks',
+  'Test coverage falls behind feature velocity, always',
+  'Flaky tests erode confidence and get disabled one by one',
+  'QA becomes a cost centre, not a quality function',
+];
+
+const insighttest = [
+  'Anyone on the team can build tests with drag-and-drop — no code required',
+  'AI generates tests from user stories, specs, and existing behaviour',
+  'Self-healing selectors adapt when your UI changes',
+  'One platform for mobile, web, API, and analytics validation',
+  'Anomaly detection flags real regressions, not flaky noise',
+  'QA becomes a velocity enabler, not a release blocker',
+];
+
+const caps = [
+  {
+    num: '01',
+    tag: 'AI Test Generation',
+    title: 'Describe the behaviour. Get the test.',
+    body: 'Feed a user story, a Figma flow, a Jira ticket, or an existing screen recording — our NLP engine generates the test cases, selects appropriate assertions, and populates realistic test data. What used to be a day of scripting is now a 10-minute review.',
+    snippet: {
+      input: 'User should be able to apply a promo code and see the updated total at checkout.',
+      output: '4 test cases generated · 12 assertions · 3 edge cases identified',
+    },
+  },
+  {
+    num: '02',
+    tag: 'Self-Healing Automation',
+    title: 'The test adapts when your UI doesn\'t.',
+    body: 'When a developer renames a class or restructures a component, traditional test suites turn red. InsightTest\'s healer analyses the DOM, identifies the new element using visual, semantic, and positional signals, and updates the selector automatically. The test keeps running. The engineer gets a notification, not a 2 AM page.',
+    snippet: {
+      input: '.checkout-btn (not found in DOM)',
+      output: 'healed → #pay-now · visual + semantic match · 96% confidence',
+    },
+  },
+  {
+    num: '03',
+    tag: 'Anomaly Detection',
+    title: 'The real regression, not the flaky noise.',
+    body: 'Not every red test is a bug. InsightTest learns your suite\'s baseline — timing, failure patterns, flake rate per test — and distinguishes genuine regressions from environmental flukes. Your team triages real issues, not yesterday\'s network hiccup.',
+    snippet: {
+      input: 'Login test · 12% latency spike',
+      output: 'flagged → likely regression vs 30-day baseline (not flake)',
+    },
+  },
+  {
+    num: '04',
+    tag: 'Analytics Validation',
+    title: 'Events fire where they should, or you know immediately.',
+    body: 'Marketing teams depend on event tracking nobody validates until the campaign is already live and broken. InsightTest runs scheduled validation on your Adobe, RudderStack, and MoEngage pipelines — firing events, checking payloads, confirming downstream receipt. Marketing sleeps easier.',
+    snippet: {
+      input: 'add_to_cart event · RudderStack source',
+      output: 'verified → payload intact · 3 downstream destinations OK',
+    },
+  },
+];
+
+const surfaces = [
+  { name: 'Mobile', icon: 'M', body: 'Flutter and native iOS/Android testing with device-farm integration via BrowserStack.', tags: ['Flutter', 'Android', 'iOS', 'BrowserStack'] },
+  { name: 'Web', icon: 'W', body: 'Modern web apps, progressive web apps, and legacy sites. Cross-browser and responsive validation.', tags: ['Chrome', 'Safari', 'Firefox', 'Edge'] },
+  { name: 'API', icon: 'A', body: 'REST, GraphQL, and webhook testing with contract validation, load simulation, and schema drift detection.', tags: ['REST', 'GraphQL', 'OpenAPI', 'Webhooks'] },
+  { name: 'Analytics', icon: 'σ', body: 'Event payloads, downstream deliverability, and campaign readiness — validated before the launch, not after.', tags: ['Adobe', 'RudderStack', 'MoEngage', 'Amplitude'] },
+];
+
+const integrations = [
+  { label: 'CI / CD', title: 'Ship on every commit', items: ['GitHub Actions & GitLab CI', 'Jenkins pipelines', 'CircleCI & Bitbucket', 'Webhook-triggered runs'] },
+  { label: 'Device Farms', title: 'Real devices at scale', items: ['BrowserStack (native)', 'Sauce Labs', 'AWS Device Farm', 'Custom device pools'] },
+  { label: 'Issue Tracking', title: 'Bugs in the right place', items: ['Jira & Linear auto-creation', 'Slack & Microsoft Teams alerts', 'PagerDuty for regressions', 'Email digests'] },
+  { label: 'Analytics Platforms', title: 'Campaign-ready event data', items: ['Adobe Analytics & Launch', 'RudderStack customer data', 'MoEngage marketing events', 'Amplitude & Mixpanel'] },
+  { label: 'Observability', title: 'Full trace, full visibility', items: ['Datadog & New Relic export', 'Sentry error correlation', 'Custom Prometheus metrics', 'OpenTelemetry spans'] },
+  { label: 'Source of Truth', title: 'Test cases where your work lives', items: ['Jira test management sync', 'TestRail import/export', 'Notion & Confluence docs', 'Figma flow import'] },
+];
+
+const stack = [
+  { layer: 'Frontend', value: 'React + TypeScript LCNC builder' },
+  { layer: 'Backend', value: 'Java / Spring Boot + Node.js microservices' },
+  { layer: 'Data', value: 'PostgreSQL + MongoDB' },
+  { layer: 'Execution', value: 'AWS Lambda + containerised runners' },
+  { layer: 'AI Layer', value: 'NLP models + anomaly detection engine' },
+  { layer: 'Device Farm', value: 'BrowserStack native integration' },
+];
+
+const deployments = ['AWS', 'Azure', 'Railway', 'Self-hosted', 'Private VPC'];
+
+const faqs = [
+  { q: 'Is the 60–70% effort reduction claim real?', a: 'It\'s measured across teams using InsightTest for three sprints or more, comparing time spent writing and maintaining tests against their prior baseline. The biggest gains are from self-healing (which eliminates most maintenance cycles) and AI generation (which removes the from-scratch writing cost). Smaller suites see smaller gains; mature suites with hundreds of tests see the largest.' },
+  { q: 'Can non-engineers actually write useful tests with this?', a: 'Product managers, designers, and QA analysts can build meaningful end-to-end tests through the drag-and-drop builder and natural-language generation. For complex assertions, data-driven scenarios, and deep API contract testing, engineers still drive. The point isn\'t to replace engineers — it\'s to let every team member contribute coverage they couldn\'t before.' },
+  { q: 'How does self-healing know it hasn\'t healed to the wrong element?', a: 'Every auto-healed selector gets a confidence score from visual, semantic, and positional analysis. Below a configurable threshold (default 85%), the test pauses for human review rather than proceeding silently. Every heal is logged, reversible, and auditable — so if the platform ever makes a bad call, you see it before it lands in your report.' },
+  { q: 'Will this replace our existing test framework (Playwright, Cypress, Appium)?', a: 'It doesn\'t have to. InsightTest can coexist with your existing frameworks — some teams use it for new feature coverage while keeping their legacy suites running, others migrate gradually. We support import from Playwright, Cypress, Selenium, and Appium test definitions so migration is incremental, not a big bang.' },
+  { q: 'Where does our test data go? Is it secure?', a: 'Test data is tenant-isolated and encrypted at rest and in transit. For regulated industries, we offer self-hosted and private VPC deployments so test data never leaves your infrastructure. The AI models that parse test intent never see production customer data — only test artefacts.' },
+  { q: 'How does pricing work? Per user, per test, per execution?', a: 'Our pricing combines a platform fee based on team size (unlimited test authoring) with a pay-per-execution model for test runs (tiered by volume). No surprise overages — budget caps and alerts are built in. Enterprise plans offer fixed-cost execution pools. Contact our team for a quote specific to your scale.' },
+];
+---
+
+<PageLayout
+  title="InsightTest AI"
+  description="AI-powered testing for teams that would rather ship than write scripts. A low-code platform that cuts QA effort 60-70%. Mobile, web, API, and analytics — one unified flow, with self-healing automation."
+  canonical="/platforms/insighttest"
+  ogImage="/og-insighttest.png"
+  schemas={schemas}
+  headerMode="over-dark"
+>
+  {/* === HERO === */}
+  <ProductHero
+    eyebrowPills={[{ label: 'BUILD · ENGINEERING' }, { label: 'Live', variant: 'outline-dark' }]}
+    nameFirst="Insight"
+    nameItalic="Test"
+    tagline="AI-powered testing for teams that would rather ship than write scripts."
+    description="A low-code platform that cuts QA effort 60–70%. AI generates your tests. Self-healing automation adapts when your UI changes. Mobile, web, API, and analytics — one unified flow."
+    primaryCta={{ label: 'Book a Technical Demo', href: 'mailto:info@shambhavilabs.com?subject=InsightTest%20AI%20Technical%20Demo' }}
+    secondaryCta={{ label: 'See it in action', href: '#caps' }}
+    stats={heroStats}
+    accentColor="saffron"
+    breadcrumbName="InsightTest AI"
+  >
+    {/* Live test dashboard */}
+    <div slot="visual" class="relative w-full max-w-md mx-auto">
+      <div class="relative rounded-3xl bg-cream/[0.06] backdrop-blur-sm border border-cream/15 p-5 md:p-6 shadow-2xl font-mono">
+        {/* Terminal header */}
+        <div class="flex items-center gap-2 mb-4 pb-3 border-b border-cream/10">
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/30"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/30"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/30"></span>
+          <span class="ml-2 text-[10px] text-onDark-muted">checkout_flow_e2e.test</span>
+          <span class="ml-auto text-[9px] text-saffron-300 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-saffron-400 animate-gentle-pulse"></span>
+            running
+          </span>
+        </div>
+
+        {/* Test results */}
+        <ul class="space-y-2 text-xs">
+          <li class="flex items-center gap-2.5 text-onDark-secondary">
+            <span class="text-saffron-300">✓</span>
+            <span class="flex-1 text-onDark-primary">Login with valid credentials</span>
+            <span class="text-[10px] text-onDark-muted tabular-nums">1.2s</span>
+          </li>
+          <li class="flex items-center gap-2.5 text-onDark-secondary">
+            <span class="text-saffron-300">✓</span>
+            <span class="flex-1 text-onDark-primary">Add item to cart</span>
+            <span class="text-[10px] text-onDark-muted tabular-nums">0.8s</span>
+          </li>
+          <li class="flex items-center gap-2.5 text-onDark-secondary">
+            <span class="text-saffron-300">✓</span>
+            <span class="flex-1 text-onDark-primary">Apply promo code</span>
+            <span class="text-[10px] text-onDark-muted tabular-nums">0.4s</span>
+          </li>
+          <li class="flex items-center gap-2.5 text-onDark-secondary">
+            <span class="text-saffron-300 animate-gentle-pulse">○</span>
+            <span class="flex-1 text-onDark-primary">Complete checkout</span>
+            <span class="text-[10px] text-onDark-muted">running…</span>
+          </li>
+        </ul>
+
+        {/* Auto-heal toast */}
+        <div class="mt-4 p-3 rounded-xl bg-saffron-400/10 border border-saffron-400/30">
+          <div class="flex items-start gap-2">
+            <span class="text-[9px] text-saffron-300 font-mono uppercase tracking-wider mt-0.5">Auto-heal</span>
+          </div>
+          <div class="mt-1 text-[11px] text-onDark-primary">
+            <span class="line-through text-onDark-muted">.btn-primary</span>
+            <span class="text-saffron-300"> → </span>
+            <span class="text-saffron-200">#pay-now</span>
+          </div>
+          <div class="text-[10px] text-onDark-muted mt-1">visual + semantic match · 96% confidence</div>
+        </div>
+
+        {/* Summary bar */}
+        <div class="mt-4 grid grid-cols-4 gap-2 pt-3 border-t border-cream/10 text-center">
+          <div>
+            <div class="text-saffron-200 text-base tabular-nums">36</div>
+            <div class="text-[8px] text-onDark-muted uppercase tracking-wider">queued</div>
+          </div>
+          <div>
+            <div class="text-saffron-200 text-base tabular-nums">18</div>
+            <div class="text-[8px] text-onDark-muted uppercase tracking-wider">passed</div>
+          </div>
+          <div>
+            <div class="text-cream text-base tabular-nums">1</div>
+            <div class="text-[8px] text-onDark-muted uppercase tracking-wider">running</div>
+          </div>
+          <div>
+            <div class="text-onDark-muted text-base tabular-nums">17</div>
+            <div class="text-[8px] text-onDark-muted uppercase tracking-wider">pending</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ProductHero>
+
+  {/* === PROBLEM (two-column comparison) === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="problem-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="The Problem" id="problem-heading">
+        QA is the bottleneck. <em class="italic font-light text-saffron-500">Not because teams are slow — because the tools haven't caught up.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+        <Reveal>
+          <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-7 md:p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-7 h-7 rounded-full bg-maroon/15 border border-maroon/30 flex items-center justify-center text-maroon text-sm">×</span>
+              <span class="text-xs uppercase tracking-eyebrow text-maroon font-medium">Traditional QA</span>
+            </div>
+            <h3 class="font-serif text-xl text-navy mb-5 leading-tight">Hand-coded test suites that break every sprint.</h3>
+            <ul class="space-y-2.5">
+              {traditional.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-ink-secondary">
+                  <span aria-hidden="true" class="shrink-0 mt-1.5 w-3 h-px bg-maroon/40"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <article class="h-full rounded-2xl bg-navy-deepest text-onDark-primary border border-saffron-400/30 p-7 md:p-8 shadow-glow">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-7 h-7 rounded-full bg-saffron-400 flex items-center justify-center text-navy text-sm font-bold">✓</span>
+              <span class="text-xs uppercase tracking-eyebrow text-saffron-300 font-medium">InsightTest AI</span>
+            </div>
+            <h3 class="font-serif text-xl text-onDark-primary mb-5 leading-tight">AI writes the tests. AI heals the tests. Your team ships.</h3>
+            <ul class="space-y-2.5">
+              {insighttest.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-onDark-secondary">
+                  <span aria-hidden="true" class="shrink-0 mt-1.5 w-3 h-px bg-saffron-300"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* === AI CAPABILITIES (with code snippets) === */}
+  <section class="section-pad bg-cream" aria-labelledby="caps-heading" id="caps">
+    <div class="container-page">
+      <SectionHead eyebrow="AI Capabilities" id="caps-heading">
+        Four things our AI does <em class="italic font-light text-saffron-500">that hand-coded QA doesn't.</em>
+      </SectionHead>
+
+      <div class="space-y-5 md:space-y-6 max-w-5xl mx-auto">
+        {caps.map((cap, i) => (
+          <Reveal delay={i * 80}>
+            <article class="rounded-3xl bg-cream-50 border border-navy/8 p-6 md:p-10 grid md:grid-cols-[1.2fr_1fr] gap-6 md:gap-10 items-start hover:shadow-lift transition-shadow duration-500">
+              {/* Copy */}
+              <div>
+                <div class="flex items-baseline gap-3 mb-4">
+                  <span class="font-mono text-xs text-saffron-500 font-semibold tabular-nums">{cap.num}</span>
+                  <span class="text-[10px] uppercase tracking-eyebrow text-ink-muted">{cap.tag}</span>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-navy text-balance leading-tight">{cap.title}</h3>
+                <p class="mt-4 text-base leading-relaxed text-ink-secondary text-pretty">{cap.body}</p>
+              </div>
+
+              {/* Code snippet */}
+              <div class="rounded-2xl bg-navy-deepest text-onDark-primary p-5 md:p-6 font-mono text-xs space-y-3 overflow-hidden">
+                <div>
+                  <div class="text-[9px] uppercase tracking-wider text-onDark-muted mb-1.5">input</div>
+                  <div class="text-onDark-secondary leading-relaxed">{cap.snippet.input}</div>
+                </div>
+                <div class="h-px bg-cream/10"></div>
+                <div>
+                  <div class="text-[9px] uppercase tracking-wider text-saffron-300 mb-1.5">output</div>
+                  <div class="text-saffron-200 leading-relaxed">{cap.snippet.output}</div>
+                </div>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === FOUR SURFACES === */}
+  <section class="section-pad bg-navy-deepest text-onDark-primary grain-overlay relative overflow-hidden" aria-labelledby="surfaces-heading">
+    <GradientOrb class="-top-20 right-0" color="saffron" size="md" />
+
+    <div class="container-page relative">
+      <SectionHead eyebrow="Unified Testing" variant="dark" id="surfaces-heading" align="center">
+        Four surfaces. <em class="italic font-light text-saffron-300">One builder. One login. One report.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {surfaces.map((s, i) => (
+          <Reveal delay={i * 80}>
+            <article class="h-full rounded-2xl bg-cream/[0.04] border border-cream/10 p-7 hover:bg-cream/[0.06] hover:border-saffron-300/30 transition-all duration-500">
+              <div class="w-12 h-12 rounded-xl bg-saffron-400/15 border border-saffron-400/30 flex items-center justify-center font-serif text-xl text-saffron-300 italic mb-5">
+                {s.icon}
+              </div>
+              <h3 class="font-serif text-xl text-onDark-primary leading-tight">{s.name}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-onDark-secondary text-pretty">{s.body}</p>
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {s.tags.map((tag) => (
+                  <li class="px-2 py-0.5 rounded-md bg-cream/5 border border-cream/10 text-[10px] font-mono text-onDark-secondary">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === INTEGRATIONS === */}
+  <section class="section-pad bg-cream" aria-labelledby="integrations-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Integrations" id="integrations-heading">
+        Plugs into the tools <em class="italic font-light text-saffron-500">your team already uses.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {integrations.map((int, i) => (
+          <Reveal delay={(i % 3) * 80}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-6 md:p-7">
+              <div class="flex items-baseline gap-3 mb-4">
+                <span class="text-[10px] uppercase tracking-eyebrow text-saffron-500 font-medium">{int.label}</span>
+                <span class="h-px flex-1 bg-navy/10"></span>
+              </div>
+              <h3 class="font-serif text-lg md:text-xl text-navy mb-4 leading-tight">{int.title}</h3>
+              <ul class="space-y-2">
+                {int.items.map((item) => (
+                  <li class="flex gap-2.5 text-sm leading-relaxed text-ink-secondary">
+                    <span aria-hidden="true" class="shrink-0 mt-2 w-2 h-px bg-saffron-400"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === ARCHITECTURE === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="arch-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Architecture" id="arch-heading">
+        Built for serious engineering, <em class="italic font-light text-saffron-500">priced for rational teams.</em>
+      </SectionHead>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto">
+        {/* Body */}
+        <Reveal>
+          <div class="space-y-5 text-base leading-relaxed text-ink-secondary">
+            <p>
+              InsightTest AI is engineered on a <strong class="text-navy">serverless-first microservices architecture</strong> designed to scale from a 5-person team to a 500-engineer organisation without architectural rewrites.
+            </p>
+            <p>
+              The execution layer runs on <strong class="text-navy">AWS Lambda</strong>, spinning up test workers on demand — you pay for executions, not idle capacity. The AI layer combines NLP models for test-intent parsing and purpose-built anomaly detection models trained on QA-specific signals.
+            </p>
+            <p>
+              <strong class="text-navy">Deploy anywhere.</strong> The full platform runs on AWS, Azure, or lightweight Railway for smaller teams — or on your own VPC for enterprises that require it.
+            </p>
+
+            <div class="mt-6 pt-6 border-t border-navy/10">
+              <p class="eyebrow text-ink-muted mb-3">Deployment options</p>
+              <div class="flex flex-wrap gap-2">
+                {deployments.map((d) => (
+                  <span class="px-3 py-1.5 rounded-md bg-cream-200 border border-navy/8 text-xs font-mono text-ink-secondary">
+                    {d}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Tech stack */}
+        <Reveal delay={150}>
+          <div class="rounded-2xl bg-navy-deepest text-onDark-primary p-6 md:p-7 font-mono text-xs">
+            <div class="flex items-center gap-2 mb-5 pb-3 border-b border-cream/10">
+              <span class="w-2 h-2 rounded-full bg-saffron-400"></span>
+              <span class="text-[10px] uppercase tracking-wider text-onDark-muted">tech stack</span>
+            </div>
+            <ul class="space-y-3">
+              {stack.map((s) => (
+                <li class="grid grid-cols-[7rem_1fr] gap-3 items-start">
+                  <span class="text-saffron-300 text-[10px] uppercase tracking-wider pt-0.5">{s.layer}</span>
+                  <span class="text-onDark-secondary leading-relaxed">{s.value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* === FAQ === */}
+  <section class="section-pad bg-cream" aria-labelledby="faq-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Questions" id="faq-heading" align="center">
+        Things engineering leads <em class="italic font-light text-saffron-500">ask us.</em>
+      </SectionHead>
+
+      <FaqList items={faqs} variant="light" />
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>

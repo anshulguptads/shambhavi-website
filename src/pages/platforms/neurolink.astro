@@ -1,0 +1,467 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import ProductHero from '@components/sections/ProductHero.astro';
+import SectionHead from '@components/sections/SectionHead.astro';
+import FaqList from '@components/sections/FaqList.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Pill from '@components/ui/Pill.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+import { productSchema, breadcrumbSchema } from '@lib/seo';
+import { site } from '@lib/site';
+
+const url = `${site.url}/platforms/neurolink`;
+const schemas = [
+  productSchema({
+    name: 'NeuroLink',
+    description: "The AI-native learning platform for India's CS and AI universities. Turn lectures into interactive lessons. Living knowledge graph per student. Zero GPU infrastructure required.",
+    url,
+    image: `${site.url}/og-neurolink.png`,
+  }),
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Platforms', url: `${site.url}/#platforms` },
+    { name: 'NeuroLink', url },
+  ]),
+];
+
+const heroStats = [
+  { value: '14', label: 'Interconnected features' },
+  { value: 'Zero', label: 'GPUs required' },
+  { value: 'Gemini', label: '3.1 AI backbone' },
+  { value: '50+', label: 'Target universities' },
+];
+
+const crisisStats = [
+  { value: '1M+', label: 'AI professionals shortfall projected for India by 2027' },
+  { value: '53%', label: 'AI talent gap estimated across Indian industry in 2026' },
+  { value: '63%', label: 'Indian workers needing significant reskilling by 2030' },
+  { value: '3.9 L', label: 'CS engineering students admitted annually' },
+  { value: '60%+', label: "of professor time spent on admin, not teaching" },
+  { value: 'Zero', label: 'systematic way to know which concepts students are stuck on' },
+];
+
+const howItWorks = [
+  { step: '01', label: 'Upload', body: 'Professors upload PDFs, slides, research papers, or lecture notes. Any format.' },
+  { step: '02', label: 'AI Transform', body: 'Gemini extracts concepts, generates interactive content, animations, and code playgrounds.' },
+  { step: '03', label: 'Students Learn', body: 'Personalised lessons, adaptive challenges, 24/7 AI tutor. Each student, their own pace.' },
+  { step: '04', label: 'Measure', body: 'Real-time analytics on learning gaps — per student and class-wide. Confusion made visible.' },
+];
+
+const features = [
+  { num: '01', tag: 'INTELLIGENCE', name: 'Concept DNA', body: 'A living Neo4j knowledge graph for every student. Not flat scores — interconnected concepts. When CNNs fail, the graph traces back to weak tensor intuition.' },
+  { num: '02', tag: 'RETENTION', name: 'Time Machine', body: 'Modified SM-2 spaced repetition with AI-adjusted intervals. Daily warmups of 5–10 micro-challenges pulled from last week\'s concepts.' },
+  { num: '03', tag: 'VISUALISATION', name: 'Animate My Understanding', body: 'On-demand 3D visualisations in under 5 seconds. Polished Manim renders for popular concepts. Sliders to play with parameters.' },
+  { num: '04', tag: 'REASONING', name: 'Ghost Mode', body: 'Watch the AI solve problems with full reasoning exposed — approach selection, tradeoffs, decisions. Students explore alternate branches at each decision point.' },
+  { num: '05', tag: 'DEBUGGING', name: 'Code Archaeology', body: 'Cracks open ML black boxes. Captures tensor shapes, gradients, loss values at every checkpoint. DVR-style replay of execution with AI narration.' },
+  { num: '06', tag: 'INQUIRY', name: 'Socratic Debug', body: 'Never gives the answer. Five graduated hint levels — observation, localisation, concept nudge, micro-exercise, explicit fix — configurable by the professor.' },
+  { num: '07', tag: 'COMPETITION', name: 'Challenge Arena', body: 'Model Bake-Off, Adversarial Debug, Explain-It-To-Win. Competitive coding that teaches intuition, not just syntax.' },
+  { num: '08', tag: 'RESEARCH', name: 'Paper to Playground', body: 'Upload any ML paper. AI generates an interactive tiered implementation — overview, guided building, experimentation sandbox.' },
+  { num: '09', tag: 'EXPERIMENTATION', name: 'Lab Notebook', body: 'Auto-logs every execution with hyperparameters, results, and AI analysis. Exports as portfolio-ready documents.' },
+  { num: '10', tag: 'SYNTHESIS', name: 'Scenario Simulator', body: 'Real-world ML scenarios students walk through — dataset corruption, deployment drift, adversarial attacks. Learn by facing the situation.' },
+  { num: '11', tag: 'CROSS-DOMAIN', name: 'Bridges', body: 'Maps ML concepts to other domains — gradient descent ↔ supply chain optimisation. Parallel visualisations with linked parameters. Perfect for NEP 2020.' },
+  { num: '12', tag: 'COLLABORATION', name: 'Study Groups AI', body: 'Intelligent group formation based on complementary knowledge gaps. Students learn from peers strategically, not randomly.' },
+  { num: '13', tag: 'ECOSYSTEM', name: 'Content Marketplace', body: 'Three-tier sharing — department-private, university-commons, global marketplace. Effectiveness scores from anonymised learning data drive discovery.' },
+  { num: '14', tag: 'CAREER', name: 'LaunchPad', body: 'AI mock interviews personalised from actual projects. System design sandbox. Auto-generated portfolios from Lab Notebook and Challenge Arena.' },
+];
+
+const outcomes = [
+  { value: '30%+', label: 'Faster concept mastery', body: 'AI-personalised paths vs traditional lectures, measured in pre/post assessments.' },
+  { value: '> 70%', label: 'Daily active usage', body: 'Gamification + personalised content drives habitual engagement beyond class.' },
+  { value: '60%', label: 'Professor time saved', body: 'Auto-grading, auto-content generation, and AI analytics replace hours of manual work.' },
+  { value: '100%', label: 'Learning gap visibility', body: 'Real-time Concept DNA tracking for every student. Nothing falls through the cracks.' },
+];
+
+const phases = [
+  {
+    num: 'Phase 01',
+    timeline: 'Months 1–6',
+    title: 'Pilot Programme',
+    items: [
+      '2–3 select IITs or NITs',
+      '200–500 students, 10–15 professors',
+      'Full platform deployment',
+      'Controlled outcome study vs traditional cohort',
+    ],
+  },
+  {
+    num: 'Phase 02',
+    timeline: 'Months 7–12',
+    title: 'Validated Expansion',
+    items: [
+      'Publish pilot results & case studies',
+      'Expand to 10–15 government institutions',
+      'Activate Content Marketplace',
+      'Faculty training cohorts',
+    ],
+  },
+  {
+    num: 'Phase 03',
+    timeline: 'Months 13–24',
+    title: 'National Scale',
+    items: [
+      'Roll out across 50+ universities',
+      'Integration with UGC and AICTE systems',
+      'Cross-university content sharing',
+      'State-level partnerships',
+    ],
+  },
+  {
+    num: 'Phase 04',
+    timeline: 'Year 3+',
+    title: 'Full Ecosystem',
+    items: [
+      'All government CS and AI departments',
+      'Indian-language support via BHASHINI',
+      'Export model to other developing nations',
+      'Research collaboration networks',
+    ],
+  },
+];
+
+const partnership = {
+  bring: [
+    'Full NeuroLink platform deployment',
+    'Free pilot period for selected institutions',
+    'Dedicated onboarding, training, and support',
+    'Custom integrations with existing university systems',
+    'Data-driven learning outcome reports',
+    'Indian data sovereignty — all data hosted in India',
+    'Engineering collaboration on research publication',
+  ],
+  seek: [
+    'MoU for pilot deployment at 2–3 IITs or NITs',
+    'Access to CS and AI department faculty for feedback',
+    'A student cohort for the controlled outcome study',
+    'Letter of intent for post-pilot expansion',
+    'Co-branding for case study publications',
+    'Pathway to UGC or AICTE recognition',
+    'Introductions to state education departments',
+  ],
+};
+
+const faqs = [
+  { q: 'Do we need to buy GPUs or any new infrastructure?', a: 'No. NeuroLink runs entirely on cloud APIs — Google Gemini 3.1 Pro for the AI layer, Neo4j cloud for the knowledge graph, standard web hosting for the application. Universities need a browser. That\'s it. No GPU procurement, no server maintenance, no capex.' },
+  { q: 'How does this integrate with our existing LMS or academic systems?', a: 'NeuroLink can function as a complete standalone platform or as a layer on top of existing LMS systems like Moodle, Canvas, or national platforms like DIKSHA. For government universities, we have a roadmap for integration with UGC and AICTE systems. Authentication supports Google Workspace, SAML SSO, and Active Directory.' },
+  { q: 'Does it only work for CS and AI, or broader fields?', a: 'NeuroLink is optimised for Computer Science, Machine Learning, and AI curricula. The Bridges feature explicitly maps ML concepts to other domains, which extends its utility to data-adjacent fields like Operations Research, Computational Biology, and Quantitative Finance. Full support for humanities and pure sciences is on our roadmap.' },
+  { q: 'Where is student data stored? Is it safe?', a: 'All data is stored in Indian data centres — data sovereignty is non-negotiable for government institutions. DPDPA-compliant from day one. Student data is tenant-isolated and never used to train shared models. Each institution\'s data stays with that institution.' },
+  { q: 'What do professors actually have to do differently?', a: 'Less, not more. Professors upload their existing lecture materials — slides, PDFs, papers — and the AI transforms them. The Socratic Debug hint levels, the rubric for evaluation, and the challenge types are all configurable, but default settings are designed to require zero setup. Many professors spend less time grading and more time mentoring within the first month.' },
+  { q: 'Can we run this for a single department before a university-wide rollout?', a: 'Yes, and we strongly recommend it. Our standard pilot structure starts with a single CS or AI department, one semester, roughly 200–500 students. Success is measured against a control cohort using standard assessments. Scale-up decisions happen based on evidence, not enthusiasm.' },
+];
+---
+
+<PageLayout
+  title="NeuroLink"
+  description="The AI-native learning platform for India's CS and AI universities. Fourteen interconnected features. Living knowledge graph per student. Zero GPU infrastructure required."
+  canonical="/platforms/neurolink"
+  ogImage="/og-neurolink.png"
+  schemas={schemas}
+  headerMode="over-dark"
+>
+  {/* === HERO === */}
+  <ProductHero
+    eyebrowPills={[{ label: 'LEARN · UNIVERSITY' }, { label: 'In Pilot', variant: 'outline-dark' }]}
+    nameFirst="Neuro"
+    nameItalic="Link"
+    tagline="The AI-native platform for India's CS and AI universities."
+    description="Turn any lecture slide into a personalised interactive lesson. Give every student a living knowledge graph. Watch class-wide confusion in real time. Zero GPU infrastructure required."
+    primaryCta={{ label: 'Partner for a Pilot', href: 'mailto:info@shambhavilabs.com?subject=NeuroLink%20Pilot' }}
+    secondaryCta={{ label: 'Explore features', href: '#features' }}
+    stats={heroStats}
+    accentColor="saffron"
+    breadcrumbName="NeuroLink"
+  >
+    {/* Knowledge graph hero visual */}
+    <div slot="visual" class="relative w-full max-w-md mx-auto">
+      <svg viewBox="0 0 400 360" class="w-full h-auto" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="nl-hero-core" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color="#f5b556" />
+            <stop offset="60%" stop-color="#d99133" />
+            <stop offset="100%" stop-color="#b87627" />
+          </radialGradient>
+          <linearGradient id="nl-hero-edge" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#d99133" stop-opacity="0.1" />
+            <stop offset="50%" stop-color="#d99133" stop-opacity="0.85" />
+            <stop offset="100%" stop-color="#d99133" stop-opacity="0.1" />
+          </linearGradient>
+        </defs>
+
+        {/* Edges */}
+        <g stroke="#d99133" fill="none" stroke-linecap="round">
+          <line x1="200" y1="180" x2="100" y2="80"  stroke-opacity="0.55" stroke-width="1.2" />
+          <line x1="200" y1="180" x2="300" y2="80"  stroke-opacity="0.55" stroke-width="1.2" />
+          <line x1="200" y1="180" x2="60"  y2="190" stroke-opacity="0.45" stroke-width="1" />
+          <line x1="200" y1="180" x2="340" y2="190" stroke-opacity="0.45" stroke-width="1" />
+          <line x1="200" y1="180" x2="120" y2="300" stroke-opacity="0.4" stroke-width="1" />
+          <line x1="200" y1="180" x2="280" y2="300" stroke-opacity="0.4" stroke-width="1" />
+          <line x1="100" y1="80" x2="60"  y2="190"  stroke-opacity="0.2" stroke-width="0.7" />
+          <line x1="300" y1="80" x2="340" y2="190"  stroke-opacity="0.2" stroke-width="0.7" />
+          <line x1="60"  y1="190" x2="120" y2="300" stroke-opacity="0.2" stroke-width="0.7" />
+          <line x1="340" y1="190" x2="280" y2="300" stroke-opacity="0.2" stroke-width="0.7" />
+          {/* Animated signal */}
+          <line x1="200" y1="180" x2="300" y2="80" stroke="url(#nl-hero-edge)" stroke-width="2" class="nl-hero-signal" />
+        </g>
+
+        {/* Nodes — mastered (saffron) */}
+        <g>
+          <circle cx="100" cy="80" r="18" fill="#d99133" />
+          <text x="100" y="83" text-anchor="middle" fill="#1a1840" font-family="Manrope, sans-serif" font-size="8" font-weight="600">Linear Alg.</text>
+        </g>
+        <g>
+          <circle cx="300" cy="80" r="18" fill="#d99133" />
+          <text x="300" y="83" text-anchor="middle" fill="#1a1840" font-family="Manrope, sans-serif" font-size="8" font-weight="600">Calculus</text>
+        </g>
+
+        {/* Nodes — learning (cream) */}
+        <g>
+          <circle cx="60" cy="190" r="14" fill="#faf7ef" />
+          <text x="60" y="193" text-anchor="middle" fill="#1a1840" font-family="Manrope, sans-serif" font-size="7" font-weight="600">Probability</text>
+        </g>
+        <g>
+          <circle cx="340" cy="190" r="14" fill="#faf7ef" />
+          <text x="340" y="193" text-anchor="middle" fill="#1a1840" font-family="Manrope, sans-serif" font-size="7" font-weight="600">Gradients</text>
+        </g>
+
+        {/* Nodes — locked (outlined) */}
+        <g>
+          <circle cx="120" cy="300" r="12" fill="none" stroke="#faf7ef" stroke-opacity="0.4" stroke-width="1.2" />
+          <text x="120" y="303" text-anchor="middle" fill="#faf7ef" fill-opacity="0.6" font-family="Manrope, sans-serif" font-size="6.5">CNNs</text>
+        </g>
+        <g>
+          <circle cx="280" cy="300" r="12" fill="none" stroke="#faf7ef" stroke-opacity="0.4" stroke-width="1.2" />
+          <text x="280" y="303" text-anchor="middle" fill="#faf7ef" fill-opacity="0.6" font-family="Manrope, sans-serif" font-size="6">Transformers</text>
+        </g>
+
+        {/* Center: Neural Nets — the active concept */}
+        <g>
+          <circle cx="200" cy="180" r="38" fill="url(#nl-hero-core)" />
+          <circle cx="200" cy="180" r="38" fill="none" stroke="#f5b556" stroke-width="1" opacity="0.5" />
+          <circle cx="200" cy="180" r="50" fill="none" stroke="#d99133" stroke-width="0.6" opacity="0.3" stroke-dasharray="2 3" />
+          <text x="200" y="178" text-anchor="middle" fill="#1a1840" font-family="Fraunces, serif" font-size="11" font-weight="500" font-style="italic">Neural</text>
+          <text x="200" y="190" text-anchor="middle" fill="#1a1840" font-family="Fraunces, serif" font-size="11" font-weight="500" font-style="italic">Nets</text>
+        </g>
+
+        {/* Legend */}
+        <g font-family="Manrope, sans-serif" font-size="7" letter-spacing="1.5">
+          <g transform="translate(20, 340)">
+            <circle cx="5" cy="0" r="3" fill="#d99133" />
+            <text x="13" y="2.5" fill="#faf7ef" fill-opacity="0.75">MASTERED</text>
+          </g>
+          <g transform="translate(110, 340)">
+            <circle cx="5" cy="0" r="3" fill="#faf7ef" />
+            <text x="13" y="2.5" fill="#faf7ef" fill-opacity="0.75">LEARNING</text>
+          </g>
+          <g transform="translate(200, 340)">
+            <circle cx="5" cy="0" r="3" fill="none" stroke="#faf7ef" stroke-opacity="0.5" />
+            <text x="13" y="2.5" fill="#faf7ef" fill-opacity="0.75">NEXT</text>
+          </g>
+          <text x="380" y="342.5" fill="#faf7ef" fill-opacity="0.4" text-anchor="end">CONCEPT DNA · LIVE</text>
+        </g>
+      </svg>
+    </div>
+  </ProductHero>
+
+  <style is:global>
+    .nl-hero-signal {
+      stroke-dasharray: 60 200;
+      stroke-dashoffset: 260;
+      animation: nl-hero-flow 2.4s linear infinite;
+    }
+    @keyframes nl-hero-flow {
+      to { stroke-dashoffset: -260; }
+    }
+  </style>
+
+  {/* === CRISIS === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="crisis-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="India's AI Workforce Crisis" id="crisis-heading">
+        One million AI professionals short. <em class="italic font-light text-saffron-500">Three point nine lakh students admitted annually.</em> The math doesn't work.
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {crisisStats.map((stat, i) => (
+          <Reveal delay={i * 80}>
+            <div class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-7 md:p-8 flex flex-col justify-between min-h-[170px]">
+              <div class="font-serif text-3xl md:text-4xl text-saffron-500 font-light tabular-nums leading-none">
+                {stat.value}
+              </div>
+              <p class="mt-4 text-sm leading-relaxed text-ink-secondary">{stat.label}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={500}>
+        <p class="mt-12 max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl text-navy text-balance italic font-light">
+          "The talent India needs is already in its universities. What's missing is the infrastructure to teach every student like the best professor is teaching only them."
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === HOW IT WORKS === */}
+  <section class="section-pad bg-cream" aria-labelledby="how-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="How It Works" id="how-heading">
+        From static slides <em class="italic font-light text-saffron-500">to interactive learning</em> — in four steps.
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {howItWorks.map((s, i) => (
+          <Reveal delay={i * 100}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-7 md:p-8 flex flex-col">
+              <div class="flex items-center gap-3 mb-6">
+                <span class="font-mono text-xs text-saffron-500 font-semibold tabular-nums">{s.step}</span>
+                <span class="h-px flex-1 bg-navy/10"></span>
+                <span class="text-[10px] uppercase tracking-eyebrow text-ink-muted">Step</span>
+              </div>
+              <h3 class="font-serif text-xl md:text-2xl text-navy leading-tight">{s.label}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-ink-secondary text-pretty">{s.body}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === 14 FEATURES === */}
+  <section class="section-pad bg-navy-deepest text-onDark-primary grain-overlay relative overflow-hidden" aria-labelledby="features-heading" id="features">
+    <GradientOrb class="-top-20 right-0" color="saffron" size="lg" />
+
+    <div class="container-page relative">
+      <SectionHead eyebrow="Platform Capabilities" variant="dark" id="features-heading" align="center">
+        Fourteen features. <em class="italic font-light text-saffron-300">One unified learning graph.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {features.map((f, i) => (
+          <Reveal delay={(i % 3) * 80}>
+            <article class="h-full rounded-2xl bg-cream/[0.04] border border-cream/10 p-6 md:p-7 hover:bg-cream/[0.06] hover:border-saffron-300/30 transition-all duration-500">
+              <div class="flex items-baseline gap-3 mb-4">
+                <span class="font-mono text-xs text-saffron-300 font-semibold tabular-nums">{f.num}</span>
+                <span class="text-[9px] uppercase tracking-eyebrow text-onDark-muted">{f.tag}</span>
+              </div>
+              <h3 class="font-serif text-xl md:text-2xl text-onDark-primary leading-tight">{f.name}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-onDark-secondary text-pretty">{f.body}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === OUTCOMES === */}
+  <section class="section-pad bg-cream" aria-labelledby="outcomes-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Projected Outcomes" id="outcomes-heading" align="center">
+        Measurable change, <em class="italic font-light text-saffron-500">in one semester.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {outcomes.map((o, i) => (
+          <Reveal delay={i * 100}>
+            <div class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-7 md:p-8 flex flex-col">
+              <div class="font-serif text-4xl md:text-5xl text-saffron-500 font-light tabular-nums leading-none mb-3">
+                {o.value}
+              </div>
+              <div class="font-serif text-lg text-navy mb-3">{o.label}</div>
+              <p class="text-sm leading-relaxed text-ink-secondary text-pretty mt-auto">{o.body}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === IMPLEMENTATION PHASES === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="phases-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Implementation" id="phases-heading">
+        Phased rollout, <em class="italic font-light text-saffron-500">from pilot to national scale.</em>
+      </SectionHead>
+
+      <ol class="relative max-w-5xl mx-auto">
+        <div aria-hidden="true" class="absolute left-7 md:left-12 top-2 bottom-2 w-px bg-saffron-400/25"></div>
+        {phases.map((phase, i) => (
+          <Reveal delay={i * 100}>
+            <li class="relative grid grid-cols-[3.5rem_1fr] md:grid-cols-[7rem_1fr] gap-6 md:gap-12 pb-10 md:pb-14 last:pb-0">
+              <div class="relative">
+                <div class="absolute left-7 md:left-12 top-3 w-3 h-3 -translate-x-1/2 rounded-full bg-saffron-400 ring-4 ring-cream-100"></div>
+                <div class="font-mono text-xs md:text-sm text-saffron-500 font-semibold tabular-nums">{phase.num}</div>
+                <div class="text-[10px] uppercase tracking-eyebrow text-ink-muted mt-1">{phase.timeline}</div>
+              </div>
+              <div class="rounded-2xl bg-cream-50 border border-navy/8 p-6 md:p-8">
+                <h3 class="font-serif text-xl md:text-2xl text-navy mb-5">{phase.title}</h3>
+                <ul class="space-y-2.5">
+                  {phase.items.map((item) => (
+                    <li class="flex gap-3 text-sm leading-relaxed text-ink-secondary">
+                      <span aria-hidden="true" class="shrink-0 mt-2 w-3 h-px bg-saffron-400"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* === PARTNERSHIP PROPOSAL === */}
+  <section class="section-pad bg-navy-deepest text-onDark-primary grain-overlay" aria-labelledby="partnership-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Partnership Proposal" variant="dark" id="partnership-heading" align="center">
+        What we bring. <em class="italic font-light text-saffron-300">What we seek.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+        <Reveal>
+          <article class="h-full rounded-3xl bg-cream/[0.04] border border-cream/10 p-8 md:p-10">
+            <div class="text-xs uppercase tracking-eyebrow text-saffron-300 mb-4">We bring</div>
+            <h3 class="font-serif text-2xl md:text-3xl text-onDark-primary mb-6 leading-tight">From day one.</h3>
+            <ul class="space-y-3">
+              {partnership.bring.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-onDark-secondary">
+                  <span aria-hidden="true" class="shrink-0 mt-1.5 w-3 h-px bg-saffron-300"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <article class="h-full rounded-3xl bg-cream/[0.04] border border-cream/10 p-8 md:p-10">
+            <div class="text-xs uppercase tracking-eyebrow text-saffron-300 mb-4">We seek</div>
+            <h3 class="font-serif text-2xl md:text-3xl text-onDark-primary mb-6 leading-tight">From you.</h3>
+            <ul class="space-y-3">
+              {partnership.seek.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-onDark-secondary">
+                  <span aria-hidden="true" class="shrink-0 mt-1.5 w-3 h-px bg-saffron-300"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* === FAQ === */}
+  <section class="section-pad bg-cream" aria-labelledby="faq-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Questions" id="faq-heading" align="center">
+        Questions deans <em class="italic font-light text-saffron-500">ask us.</em>
+      </SectionHead>
+
+      <FaqList items={faqs} variant="light" />
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>

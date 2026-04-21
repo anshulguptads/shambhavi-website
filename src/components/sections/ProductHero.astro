@@ -1,0 +1,124 @@
+---
+import Pill from '@components/ui/Pill.astro';
+import Button from '@components/ui/Button.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrowPills: { label: string; variant?: 'saffron' | 'outline-dark' }[];
+  nameFirst?: string;
+  nameItalic: string;
+  tagline: string;
+  description: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  stats?: Stat[];
+  accentColor?: 'saffron' | 'maroon' | 'mixed';
+  breadcrumbName: string;
+}
+
+const {
+  eyebrowPills,
+  nameFirst,
+  nameItalic,
+  tagline,
+  description,
+  primaryCta,
+  secondaryCta,
+  stats = [],
+  accentColor = 'saffron',
+  breadcrumbName,
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-36 pb-16 md:pb-20">
+  <GradientOrb class="-top-20 -right-40" color={accentColor} size="lg" />
+  <GradientOrb class="bottom-0 -left-40 opacity-60" color={accentColor === 'maroon' ? 'maroon' : 'mixed'} size="md" />
+
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 opacity-[0.04] pointer-events-none"
+    style="background-image: linear-gradient(rgba(250,247,239,1) 1px, transparent 1px), linear-gradient(90deg, rgba(250,247,239,1) 1px, transparent 1px); background-size: 72px 72px;"
+  >
+  </div>
+
+  <div class="container-page relative">
+    {/* Breadcrumb */}
+    <Reveal>
+      <nav aria-label="Breadcrumb" class="flex items-center gap-3 text-xs uppercase tracking-eyebrow text-onDark-muted mb-10">
+        <a href="/" class="hover:text-saffron-300 transition-colors">Shambhavi</a>
+        <span aria-hidden="true">/</span>
+        <a href="/#platforms" class="hover:text-saffron-300 transition-colors">Platforms</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-onDark-primary">{breadcrumbName}</span>
+      </nav>
+    </Reveal>
+
+    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
+      {/* Copy */}
+      <div>
+        <Reveal delay={100}>
+          <div class="flex items-center gap-3 mb-6 flex-wrap">
+            {eyebrowPills.map((p) => (
+              <Pill variant={p.variant ?? 'saffron'}>{p.label}</Pill>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <h1 class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]">
+            {nameFirst ? <>{nameFirst}</> : null}
+            <em class="italic font-light text-saffron-300">{nameItalic}</em>
+          </h1>
+        </Reveal>
+
+        <Reveal delay={250}>
+          <p class="mt-6 text-lead text-onDark-secondary text-pretty max-w-2xl font-serif italic font-light text-saffron-200/80">
+            {tagline}
+          </p>
+        </Reveal>
+
+        <Reveal delay={300}>
+          <p class="mt-5 text-base md:text-lg text-onDark-secondary text-pretty max-w-2xl">
+            {description}
+          </p>
+        </Reveal>
+
+        <Reveal delay={400}>
+          <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <Button href={primaryCta.href} variant="primary" size="lg">{primaryCta.label}</Button>
+            {secondaryCta && (
+              <Button href={secondaryCta.href} variant="ghost-dark" size="lg" icon="none">{secondaryCta.label}</Button>
+            )}
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Visual slot */}
+      <div class="relative animate-fade-in" style="animation-delay: 400ms">
+        <slot name="visual" />
+      </div>
+    </div>
+
+    {/* KPI bar */}
+    {stats.length > 0 && (
+      <Reveal delay={500}>
+        <div class="mt-14 md:mt-20 pt-8 md:pt-10 border-t border-cream/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+          {stats.map((stat) => (
+            <div class="flex flex-col items-start gap-1">
+              <span class="font-serif text-3xl md:text-4xl text-saffron-300 font-light tabular-nums leading-none">
+                {stat.value}
+              </span>
+              <span class="text-[10px] md:text-xs uppercase tracking-eyebrow text-onDark-muted">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+    )}
+  </div>
+</section>

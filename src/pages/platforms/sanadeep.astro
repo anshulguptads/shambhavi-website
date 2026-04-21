@@ -1,0 +1,484 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import ProductHero from '@components/sections/ProductHero.astro';
+import SectionHead from '@components/sections/SectionHead.astro';
+import FaqList from '@components/sections/FaqList.astro';
+import PricingTier from '@components/sections/PricingTier.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Pill from '@components/ui/Pill.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+import { productSchema, breadcrumbSchema } from '@lib/seo';
+import { site } from '@lib/site';
+
+const url = `${site.url}/platforms/sanadeep`;
+const schemas = [
+  productSchema({
+    name: 'SanaDeep',
+    description: 'The AI-native HRMS engineered in India, ready for the world. Nineteen modules, hundreds of AI features, statutory payroll across India, UAE, UK, and US — eight languages, one platform.',
+    url,
+    image: `${site.url}/og-sanadeep.png`,
+  }),
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Platforms', url: `${site.url}/#platforms` },
+    { name: 'SanaDeep', url },
+  ]),
+];
+
+const heroStats = [
+  { value: '19', label: 'Modules' },
+  { value: '1,958', label: 'Total features' },
+  { value: '584', label: 'AI features' },
+  { value: '4', label: 'Country payroll engines' },
+];
+
+// 5 clusters × 19 modules
+const clusters = [
+  {
+    num: '01',
+    name: 'Foundation',
+    desc: 'Set up fast, then run forever.',
+    modules: [
+      { name: 'Cold Start & Setup', features: 91, ai: 15 },
+      { name: 'Core HR & People Data', features: 177, ai: 42 },
+      { name: 'Platform & Experience', features: 139, ai: 34 },
+    ],
+  },
+  {
+    num: '02',
+    name: 'Time & Work',
+    desc: 'Where the day actually happens.',
+    modules: [
+      { name: 'Time & Attendance', features: 162, ai: 46 },
+      { name: 'Leave Management', features: 138, ai: 45 },
+      { name: 'Daily Work Logging', features: 111, ai: 37 },
+    ],
+  },
+  {
+    num: '03',
+    name: 'Talent Lifecycle',
+    desc: 'From hello to growth, all in one flow.',
+    modules: [
+      { name: 'Talent Acquisition', features: 119, ai: 40 },
+      { name: 'Onboarding & Offboarding', features: 88, ai: 29 },
+      { name: 'Performance & Growth', features: 102, ai: 36 },
+      { name: 'Learning & Development', features: 72, ai: 28 },
+      { name: 'Engagement & Culture', features: 107, ai: 38 },
+    ],
+  },
+  {
+    num: '04',
+    name: 'Pay',
+    desc: 'Multi-country, statutory-grade, AI-watched.',
+    modules: [
+      { name: 'Payroll Processing', features: 123, ai: 33 },
+      { name: 'Compensation & Rewards', features: 91, ai: 31 },
+      { name: 'Expense Management', features: 93, ai: 27 },
+    ],
+  },
+  {
+    num: '05',
+    name: 'Intelligence',
+    desc: 'The signal layer most HRMS leave for spreadsheets.',
+    modules: [
+      { name: 'Compliance & Audit', features: 98, ai: 25 },
+      { name: 'Workforce Planning', features: 79, ai: 27 },
+      { name: 'Integrations & API', features: 70, ai: 15 },
+      { name: 'People Analytics & BI', features: 76, ai: 27 },
+      { name: 'Demo & Sandbox', features: 22, ai: 9 },
+    ],
+  },
+];
+
+const aiCaps = [
+  { num: '01', name: 'Payroll Anomaly Detection', body: 'Flags every salary run for outliers — duplicate payouts, missing PF, wrong tax slab — before the run happens, not after.' },
+  { num: '02', name: 'Predictive Compliance', body: 'Watches CBDT, MCA, EPFO, GCC labour ministries and US/UK tax bodies. Surfaces what changes for you, when, and the action required.' },
+  { num: '03', name: 'Smart Document Parser', body: 'OCR + NLP across PAN, Aadhaar, Emirates ID, P45/P60, W-2. Auto-fills employee files. No more wet-ink data entry.' },
+  { num: '04', name: 'AI Org Designer', body: 'Simulates restructures — span-of-control, comp-band drift, attrition risk — before you put humans through them.' },
+  { num: '05', name: 'Succession Readiness', body: 'Scores internal candidates against open roles using performance, skills, mobility, and engagement signals. Surfaces hidden bench strength.' },
+  { num: '06', name: 'Team Insights Brief', body: 'A monthly digest for each manager — what changed, who needs attention, what to celebrate. Five minutes, instead of ten dashboards.' },
+];
+
+const countries = [
+  {
+    code: 'IN',
+    flag: '🇮🇳',
+    name: 'India',
+    artefacts: ['PF', 'ESI', 'Form 16', 'Professional Tax', 'NEFT', 'DPDPA 2023'],
+  },
+  {
+    code: 'AE',
+    flag: '🇦🇪',
+    name: 'UAE',
+    artefacts: ['WPS', 'GOSI', 'End-of-Service', 'Arabic RTL', 'MOHRE'],
+  },
+  {
+    code: 'GB',
+    flag: '🇬🇧',
+    name: 'United Kingdom',
+    artefacts: ['PAYE', 'P60', 'P45', 'National Insurance', 'HMRC RTI'],
+  },
+  {
+    code: 'US',
+    flag: '🇺🇸',
+    name: 'United States',
+    artefacts: ['W-2', '1099', 'FICA', 'State Tax', 'I-9'],
+  },
+];
+
+const languages = [
+  { name: 'English', native: 'English' },
+  { name: 'Hindi', native: 'हिंदी' },
+  { name: 'Arabic', native: 'العربية' },
+  { name: 'Spanish', native: 'Español' },
+  { name: 'French', native: 'Français' },
+  { name: 'German', native: 'Deutsch' },
+  { name: 'Mandarin', native: '中文' },
+  { name: 'Portuguese', native: 'Português' },
+];
+
+const trust = [
+  { num: '01', name: 'DPDPA-Compliant', body: 'Consent, retention, right-to-erasure built into the data model — not bolted into a policy PDF.' },
+  { num: '02', name: 'Encryption Everywhere', body: 'AES-256 at rest, TLS 1.3 in transit. Encrypted backups, encrypted exports, encrypted snapshots.' },
+  { num: '03', name: 'Data Sovereignty', body: 'Indian data centres by default. EU, UAE, US regions on request. Data residency you can prove to a regulator.' },
+  { num: '04', name: 'Field-Level Access', body: 'Roles control visibility per field, not just per module. Compensation, medical, performance — each gated separately.' },
+  { num: '05', name: 'Complete Audit Trail', body: 'Every read and write timestamped, attributed, immutable. Compliance teams stop dreading audits.' },
+  { num: '06', name: 'Right to Erasure', body: 'Employees can request deletion. Workflows handle statutory retention conflicts. Done in days, not months.' },
+];
+
+const plans = [
+  {
+    name: 'Essential',
+    price: '₹89',
+    priceUnit: '/employee/month',
+    description: 'For small teams getting modern HR right in India — without enterprise overhead.',
+    features: [
+      '4 core modules (Core HR, Time, Leave, Payroll)',
+      'India-only statutory payroll',
+      'Up to 100 employees',
+      'Email support — 24h SLA',
+      'Standard integrations (Slack, GSuite)',
+    ],
+    ctaLabel: 'Start with Essential',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=SanaDeep%20Essential',
+  },
+  {
+    name: 'Growth',
+    price: '₹149',
+    priceUnit: '/employee/month',
+    description: 'For mid-market companies operating in India + 1 international market with full HR depth.',
+    features: [
+      'All 19 modules unlocked',
+      'India + 1 country (UAE, UK, or US)',
+      'Up to 1,000 employees',
+      'Dedicated CSM + chat — 4h SLA',
+      'AI capabilities (Anomaly, Compliance, Org Designer)',
+      'SAML SSO + SCIM provisioning',
+    ],
+    ctaLabel: 'Book a walkthrough',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=SanaDeep%20Growth',
+    featured: true,
+    badge: 'Most chosen',
+  },
+  {
+    name: 'Enterprise',
+    price: 'Custom',
+    priceUnit: 'pricing',
+    description: 'For multi-country enterprises that need white-label, full SLAs, and custom statutory work.',
+    features: [
+      'Unlimited employees and countries',
+      'White-label, custom domain, brand kit',
+      '99.9% uptime SLA, 24/7 priority support',
+      'Custom statutory engines (additional countries)',
+      'Dedicated solution architect + onboarding squad',
+      'Private VPC deployment available',
+    ],
+    ctaLabel: 'Talk to sales',
+    ctaHref: 'mailto:info@shambhavilabs.com?subject=SanaDeep%20Enterprise',
+  },
+];
+
+const faqs = [
+  { q: 'Is SanaDeep DPDPA-compliant out of the box?', a: 'Yes. The data model is built around DPDPA — consent capture at every entry point, retention rules per module, right-to-erasure workflows that handle statutory retention conflicts automatically. We can produce a compliance attestation pack for your DPO.' },
+  { q: 'Which third-party HRMS or finance tools does SanaDeep integrate with?', a: 'Out of the box: SAP SuccessFactors, Workday, Oracle HCM, BambooHR, Zoho People (data migration), as well as Tally, QuickBooks, Zoho Books, Xero, NetSuite (finance). Beyond these, our REST API, SCIM, and webhook layers cover everything else. Custom integrations can be built on Growth + Enterprise plans.' },
+  { q: 'How long does implementation take?', a: 'Essential and Growth: 4–6 weeks end-to-end including data migration, payroll parallel runs, and training. Enterprise: 8–14 weeks depending on number of countries, custom modules, and integrations. Every implementation includes a parallel payroll run before cutover.' },
+  { q: 'Can we run multi-country payroll on a single instance?', a: 'Yes. SanaDeep was designed multi-country from the foundation, not retrofitted. One instance, one login, multi-country payroll engines that share employee data but apply each country\'s statutory rules independently. No duplicate employee records, no separate logins.' },
+  { q: 'Where is our data stored, and can we choose the region?', a: 'India by default for Indian customers. EU, UAE, and US regions available on Growth+ plans. Enterprise customers can request fully isolated single-tenant deployments in their preferred region. All deployments meet the data sovereignty requirements of the selected region.' },
+  { q: 'Are our prompts and HR data used to train any AI model?', a: 'No. SanaDeep AI features run on tenant-isolated inference. Your employee data, payroll data, and prompts never train shared models. Tenants can opt out of any cross-tenant statistics entirely.' },
+  { q: 'How deep is the localisation? Does Hindi just translate menu labels?', a: 'No. Localisation includes UI labels, statutory templates (Form 16 in Hindi, etc.), payslip layouts in regional formats, RTL for Arabic, calendar/holiday handling per country, currency and number formatting per locale. Eight languages out of the box; more on request for Enterprise.' },
+];
+---
+
+<PageLayout
+  title="SanaDeep"
+  description="The AI-native HRMS engineered in India, ready for the world. 19 modules · 1,958 features · 584 AI features · multi-country payroll across India, UAE, UK, US · 8 languages including Arabic RTL."
+  canonical="/platforms/sanadeep"
+  ogImage="/og-sanadeep.png"
+  schemas={schemas}
+  headerMode="over-dark"
+>
+  {/* === HERO === */}
+  <ProductHero
+    eyebrowPills={[{ label: 'WORK · ENTERPRISE' }, { label: 'Live', variant: 'outline-dark' }]}
+    nameFirst="Sana"
+    nameItalic="Deep"
+    tagline="The AI-native HRMS, engineered in India, ready for the world."
+    description="One platform for the entire employee lifecycle. Multi-country payroll engines from day one. AI woven through every module — not bolted on as a chatbot. Built for the enterprise that needs to operate across India, the Gulf, the UK, and the US on a single source of truth."
+    primaryCta={{ label: 'Book a Demo', href: 'mailto:info@shambhavilabs.com?subject=SanaDeep%20Demo' }}
+    secondaryCta={{ label: 'See pricing', href: '#pricing' }}
+    stats={heroStats}
+    accentColor="maroon"
+    breadcrumbName="SanaDeep"
+  >
+    {/* HRMS dashboard mockup */}
+    <div slot="visual" class="relative w-full max-w-md mx-auto">
+      <div class="relative rounded-3xl bg-cream/[0.06] backdrop-blur-sm border border-cream/15 p-6 md:p-7 shadow-2xl">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <p class="font-serif text-sm text-onDark-primary leading-tight">Payroll Run · Oct 2026</p>
+            <p class="text-[10px] text-onDark-muted mt-0.5">Acme India Pvt Ltd · 1,247 employees</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-md bg-saffron-400/15 border border-saffron-400/30 text-[9px] font-mono text-saffron-200 uppercase tracking-wider">
+            AI watching
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          {/* Anomaly alert */}
+          <div class="rounded-xl bg-maroon/30 border border-maroon-soft/40 p-3">
+            <div class="flex items-start gap-2">
+              <span class="shrink-0 mt-0.5 w-4 h-4 rounded-full bg-saffron-400 flex items-center justify-center text-[10px] text-navy font-bold">!</span>
+              <div class="flex-1 text-xs">
+                <p class="text-onDark-primary font-medium">3 anomalies detected</p>
+                <p class="text-onDark-muted mt-0.5 leading-snug">Duplicate IFSC for emp #4429 · PF missing for emp #2118 · Unusual variable comp for emp #3847</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Country split */}
+          <div class="grid grid-cols-2 gap-2">
+            <div class="rounded-lg bg-cream/[0.04] p-3">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-base">🇮🇳</span>
+                <span class="text-[9px] text-onDark-muted uppercase tracking-wider">PF · ESI · Form 16</span>
+              </div>
+              <div class="font-serif text-onDark-primary text-base">₹4.82 Cr</div>
+              <div class="text-[9px] text-saffron-200 mt-0.5">892 employees</div>
+            </div>
+            <div class="rounded-lg bg-cream/[0.04] p-3">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-base">🇦🇪</span>
+                <span class="text-[9px] text-onDark-muted uppercase tracking-wider">WPS · GOSI</span>
+              </div>
+              <div class="font-serif text-onDark-primary text-base">د.إ 1.4M</div>
+              <div class="text-[9px] text-saffron-200 mt-0.5">218 employees</div>
+            </div>
+            <div class="rounded-lg bg-cream/[0.04] p-3">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-base">🇬🇧</span>
+                <span class="text-[9px] text-onDark-muted uppercase tracking-wider">PAYE · NI</span>
+              </div>
+              <div class="font-serif text-onDark-primary text-base">£62,340</div>
+              <div class="text-[9px] text-saffron-200 mt-0.5">87 employees</div>
+            </div>
+            <div class="rounded-lg bg-cream/[0.04] p-3">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-base">🇺🇸</span>
+                <span class="text-[9px] text-onDark-muted uppercase tracking-wider">W-2 · FICA</span>
+              </div>
+              <div class="font-serif text-onDark-primary text-base">$184,700</div>
+              <div class="text-[9px] text-saffron-200 mt-0.5">50 employees</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-cream/10">
+            <div class="text-[10px] uppercase tracking-eyebrow text-onDark-muted">Run status</div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-saffron-400 animate-gentle-pulse"></span>
+              <span class="text-[11px] text-saffron-200">Ready · awaiting approval</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ProductHero>
+
+  {/* === 19 MODULES IN 5 CLUSTERS === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="modules-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="The Platform" id="modules-heading">
+        <em class="italic font-light text-saffron-500">Nineteen modules,</em> woven into five clusters. The full lifecycle, one source of truth.
+      </SectionHead>
+
+      <div class="space-y-10 md:space-y-12">
+        {clusters.map((cluster, i) => (
+          <Reveal delay={i * 80}>
+            <div>
+              {/* Cluster header */}
+              <div class="flex items-baseline gap-4 mb-5 pb-3 border-b border-navy/10">
+                <span class="font-mono text-xs text-saffron-500 font-semibold tabular-nums">{cluster.num}</span>
+                <h3 class="font-serif text-2xl md:text-3xl text-navy">
+                  {cluster.name}
+                </h3>
+                <span class="text-sm text-ink-muted italic font-serif hidden md:inline">— {cluster.desc}</span>
+                <span class="ml-auto text-[10px] uppercase tracking-eyebrow text-ink-muted">{cluster.modules.length} {cluster.modules.length === 1 ? 'module' : 'modules'}</span>
+              </div>
+              <p class="text-sm text-ink-muted italic font-serif md:hidden mb-4">{cluster.desc}</p>
+
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
+                {cluster.modules.map((mod) => (
+                  <article class="group relative rounded-xl bg-cream-50 border border-navy/8 p-5 hover:border-saffron-400/40 hover:shadow-soft transition-all duration-300">
+                    <div class="font-serif text-base md:text-lg text-navy leading-tight pr-12">{mod.name}</div>
+                    <div class="mt-3 flex items-center gap-3 text-[11px] text-ink-muted">
+                      <span class="tabular-nums">{mod.features} features</span>
+                      <span class="w-1 h-1 rounded-full bg-navy/20"></span>
+                      <span class="tabular-nums text-saffron-500 font-medium">{mod.ai} AI</span>
+                    </div>
+                    <span aria-hidden="true" class="absolute top-5 right-5 w-7 h-7 rounded-full bg-saffron-400/10 border border-saffron-400/20 flex items-center justify-center text-[8px] font-mono text-saffron-500 uppercase tracking-wider">AI</span>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === AI CAPABILITIES === */}
+  <section class="section-pad bg-navy-deepest text-onDark-primary grain-overlay relative overflow-hidden" aria-labelledby="ai-heading">
+    <GradientOrb class="-top-20 right-0" color="maroon" size="lg" />
+
+    <div class="container-page relative">
+      <SectionHead eyebrow="AI as Substrate" variant="dark" id="ai-heading">
+        Six AI capabilities that <em class="italic font-light text-saffron-300">replace whole spreadsheets.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {aiCaps.map((cap, i) => (
+          <Reveal delay={(i % 3) * 80}>
+            <article class="h-full rounded-2xl bg-cream/[0.04] border border-cream/10 p-7 md:p-8 hover:bg-cream/[0.06] hover:border-saffron-300/30 transition-all duration-500">
+              <div class="flex items-baseline gap-3 mb-4">
+                <span class="font-mono text-xs text-saffron-300 font-semibold tabular-nums">{cap.num}</span>
+                <span class="h-px flex-1 bg-cream/10"></span>
+              </div>
+              <h3 class="font-serif text-xl md:text-2xl text-onDark-primary leading-tight">{cap.name}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-onDark-secondary text-pretty">{cap.body}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === GLOBAL: 4 COUNTRIES + 8 LANGUAGES === */}
+  <section class="section-pad bg-cream" aria-labelledby="global-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Global From Day One" id="global-heading">
+        Four country payroll engines. <em class="italic font-light text-saffron-500">Eight languages.</em> One instance.
+      </SectionHead>
+
+      {/* Country grid */}
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-12 md:mb-16">
+        {countries.map((c, i) => (
+          <Reveal delay={i * 100}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-6 md:p-7 hover:border-saffron-400/40 hover:shadow-lift hover:-translate-y-1 transition-all duration-500">
+              <div class="flex items-center gap-3 mb-5">
+                <span class="text-3xl">{c.flag}</span>
+                <div>
+                  <div class="font-serif text-xl text-navy">{c.name}</div>
+                  <div class="text-[10px] uppercase tracking-eyebrow text-ink-muted">{c.code} statutory</div>
+                </div>
+              </div>
+              <p class="eyebrow text-ink-faint mb-3">Native artefacts</p>
+              <ul class="flex flex-wrap gap-1.5">
+                {c.artefacts.map((art) => (
+                  <li class="px-2 py-0.5 rounded-md bg-cream-200 border border-navy/8 text-[11px] text-ink-secondary font-mono">
+                    {art}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+
+      {/* Languages */}
+      <Reveal>
+        <div class="rounded-2xl bg-cream-50 border border-navy/8 p-6 md:p-8">
+          <div class="flex items-baseline justify-between mb-5">
+            <Eyebrow>Languages — UI, payslips, Arabic RTL throughout</Eyebrow>
+            <span class="text-[10px] uppercase tracking-eyebrow text-ink-muted">8 supported · more on Enterprise</span>
+          </div>
+          <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+            {languages.map((lang) => (
+              <div class="rounded-lg bg-cream border border-navy/8 p-3 text-center">
+                <div class="font-serif text-base text-navy leading-tight">{lang.native}</div>
+                <div class="text-[9px] uppercase tracking-eyebrow text-ink-muted mt-1">{lang.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === TRUST / SECURITY === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="trust-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Trust & Compliance" id="trust-heading" align="center">
+        Six pillars <em class="italic font-light text-saffron-500">your CISO will sign off on.</em>
+      </SectionHead>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {trust.map((t, i) => (
+          <Reveal delay={(i % 3) * 80}>
+            <article class="h-full rounded-2xl bg-cream-50 border border-navy/8 p-7 md:p-8">
+              <div class="font-mono text-xs text-saffron-500 font-semibold tabular-nums mb-3">{t.num}</div>
+              <h3 class="font-serif text-xl text-navy leading-tight mb-3">{t.name}</h3>
+              <p class="text-sm leading-relaxed text-ink-secondary text-pretty">{t.body}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* === PRICING === */}
+  <section class="section-pad bg-cream" aria-labelledby="pricing-heading" id="pricing">
+    <div class="container-page">
+      <SectionHead eyebrow="Pricing" id="pricing-heading" align="center">
+        Three tiers. <em class="italic font-light text-saffron-500">Pricing that scales with you,</em> not against you.
+      </SectionHead>
+
+      <div class="grid md:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto items-stretch">
+        {plans.map((plan) => (
+          <Reveal>
+            <PricingTier {...plan} />
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={400}>
+        <p class="mt-10 max-w-2xl mx-auto text-center text-sm text-ink-muted">
+          All plans include data sovereignty, encryption everywhere, and DPDPA compliance. No setup fees on Essential or Growth.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* === FAQ === */}
+  <section class="section-pad bg-cream-100" aria-labelledby="faq-heading">
+    <div class="container-page">
+      <SectionHead eyebrow="Questions" id="faq-heading" align="center">
+        Things CHROs and IT <em class="italic font-light text-saffron-500">always ask.</em>
+      </SectionHead>
+
+      <FaqList items={faqs} variant="light" />
+    </div>
+  </section>
+
+  <CtaSection />
+</PageLayout>
