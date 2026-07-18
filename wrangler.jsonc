@@ -1,26 +1,16 @@
 {
-  // Cloudflare WORKERS (with static assets) config — production deploys via
-  // Workers Builds (`npm run build` then `wrangler deploy`), which reads this
-  // file. Static files are served from ./dist; requests with no matching
-  // asset (the /api/* form routes, server islands) fall through to the
-  // Astro worker at dist/_worker.js.
+  // Cloudflare Workers Builds reads this at deploy time. The dashboard's
+  // stored deploy command supplies the assets directory, so this file only
+  // pins identity + runtime flags — adding `main`/`assets` here conflicts
+  // with that command's flags and fails the deploy.
   //
-  // The D1 binding is commented out until the database exists — deploys fail
-  // on bindings with invalid ids. After `wrangler d1 create shambhavi-forms`,
-  // uncomment and paste the real id (docs/DYNAMIC-SETUP.md step 1).
-  //
-  // "d1_databases": [
-  //   { "binding": "DB", "database_name": "shambhavi-forms", "database_id": "<from wrangler d1 create>" }
-  // ],
+  // To activate the SERVER side (form APIs, Keystatic) change the Workers
+  // Builds deploy command to:  npx wrangler deploy --config wrangler.worker.jsonc
+  // (docs/DYNAMIC-SETUP.md step 0).
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "shambhavi-website",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "dist/_worker.js/index.js",
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "./dist"
-  },
   "observability": {
     "enabled": true
   }
