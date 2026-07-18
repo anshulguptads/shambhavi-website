@@ -40,3 +40,9 @@ _legacy/
 /mobile-*.png
 /fix-*.png
 /page-*.png
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
