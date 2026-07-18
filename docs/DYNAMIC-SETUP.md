@@ -19,16 +19,15 @@ config file conflicts with it — builds fail if one exists). The form pages
 render, but `/api/*` and `/keystatic` need the Astro worker deployed.
 
 Cloudflare dashboard → Workers & Pages → **shambhavi-website** → Settings →
-**Build** → Deploy command, change it to:
+**Build**, change TWO fields:
 
-```
-npx wrangler deploy --config cloudflare.worker.jsonc
-```
+- Build command: `npm run build:worker`
+- Deploy command: `npx wrangler deploy --config cloudflare.worker.jsonc`
 
 [cloudflare.worker.jsonc](../cloudflare.worker.jsonc) is ready in the repo
 (worker + assets + nodejs_compat). Retry the latest deployment after saving.
-While you're in that screen, note the **build log** of any failed deploy —
-if the command above errors, the log will say exactly why.
+While you're in that screen, the **build log** of any failed deploy says
+exactly why — that log is the one thing this repo can't see.
 
 ## 1. D1 database — durable lead storage (~3 min)
 
