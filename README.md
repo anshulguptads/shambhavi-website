@@ -5,7 +5,15 @@ AI-native software for how India learns, works, and builds.
 **Live site:** https://shambhavilabs.com
 
 The source code for the Shambhavi Innovation Lab marketing website. Built with
-[Astro](https://astro.build), Tailwind CSS, and MDX. Deployed via Cloudflare Pages.
+[Astro](https://astro.build), Tailwind CSS, MDX, GSAP + three.js (motion), and
+Keystatic (CMS). Deployed on Cloudflare (static assets + a worker for the form
+APIs and CMS).
+
+**Dynamic features** — working pilot/contact forms (`/request-pilot`,
+`/contact`; Turnstile → D1 → Resend with graceful degradation) and a founder
+CMS at `/keystatic`. One-time account setup lives in
+[docs/DYNAMIC-SETUP.md](docs/DYNAMIC-SETUP.md). Tests: `npm run test`.
+Full worker build: `npm run build:worker`.
 
 ---
 
