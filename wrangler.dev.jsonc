@@ -1,0 +1,15 @@
+{
+  // LOCAL DEV ONLY — read by astro.config.mjs platformProxy so `astro dev`
+  // gets a local D1 (miniflare sqlite). The database_id is irrelevant
+  // locally; data lives in .wrangler/state.
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "shambhavi-website",
+  "compatibility_date": "2026-07-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shambhavi-forms",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

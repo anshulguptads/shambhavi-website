@@ -1,18 +1,17 @@
 {
-  // Cloudflare Pages runtime config — bindings for the form API routes.
-  // Local dev: `astro dev` reads this via platformProxy (local D1 automatically).
-  // Production: create the database once (`wrangler d1 create shambhavi-forms`),
-  // paste its id below, and apply db/migrations/0001_submissions.sql --remote.
-  // See docs/DYNAMIC-SETUP.md.
+  // Cloudflare Pages config. Deliberately minimal: bindings with invalid ids
+  // fail Pages deploy validation, so the D1 binding is added either
+  //   (a) in the dashboard (Settings → Bindings → D1 → name `DB`), or
+  //   (b) here, once you have the real id from `wrangler d1 create` —
+  //       see docs/DYNAMIC-SETUP.md step 1.
+  //
+  // Local dev bindings live in wrangler.dev.jsonc (used via platformProxy).
+  //
+  // "d1_databases": [
+  //   { "binding": "DB", "database_name": "shambhavi-forms", "database_id": "<from wrangler d1 create>" }
+  // ],
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "shambhavi-website",
   "compatibility_date": "2026-07-01",
-  "pages_build_output_dir": "./dist",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "shambhavi-forms",
-      "database_id": "REPLACE-WITH-ID-FROM-wrangler-d1-create"
-    }
-  ]
+  "pages_build_output_dir": "./dist"
 }

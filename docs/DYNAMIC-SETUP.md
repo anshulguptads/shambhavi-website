@@ -18,8 +18,8 @@ npx wrangler login                     # opens browser; use the Cloudflare accou
 npx wrangler d1 create shambhavi-forms
 ```
 
-Copy the printed `database_id` into [wrangler.jsonc](../wrangler.jsonc)
-(replace `REPLACE-WITH-ID-FROM-wrangler-d1-create`), then create the table:
+Copy the printed `database_id` into [wrangler.jsonc](../wrangler.jsonc) —
+uncomment the `d1_databases` block and paste the id — then create the table:
 
 ```bash
 npx wrangler d1 execute shambhavi-forms --remote --file db/migrations/0001_submissions.sql
