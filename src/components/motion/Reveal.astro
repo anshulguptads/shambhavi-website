@@ -23,6 +23,8 @@ const fromClass = {
 </Tag>
 
 <script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+
   const REVEAL_CLASSES_TO_REMOVE = ['opacity-0', 'translate-y-4', '-translate-x-4', 'translate-x-4'];
 
   const showElement = (el: Element) => {
@@ -30,7 +32,8 @@ const fromClass = {
     el.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
   };
 
-  const observe = () => {
+  // Re-runs on every page (client-side navs included); cleans up per page.
+  onPageReady(() => {
     const els = Array.from(document.querySelectorAll('.reveal.opacity-0'));
     if (els.length === 0) return;
 
@@ -62,14 +65,13 @@ const fromClass = {
     // Safety net: anything still hidden after 4s (page loaded but observer never fired)
     // ensures content always becomes visible — critical for fullPage screenshots, slow
     // JS execution, adblockers that suppress observers, and print/PDF exports.
-    setTimeout(() => {
+    const safetyNet = window.setTimeout(() => {
       document.querySelectorAll('.reveal.opacity-0').forEach(showElement);
     }, 4000);
-  };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', observe);
-  } else {
-    observe();
-  }
+    return () => {
+      io.disconnect();
+      window.clearTimeout(safetyNet);
+    };
+  });
 </script>

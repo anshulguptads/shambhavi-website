@@ -1,0 +1,137 @@
+---
+/**
+ * AspiremsAI signature scene — the crisis-detection story, played by scroll.
+ *
+ * A student's message arrives → the two detection layers fire (with a live
+ * stopwatch racing to the "< 2s" promise) → the KIRAN helpline card surfaces
+ * over the chat → system responses fan out. On 'full' tier the beats are
+ * scrubbed by scroll; on 'lite' the sequence plays once on reveal; with
+ * reduced motion (or no JS) the final state is simply visible.
+ */
+---
+
+<div class="crisis-scene max-w-5xl mx-auto mb-16" role="img" aria-label="Simulation: a distress message is detected in under two seconds, the KIRAN helpline appears for the student, and counsellors and administrators are alerted in parallel.">
+  <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-5 md:gap-6 items-stretch">
+
+    {/* Phone chat panel */}
+    <div class="ct-phone relative rounded-2xl bg-navy-deep/60 border border-cream/10 p-5 md:p-6 overflow-hidden">
+      <div class="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-onDark-muted mb-5">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-saffron-400 animate-gentle-pulse"></span>
+          AspiremsAI · Student chat
+        </span>
+        <span class="inline-flex items-baseline gap-1">
+          <span class="text-onDark-faint normal-case">detection</span>
+          <span class="ct-clock text-saffron-300 tabular-nums text-xs">1.80s</span>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-sm leading-relaxed">
+        <div class="self-end max-w-[80%] px-4 py-2.5 rounded-2xl rounded-br-md bg-cream/10 text-onDark-primary border border-cream/5">
+          Physics test kal hai… bilkul ready nahi hoon
+        </div>
+        <div class="ct-msg self-end max-w-[86%] px-4 py-2.5 rounded-2xl rounded-br-md bg-cream/10 text-onDark-primary border border-cream/5">
+          kuch samajh nahi aata…
+          <mark class="ct-flag rounded-sm px-1 bg-transparent text-onDark-primary transition-colors duration-500">main bahut thak gayi hoon, sab bekaar lagta hai</mark>
+        </div>
+
+        {/* Detection layer badges */}
+        <div class="self-end flex flex-wrap justify-end gap-1.5 mt-0.5" aria-hidden="true">
+          <span class="ct-l1 text-[9px] font-mono uppercase tracking-wider px-2 py-1 rounded-md bg-cream/[0.07] border border-saffron-400/40 text-saffron-200">Layer 01 · keyword net ✓</span>
+          <span class="ct-l2 text-[9px] font-mono uppercase tracking-wider px-2 py-1 rounded-md bg-cream/[0.07] border border-saffron-400/40 text-saffron-200">Layer 02 · semantic ✓</span>
+        </div>
+
+        {/* KIRAN intervention card */}
+        <div class="ct-kiran mt-2 rounded-xl bg-saffron-400 text-navy p-4 md:p-5 shadow-glow">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-serif text-base font-medium leading-snug">You're not alone. Talking helps.</p>
+              <p class="mt-1 text-xs leading-relaxed opacity-80">A trained counsellor is available right now, free, in your language.</p>
+            </div>
+            <span class="shrink-0 text-[9px] font-mono uppercase tracking-wider bg-navy/10 rounded px-1.5 py-0.5">KIRAN</span>
+          </div>
+          <p class="mt-3 font-mono text-sm font-semibold tabular-nums">1800-599-0019</p>
+        </div>
+      </div>
+
+    </div>
+
+    {/* System response column */}
+    <div class="flex flex-col gap-2.5 md:gap-3" aria-hidden="true">
+      <p class="eyebrow text-onDark-muted mb-1">Meanwhile, in parallel</p>
+      {[
+        { t: '+2.0s', label: 'Safety alert written to the audit database', icon: '▣' },
+        { t: '+5.0s', label: 'Counsellor notified — email + SMS, critical priority', icon: '➤' },
+        { t: '+10s', label: 'School Health Dashboard updates for administrators', icon: '◔' },
+        { t: '+1h', label: 'AI Coach gently offers a coping exercise', icon: '❋' },
+      ].map((step) => (
+        <div class="ct-sys flex items-center gap-4 rounded-xl bg-cream/[0.04] border border-cream/10 px-4 py-3.5 md:py-4">
+          <span class="font-mono text-xs text-saffron-300 tabular-nums w-12 shrink-0">{step.t}</span>
+          <span class="text-sm text-onDark-primary leading-snug">{step.label}</span>
+          <span class="ml-auto text-saffron-300/60 text-base" aria-hidden="true">{step.icon}</span>
+        </div>
+      ))}
+      <p class="mt-2 text-[11px] leading-relaxed text-onDark-muted italic">
+        The student sees only the helpline — never the machinery. Support without surveillance.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { withGsap } from '@lib/motion/gsap';
+  import { motionTier } from '@lib/motion/tier';
+
+  withGsap(
+    (gsap) => {
+      const scene = document.querySelector('.crisis-scene');
+      if (!scene) return;
+
+      const clock = scene.querySelector('.ct-clock');
+      const flag = scene.querySelector('.ct-flag');
+      const chain = document.querySelectorAll('.crisis-chain li');
+      const proxy = { t: 0 };
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.out' },
+        scrollTrigger:
+          motionTier() === 'full'
+            ? { trigger: scene, start: 'top 78%', end: 'center 38%', scrub: 0.6 }
+            : { trigger: scene, start: 'top 80%', once: true },
+      });
+
+      // initial states (JS-only, so no-JS keeps the final state visible)
+      tl.set('.ct-msg', { opacity: 0, y: 14 }, 0)
+        .set(['.ct-l1', '.ct-l2'], { opacity: 0, x: 16 }, 0)
+        .set('.ct-kiran', { opacity: 0, y: 22, scale: 0.96 }, 0)
+        .set('.ct-sys', { opacity: 0, x: 26 }, 0)
+        .set(chain, { opacity: 0.3 }, 0);
+
+      // Beat 1 — the message lands
+      tl.to('.ct-msg', { opacity: 1, y: 0, duration: 0.4 }, 0.05);
+
+      // Beat 2 — layers fire while the stopwatch races to the <2s promise
+      tl.to(proxy, {
+        t: 1.8,
+        duration: 0.9,
+        ease: 'none',
+        onUpdate: () => {
+          if (clock) clock.textContent = proxy.t.toFixed(2) + 's';
+        },
+      }, 0.35)
+        .to('.ct-l1', { opacity: 1, x: 0, duration: 0.25 }, 0.45)
+        .to(flag, { backgroundColor: 'rgba(168, 50, 84, 0.45)', duration: 0.3 }, 0.5)
+        .to('.ct-l2', { opacity: 1, x: 0, duration: 0.25 }, 0.75);
+
+      // Beat 3 — KIRAN surfaces for the student
+      tl.to('.ct-kiran', { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'back.out(1.4)' }, 1.25);
+
+      // Beat 4 — the system fans out around them
+      tl.to('.ct-sys', { opacity: 1, x: 0, stagger: 0.18, duration: 0.45 }, 1.55);
+
+      // Beat 5 — the full intervention chain below lights up
+      if (chain.length) tl.to(chain, { opacity: 1, stagger: 0.08, duration: 0.3 }, 2.1);
+    },
+    { minTier: 'lite' }
+  );
+</script>

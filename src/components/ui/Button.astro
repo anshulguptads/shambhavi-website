@@ -41,6 +41,7 @@ const Tag = href ? 'a' : 'button';
 <Tag
   href={href}
   type={Tag === 'button' ? type : undefined}
+  data-magnetic={variant === 'primary' ? true : undefined}
   class:list={[base, variantClass, variant !== 'link' && sizeClass, className]}
 >
   <slot />

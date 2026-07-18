@@ -25,7 +25,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout {...seoProps} schemas={schemas} theme={theme} bodyClass={bodyClass}>
+<BaseLayout {...seoProps} schemas={schemas} theme={theme} bodyClass={bodyClass} headerMode={headerMode}>
   <Header mode={headerMode} />
   <main id="main-content" class="min-h-screen">
     <slot />

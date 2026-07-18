@@ -2,12 +2,15 @@
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Button from '@components/ui/Button.astro';
 import GradientOrb from '@components/motion/GradientOrb.astro';
+import GradientMesh from '@components/motion/GradientMesh.astro';
+import HeroEyeGL from '@components/scenes/HeroEyeGL.astro';
 ---
 
 <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay min-h-[min(100svh,900px)] flex items-center pt-28 md:pt-32 pb-24 md:pb-32" id="hero" aria-labelledby="hero-title">
-  {/* Ambient gradient orbs */}
+  {/* Ambient gradient orbs + drifting mesh upgrade (full tier) */}
   <GradientOrb class="-top-40 -right-20 md:-right-40 -z-0" color="saffron" size="lg" />
   <GradientOrb class="bottom-0 -left-40 -z-0" color="maroon" size="md" />
+  <GradientMesh variant="hero" class="-z-0" />
 
   {/* Grid pattern */}
   <div
@@ -59,11 +62,13 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
         </div>
       </div>
 
-      {/* Eye visual — radial-beam variant */}
+      {/* Eye visual — SVG fallback + WebGL particle upgrade on capable devices */}
       <div class="order-1 lg:order-2 relative flex justify-center lg:justify-end animate-fade-in" style="animation-delay: 340ms">
         <div class="relative w-full max-w-[360px] md:max-w-[440px] aspect-[4/3]">
           {/* Glow behind eye */}
           <div class="absolute inset-0 rounded-full bg-saffron-400/20 blur-3xl scale-75 animate-gentle-pulse"></div>
+
+          <HeroEyeGL />
 
           <svg
             class="hero-eye relative w-full h-full"
@@ -198,10 +203,15 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
 </style>
 
 <script>
-  const eye = document.querySelector('.hero-eye') as SVGElement | null;
-  const pupil = document.getElementById('hero-pupil') as unknown as SVGCircleElement | null;
+  import { onPageReady } from '@lib/motion/lifecycle';
 
-  if (eye && pupil && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Pupil cursor-tracking for the SVG fallback eye. Re-bound per page;
+  // idle when the WebGL eye has taken over (svg gets data-gl-active).
+  onPageReady(() => {
+    const eye = document.querySelector('.hero-eye') as SVGElement | null;
+    const pupil = document.getElementById('hero-pupil') as unknown as SVGCircleElement | null;
+    if (!eye || !pupil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const centerCx = 80;
     const centerCy = 60;
     const maxOffset = 5;
@@ -211,12 +221,12 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
     let curY = centerCy;
     let rafId: number | null = null;
 
-    const move = (clientX: number, clientY: number) => {
+    const move = (e: MouseEvent) => {
       const rect = eye.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = clientX - cx;
-      const dy = clientY - cy;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
       const mag = Math.hypot(dx, dy) || 1;
       const norm = Math.min(mag / 600, 1);
       targetX = centerCx + (dx / mag) * maxOffset * norm;
@@ -224,6 +234,11 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
     };
 
     const follow = () => {
+      // WebGL eye has taken over — stop driving the invisible SVG pupil.
+      if (eye.dataset.glActive === 'true') {
+        rafId = null;
+        return;
+      }
       curX += (targetX - curX) * 0.1;
       curY += (targetY - curY) * 0.1;
       pupil.setAttribute('cx', curX.toFixed(2));
@@ -231,11 +246,12 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
       rafId = requestAnimationFrame(follow);
     };
 
-    window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY), { passive: true });
+    window.addEventListener('mousemove', move, { passive: true });
     follow();
 
-    window.addEventListener('beforeunload', () => {
+    return () => {
+      window.removeEventListener('mousemove', move);
       if (rafId !== null) cancelAnimationFrame(rafId);
-    });
-  }
+    };
+  });
 </script>

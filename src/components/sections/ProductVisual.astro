@@ -424,10 +424,20 @@ const sanaModules = [
 </style>
 
 <script>
-  // Re-triggering observer: animations replay every time visual enters viewport
-  const visuals = document.querySelectorAll('.product-visual');
+  import { onPageReady } from '@lib/motion/lifecycle';
 
-  if ('IntersectionObserver' in window) {
+  // Re-triggering observer: animations replay every time visual enters viewport.
+  // Re-bound per page so client-side navigation keeps visuals alive.
+  onPageReady(() => {
+    const visuals = document.querySelectorAll('.product-visual');
+    if (visuals.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      visuals.forEach((v) => v.classList.add('in-view'));
+      return;
+    }
+
+    const intervals: number[] = [];
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -451,6 +461,7 @@ const sanaModules = [
                   if (counter) counter.textContent = String(cur);
                   if (cur >= target) window.clearInterval(interval);
                 }, 60);
+                intervals.push(interval);
               }
             }
           } else {
@@ -462,7 +473,10 @@ const sanaModules = [
       { threshold: 0.2, rootMargin: '0px 0px -80px 0px' }
     );
     visuals.forEach((v) => io.observe(v));
-  } else {
-    visuals.forEach((v) => v.classList.add('in-view'));
-  }
+
+    return () => {
+      io.disconnect();
+      intervals.forEach((i) => window.clearInterval(i));
+    };
+  });
 </script>

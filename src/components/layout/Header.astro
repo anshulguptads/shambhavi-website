@@ -13,6 +13,7 @@ const currentPath = Astro.url.pathname;
 
 <header
   id="site-header"
+  transition:persist="site-header"
   data-mode={mode}
   data-scrolled="false"
   class:list={[
@@ -42,7 +43,7 @@ const currentPath = Astro.url.pathname;
       </a>
 
       {/* Desktop nav */}
-      <ul class="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium">
+      <ul id="desktop-nav" class="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium relative">
         {nav.primary.map((link) => {
           const linkPath = link.href.split('#')[0];
           const isActive =
@@ -237,58 +238,67 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+
+  // The header element is persisted across client-side navigations
+  // (transition:persist), so bindings survive — but the mode must re-sync to
+  // each page's intent, and the mobile menu must close on navigation.
+
   const header = document.getElementById('site-header');
-  const mode = header?.dataset.mode;
-
-  // Scroll-based mode swap
-  if (header && mode === 'over-dark') {
-    const threshold = Math.max(80, window.innerHeight * 0.5);
-    let ticking = false;
-    const update = () => {
-      const scrolled = window.scrollY > threshold;
-      header.dataset.scrolled = scrolled ? 'true' : 'false';
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', update);
-  }
-
-  // Mobile menu toggle
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const bars = toggle?.querySelectorAll('.menu-bar') as NodeListOf<HTMLElement> | undefined;
 
-  if (toggle && menu && bars) {
-    let isOpen = false;
-    const setOpen = (open: boolean) => {
-      isOpen = open;
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.setAttribute('aria-hidden', String(!open));
-      if (open) {
-        menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
-        menu.classList.add('opacity-100', 'translate-y-0');
-        document.body.style.overflow = 'hidden';
-        bars[0].style.transform = 'translateY(0) rotate(45deg)';
-        bars[1].style.opacity = '0';
-        bars[2].style.transform = 'translateY(0) rotate(-45deg)';
-      } else {
-        menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
-        menu.classList.remove('opacity-100', 'translate-y-0');
-        document.body.style.overflow = '';
-        bars[0].style.transform = 'translateY(-4px) rotate(0)';
-        bars[1].style.opacity = '1';
-        bars[2].style.transform = 'translateY(4px) rotate(0)';
-      }
-    };
+  // ---- Scroll-based mode swap (bound once; header persists) ----
+  let threshold = 80;
+  const updateScrolled = () => {
+    if (!header) return;
+    header.dataset.scrolled = window.scrollY > threshold ? 'true' : 'false';
+  };
+  let ticking = false;
+  const onScroll = () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateScrolled();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+  if (header) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      threshold = Math.max(80, window.innerHeight * 0.5);
+      updateScrolled();
+    });
+  }
 
+  // ---- Mobile menu (bound once; header persists) ----
+  let isOpen = false;
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu || !bars) return;
+    isOpen = open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    menu.setAttribute('aria-hidden', String(!open));
+    if (open) {
+      menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
+      menu.classList.add('opacity-100', 'translate-y-0');
+      document.body.style.overflow = 'hidden';
+      bars[0].style.transform = 'translateY(0) rotate(45deg)';
+      bars[1].style.opacity = '0';
+      bars[2].style.transform = 'translateY(0) rotate(-45deg)';
+    } else {
+      menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
+      menu.classList.remove('opacity-100', 'translate-y-0');
+      document.body.style.overflow = '';
+      bars[0].style.transform = 'translateY(-4px) rotate(0)';
+      bars[1].style.opacity = '1';
+      bars[2].style.transform = 'translateY(4px) rotate(0)';
+    }
+  };
+
+  if (toggle && menu && bars) {
     toggle.addEventListener('click', () => setOpen(!isOpen));
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => {
@@ -298,4 +308,70 @@ const currentPath = Astro.url.pathname;
       if (window.innerWidth >= 768 && isOpen) setOpen(false);
     });
   }
+
+  // ---- Nav underline with spring physics (desktop, full tier) ----
+  onPageReady(() => {
+    const nav = document.getElementById('desktop-nav');
+    if (!nav || !window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let disposed = false;
+    let underline: HTMLElement | null = null;
+    const handlers: Array<[Element, string, EventListener]> = [];
+
+    import('@lib/motion/gsap').then(({ loadGsap }) =>
+      loadGsap().then(({ gsap }) => {
+        if (disposed) return;
+        underline = document.createElement('span');
+        underline.setAttribute('aria-hidden', 'true');
+        underline.className = 'absolute -bottom-0.5 h-[2px] rounded-full bg-saffron-400 pointer-events-none';
+        underline.style.opacity = '0';
+        nav.appendChild(underline);
+
+        const links = Array.from(nav.querySelectorAll<HTMLElement>('.hdr-link'));
+        let visible = false;
+        for (const link of links) {
+          const on = () => {
+            const left = link.offsetLeft + (link.parentElement?.offsetLeft ?? 0);
+            gsap.to(underline, {
+              x: left,
+              width: link.offsetWidth,
+              opacity: 1,
+              duration: visible ? 0.55 : 0.01,
+              ease: visible ? 'elastic.out(1, 0.6)' : 'power1.out',
+            });
+            visible = true;
+          };
+          link.addEventListener('pointerenter', on);
+          handlers.push([link, 'pointerenter', on]);
+        }
+        const off = () => {
+          visible = false;
+          gsap.to(underline, { opacity: 0, duration: 0.3 });
+        };
+        nav.addEventListener('pointerleave', off);
+        handlers.push([nav, 'pointerleave', off]);
+      })
+    );
+
+    return () => {
+      disposed = true;
+      handlers.forEach(([el, ev, fn]) => el.removeEventListener(ev, fn));
+      underline?.remove();
+    };
+  });
+
+  // ---- Per-page re-sync ----
+  onPageReady(() => {
+    if (!header) return;
+    // Each page declares its intended header mode on <body>.
+    const pageMode = document.body.dataset.headerMode;
+    if (pageMode === 'over-dark' || pageMode === 'solid-light') {
+      header.dataset.mode = pageMode;
+      header.classList.toggle('solid-light', pageMode === 'solid-light');
+    }
+    threshold = Math.max(80, window.innerHeight * 0.5);
+    updateScrolled();
+    if (isOpen) setOpen(false);
+  });
 </script>

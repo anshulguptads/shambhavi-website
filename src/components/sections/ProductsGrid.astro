@@ -30,6 +30,7 @@ const products = (await getCollection('products')).sort((a, b) => a.data.order -
         return (
           <Reveal>
             <article
+              data-tilt
               class:list={[
                 'group grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-stretch',
                 'rounded-3xl overflow-hidden border border-navy/8 bg-cream-50 hover:shadow-lift transition-shadow duration-500',
@@ -44,7 +45,7 @@ const products = (await getCollection('products')).sort((a, b) => a.data.order -
                   {data.status === 'coming-soon' && <Pill variant="outline">Coming Soon</Pill>}
                 </div>
 
-                <h3 class="font-serif fraunces-display text-display-md text-navy text-balance">
+                <h3 class="font-serif fraunces-display text-display-md text-navy text-balance" transition:name={`product-title-${slug}`}>
                   {data.name.split(' ').map((word, idx) => {
                     const italicSecond = data.name.includes(' ') && idx === data.name.split(' ').length - 1;
                     return italicSecond ? (
