@@ -1,0 +1,70 @@
+---
+/**
+ * WebGL particle eye — progressive enhancement over the SVG fallback.
+ * Renders a canvas that stays invisible until the scene's first frame,
+ * then crossfades with the SVG. Loads three.js (via @lib/motion/hero-eye)
+ * only on 'full'-tier devices, after the browser is idle.
+ */
+---
+
+<canvas
+  id="hero-eye-gl"
+  class="absolute inset-0 w-full h-full z-10 opacity-0 transition-opacity duration-700 ease-out pointer-events-none"
+  aria-hidden="true"></canvas>
+
+<script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+  import { motionTier } from '@lib/motion/tier';
+
+  onPageReady(() => {
+    const canvas = document.getElementById('hero-eye-gl') as HTMLCanvasElement | null;
+    if (!canvas || motionTier() !== 'full') return;
+
+    let cleanup: (() => void) | null = null;
+    let cancelled = false;
+    let idleId: number | null = null;
+    let timeoutId: number | null = null;
+    const failSafe = window.setTimeout(() => {
+      // If the scene hasn't produced a frame in 4s, leave the SVG in charge.
+      cancelled = true;
+    }, 4000);
+
+    const boot = async () => {
+      if (cancelled) return;
+      try {
+        const { initHeroEye } = await import('@lib/motion/hero-eye');
+        if (cancelled) return;
+        cleanup = initHeroEye(canvas, () => {
+          if (cancelled) return;
+          window.clearTimeout(failSafe);
+          canvas.classList.remove('opacity-0');
+          canvas.classList.add('opacity-100');
+          const svg = document.querySelector('.hero-eye') as SVGElement | null;
+          if (svg) {
+            svg.dataset.glActive = 'true';
+            svg.style.transition = 'opacity 700ms ease-out';
+            svg.style.opacity = '0';
+          }
+        });
+      } catch (err) {
+        // WebGL init failed — SVG fallback simply stays. Not an error state.
+        console.warn('[hero-eye] falling back to SVG:', err);
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      idleId = requestIdleCallback(() => void boot(), { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(() => void boot(), 350);
+    }
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(failSafe);
+      if (idleId !== null && 'cancelIdleCallback' in window) cancelIdleCallback(idleId);
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+      cleanup?.();
+      cleanup = null;
+    };
+  });
+</script>

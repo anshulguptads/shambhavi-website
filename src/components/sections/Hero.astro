@@ -2,6 +2,7 @@
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Button from '@components/ui/Button.astro';
 import GradientOrb from '@components/motion/GradientOrb.astro';
+import HeroEyeGL from '@components/scenes/HeroEyeGL.astro';
 ---
 
 <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay min-h-[min(100svh,900px)] flex items-center pt-28 md:pt-32 pb-24 md:pb-32" id="hero" aria-labelledby="hero-title">
@@ -59,11 +60,13 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
         </div>
       </div>
 
-      {/* Eye visual — radial-beam variant */}
+      {/* Eye visual — SVG fallback + WebGL particle upgrade on capable devices */}
       <div class="order-1 lg:order-2 relative flex justify-center lg:justify-end animate-fade-in" style="animation-delay: 340ms">
         <div class="relative w-full max-w-[360px] md:max-w-[440px] aspect-[4/3]">
           {/* Glow behind eye */}
           <div class="absolute inset-0 rounded-full bg-saffron-400/20 blur-3xl scale-75 animate-gentle-pulse"></div>
+
+          <HeroEyeGL />
 
           <svg
             class="hero-eye relative w-full h-full"
@@ -229,6 +232,11 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
     };
 
     const follow = () => {
+      // WebGL eye has taken over — stop driving the invisible SVG pupil.
+      if (eye.dataset.glActive === 'true') {
+        rafId = null;
+        return;
+      }
       curX += (targetX - curX) * 0.1;
       curY += (targetY - curY) * 0.1;
       pupil.setAttribute('cx', curX.toFixed(2));
