@@ -13,6 +13,7 @@ const currentPath = Astro.url.pathname;
 
 <header
   id="site-header"
+  transition:persist="site-header"
   data-mode={mode}
   data-scrolled="false"
   class:list={[
@@ -237,58 +238,67 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+
+  // The header element is persisted across client-side navigations
+  // (transition:persist), so bindings survive — but the mode must re-sync to
+  // each page's intent, and the mobile menu must close on navigation.
+
   const header = document.getElementById('site-header');
-  const mode = header?.dataset.mode;
-
-  // Scroll-based mode swap
-  if (header && mode === 'over-dark') {
-    const threshold = Math.max(80, window.innerHeight * 0.5);
-    let ticking = false;
-    const update = () => {
-      const scrolled = window.scrollY > threshold;
-      header.dataset.scrolled = scrolled ? 'true' : 'false';
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', update);
-  }
-
-  // Mobile menu toggle
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const bars = toggle?.querySelectorAll('.menu-bar') as NodeListOf<HTMLElement> | undefined;
 
-  if (toggle && menu && bars) {
-    let isOpen = false;
-    const setOpen = (open: boolean) => {
-      isOpen = open;
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.setAttribute('aria-hidden', String(!open));
-      if (open) {
-        menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
-        menu.classList.add('opacity-100', 'translate-y-0');
-        document.body.style.overflow = 'hidden';
-        bars[0].style.transform = 'translateY(0) rotate(45deg)';
-        bars[1].style.opacity = '0';
-        bars[2].style.transform = 'translateY(0) rotate(-45deg)';
-      } else {
-        menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
-        menu.classList.remove('opacity-100', 'translate-y-0');
-        document.body.style.overflow = '';
-        bars[0].style.transform = 'translateY(-4px) rotate(0)';
-        bars[1].style.opacity = '1';
-        bars[2].style.transform = 'translateY(4px) rotate(0)';
-      }
-    };
+  // ---- Scroll-based mode swap (bound once; header persists) ----
+  let threshold = 80;
+  const updateScrolled = () => {
+    if (!header) return;
+    header.dataset.scrolled = window.scrollY > threshold ? 'true' : 'false';
+  };
+  let ticking = false;
+  const onScroll = () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateScrolled();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+  if (header) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      threshold = Math.max(80, window.innerHeight * 0.5);
+      updateScrolled();
+    });
+  }
 
+  // ---- Mobile menu (bound once; header persists) ----
+  let isOpen = false;
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu || !bars) return;
+    isOpen = open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    menu.setAttribute('aria-hidden', String(!open));
+    if (open) {
+      menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
+      menu.classList.add('opacity-100', 'translate-y-0');
+      document.body.style.overflow = 'hidden';
+      bars[0].style.transform = 'translateY(0) rotate(45deg)';
+      bars[1].style.opacity = '0';
+      bars[2].style.transform = 'translateY(0) rotate(-45deg)';
+    } else {
+      menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
+      menu.classList.remove('opacity-100', 'translate-y-0');
+      document.body.style.overflow = '';
+      bars[0].style.transform = 'translateY(-4px) rotate(0)';
+      bars[1].style.opacity = '1';
+      bars[2].style.transform = 'translateY(4px) rotate(0)';
+    }
+  };
+
+  if (toggle && menu && bars) {
     toggle.addEventListener('click', () => setOpen(!isOpen));
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => {
@@ -298,4 +308,18 @@ const currentPath = Astro.url.pathname;
       if (window.innerWidth >= 768 && isOpen) setOpen(false);
     });
   }
+
+  // ---- Per-page re-sync ----
+  onPageReady(() => {
+    if (!header) return;
+    // Each page declares its intended header mode on <body>.
+    const pageMode = document.body.dataset.headerMode;
+    if (pageMode === 'over-dark' || pageMode === 'solid-light') {
+      header.dataset.mode = pageMode;
+      header.classList.toggle('solid-light', pageMode === 'solid-light');
+    }
+    threshold = Math.max(80, window.innerHeight * 0.5);
+    updateScrolled();
+    if (isOpen) setOpen(false);
+  });
 </script>

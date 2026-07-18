@@ -1,5 +1,6 @@
 ---
 import '@styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import { buildSeo, type SeoProps, organizationSchema, websiteSchema } from '@lib/seo';
 import { site } from '@lib/site';
 
@@ -7,9 +8,11 @@ interface Props extends SeoProps {
   schemas?: unknown[];
   theme?: 'light' | 'dark';
   bodyClass?: string;
+  /** Forwarded from PageLayout so the persisted header can re-sync its mode after client-side navigation. */
+  headerMode?: 'over-dark' | 'solid-light';
 }
 
-const { schemas = [], theme = 'light', bodyClass = '', ...seoProps } = Astro.props;
+const { schemas = [], theme = 'light', bodyClass = '', headerMode = 'over-dark', ...seoProps } = Astro.props;
 const seo = buildSeo(seoProps);
 const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
 ---
@@ -72,10 +75,15 @@ const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
       }
     </style>
 
+    <ClientRouter />
+
     <slot name="head" />
   </head>
 
-  <body class:list={[theme === 'dark' ? 'bg-navy-deepest text-onDark-primary' : 'bg-cream text-ink-primary', 'font-sans antialiased', bodyClass]}>
+  <body
+    data-header-mode={headerMode}
+    class:list={[theme === 'dark' ? 'bg-navy-deepest text-onDark-primary' : 'bg-cream text-ink-primary', 'font-sans antialiased', bodyClass]}
+  >
     <a href="#main-content" class="skip-link">Skip to content</a>
     <slot />
   </body>

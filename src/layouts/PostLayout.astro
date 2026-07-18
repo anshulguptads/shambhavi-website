@@ -304,9 +304,13 @@ const dateFormatted = data.publishDate.toLocaleDateString('en-IN', {
 </style>
 
 <script>
-  // Reading progress
-  const progress = document.getElementById('reading-progress');
-  if (progress) {
+  import { onPageReady } from '@lib/motion/lifecycle';
+
+  // Reading progress — re-bound per page, cleaned up on navigation.
+  onPageReady(() => {
+    const progress = document.getElementById('reading-progress');
+    if (!progress) return;
+
     const update = () => {
       const scrolled = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -316,5 +320,10 @@ const dateFormatted = data.publishDate.toLocaleDateString('en-IN', {
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
-  }
+
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  });
 </script>

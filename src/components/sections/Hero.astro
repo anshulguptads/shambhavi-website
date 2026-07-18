@@ -198,10 +198,15 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
 </style>
 
 <script>
-  const eye = document.querySelector('.hero-eye') as SVGElement | null;
-  const pupil = document.getElementById('hero-pupil') as unknown as SVGCircleElement | null;
+  import { onPageReady } from '@lib/motion/lifecycle';
 
-  if (eye && pupil && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Pupil cursor-tracking for the SVG fallback eye. Re-bound per page;
+  // idle when the WebGL eye has taken over (svg gets data-gl-active).
+  onPageReady(() => {
+    const eye = document.querySelector('.hero-eye') as SVGElement | null;
+    const pupil = document.getElementById('hero-pupil') as unknown as SVGCircleElement | null;
+    if (!eye || !pupil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const centerCx = 80;
     const centerCy = 60;
     const maxOffset = 5;
@@ -211,12 +216,12 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
     let curY = centerCy;
     let rafId: number | null = null;
 
-    const move = (clientX: number, clientY: number) => {
+    const move = (e: MouseEvent) => {
       const rect = eye.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = clientX - cx;
-      const dy = clientY - cy;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
       const mag = Math.hypot(dx, dy) || 1;
       const norm = Math.min(mag / 600, 1);
       targetX = centerCx + (dx / mag) * maxOffset * norm;
@@ -231,11 +236,12 @@ import GradientOrb from '@components/motion/GradientOrb.astro';
       rafId = requestAnimationFrame(follow);
     };
 
-    window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY), { passive: true });
+    window.addEventListener('mousemove', move, { passive: true });
     follow();
 
-    window.addEventListener('beforeunload', () => {
+    return () => {
+      window.removeEventListener('mousemove', move);
       if (rafId !== null) cancelAnimationFrame(rafId);
-    });
-  }
+    };
+  });
 </script>
