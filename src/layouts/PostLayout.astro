@@ -80,7 +80,11 @@ const dateFormatted = data.publishDate.toLocaleDateString('en-IN', {
         <p class="eyebrow text-saffron-300 mb-6 animate-fade-up" style="animation-delay: 80ms">{data.category}</p>
       )}
 
-      <h1 class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1.02] animate-fade-up" style="animation-delay: 150ms">
+      <h1
+        class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1.02] animate-fade-up"
+        style="animation-delay: 150ms"
+        transition:name={`post-title-${post.slug}`}
+      >
         {data.title}
       </h1>
 

@@ -20,6 +20,8 @@ interface Props {
   stats?: Stat[];
   accentColor?: 'saffron' | 'maroon' | 'mixed';
   breadcrumbName: string;
+  /** Product slug for the shared-element morph from the home products grid. */
+  transitionSlug?: string;
 }
 
 const {
@@ -33,6 +35,7 @@ const {
   stats = [],
   accentColor = 'saffron',
   breadcrumbName,
+  transitionSlug,
 } = Astro.props;
 ---
 
@@ -71,7 +74,10 @@ const {
         </Reveal>
 
         <Reveal delay={150}>
-          <h1 class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]">
+          <h1
+            class="font-serif fraunces-display text-display-xl text-onDark-primary text-balance leading-[1]"
+            transition:name={transitionSlug ? `product-title-${transitionSlug}` : undefined}
+          >
             {nameFirst ? <>{nameFirst}</> : null}
             <em class="italic font-light text-saffron-300">{nameItalic}</em>
           </h1>
