@@ -2,3 +2,8 @@ User-agent: *
 Allow: /
 
 Sitemap: https://shambhavilabs.com/sitemap.xml
+
+# CMS admin is not for crawlers
+User-agent: *
+Disallow: /keystatic
+Disallow: /api/

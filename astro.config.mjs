@@ -3,6 +3,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
+import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
 
 /**
  * The adapter's auto-generated _routes.json can emit overlapping rules
@@ -17,7 +19,11 @@ const routesJsonOverride = {
       const fs = await import('node:fs/promises');
       await fs.writeFile(
         new URL('_routes.json', dir),
-        JSON.stringify({ version: 1, include: ['/api/*', '/_server-islands/*'], exclude: [] }, null, 2)
+        JSON.stringify(
+          { version: 1, include: ['/api/*', '/keystatic', '/keystatic/*', '/_server-islands/*'], exclude: [] },
+          null,
+          2
+        )
       );
     },
   },
@@ -35,6 +41,8 @@ export default defineConfig({
     imageService: 'compile', // sharp optimizes prerendered pages at build time
   }),
   integrations: [
+    react(),
+    keystatic(),
     mdx(),
     sitemap(),
     tailwind({ applyBaseStyles: false }),
