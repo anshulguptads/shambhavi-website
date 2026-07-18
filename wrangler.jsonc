@@ -1,0 +1,18 @@
+{
+  // Cloudflare Pages runtime config — bindings for the form API routes.
+  // Local dev: `astro dev` reads this via platformProxy (local D1 automatically).
+  // Production: create the database once (`wrangler d1 create shambhavi-forms`),
+  // paste its id below, and apply db/migrations/0001_submissions.sql --remote.
+  // See docs/DYNAMIC-SETUP.md.
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "shambhavi-website",
+  "compatibility_date": "2026-07-01",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shambhavi-forms",
+      "database_id": "REPLACE-WITH-ID-FROM-wrangler-d1-create"
+    }
+  ]
+}

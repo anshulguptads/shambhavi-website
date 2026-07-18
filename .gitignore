@@ -40,3 +40,6 @@ _legacy/
 /mobile-*.png
 /fix-*.png
 /page-*.png
+
+# wrangler local state
+.wrangler/
