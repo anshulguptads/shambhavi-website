@@ -111,16 +111,17 @@ const {
       </div>
     </div>
 
-    {/* KPI bar */}
+    {/* KPI bar — values count up on reveal (see countup.ts) */}
     {stats.length > 0 && (
       <Reveal delay={500}>
         <div class="mt-14 md:mt-20 pt-8 md:pt-10 border-t border-cream/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
           {stats.map((stat) => (
-            <div class="flex flex-col items-start gap-1">
-              <span class="font-serif text-3xl md:text-4xl text-saffron-300 font-light tabular-nums leading-none">
+            <div class="relative flex flex-col items-start gap-1 pb-2">
+              <span data-countup class="font-serif text-3xl md:text-4xl text-saffron-300 font-light tabular-nums leading-none">
                 {stat.value}
               </span>
               <span class="text-[10px] md:text-xs uppercase tracking-eyebrow text-onDark-muted">{stat.label}</span>
+              <span aria-hidden="true" class="stat-bar absolute bottom-0 left-0 h-px w-10 bg-gradient-to-r from-saffron-400/70 to-transparent origin-left scale-x-0"></span>
             </div>
           ))}
         </div>
@@ -128,3 +129,26 @@ const {
     )}
   </div>
 </section>
+
+<script>
+  import { initCountups } from '@lib/motion/countup';
+  import { withGsap } from '@lib/motion/gsap';
+
+  initCountups();
+
+  // Draw the accent bar under each stat as it reveals.
+  withGsap(
+    (gsap, ScrollTrigger) => {
+      document.querySelectorAll('.stat-bar').forEach((bar) => {
+        gsap.to(bar, {
+          scaleX: 1,
+          duration: 0.9,
+          ease: 'power2.out',
+          delay: 0.5,
+          scrollTrigger: { trigger: bar, start: 'top 90%', once: true },
+        });
+      });
+    },
+    { minTier: 'lite' }
+  );
+</script>

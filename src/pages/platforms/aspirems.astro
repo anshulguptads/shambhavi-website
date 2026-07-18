@@ -9,6 +9,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 import Pill from '@components/ui/Pill.astro';
 import GradientOrb from '@components/motion/GradientOrb.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import CrisisTimeline from '@components/scenes/CrisisTimeline.astro';
 import { productSchema, breadcrumbSchema } from '@lib/seo';
 import { site } from '@lib/site';
 
@@ -393,6 +394,9 @@ const faqs = [
         </Reveal>
       </div>
 
+      {/* Signature scene — the detection story, played by scroll */}
+      <CrisisTimeline />
+
       {/* Intervention timeline */}
       <Reveal>
         <div class="max-w-5xl mx-auto rounded-3xl bg-cream/[0.03] border border-cream/10 p-8 md:p-10">
@@ -401,7 +405,7 @@ const faqs = [
             <span class="text-[10px] uppercase tracking-eyebrow text-saffron-300">10 seconds · 7 days</span>
           </div>
 
-          <ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <ol class="crisis-chain grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {crisisTimeline.map((step, i) => (
               <Reveal delay={i * 60}>
                 <li class="rounded-xl bg-navy-deep/50 border border-cream/10 p-4">
