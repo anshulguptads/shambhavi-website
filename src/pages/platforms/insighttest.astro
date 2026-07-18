@@ -8,6 +8,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 import Pill from '@components/ui/Pill.astro';
 import GradientOrb from '@components/motion/GradientOrb.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import SelfHealDemo from '@components/scenes/SelfHealDemo.astro';
 import { productSchema, breadcrumbSchema } from '@lib/seo';
 import { site } from '@lib/site';
 
@@ -281,6 +282,9 @@ const faqs = [
       <SectionHead eyebrow="AI Capabilities" id="caps-heading">
         Four things our AI does <em class="italic font-light text-saffron-500">that hand-coded QA doesn't.</em>
       </SectionHead>
+
+      {/* Signature scene — a selector breaks and heals itself as you scroll */}
+      <SelfHealDemo />
 
       <div class="space-y-5 md:space-y-6 max-w-5xl mx-auto">
         {caps.map((cap, i) => (

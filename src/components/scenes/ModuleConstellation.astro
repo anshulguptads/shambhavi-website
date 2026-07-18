@@ -1,0 +1,152 @@
+---
+/**
+ * SanaDeep signature scene — 19 modules, one platform.
+ *
+ * The modules float scattered on a golden-angle spiral; as you scroll they
+ * converge and snap into the unified platform grid, then a payroll anomaly
+ * ripples through and is caught mid-animation. Server renders the GRID pose
+ * (the orderly final state) so no-JS/static users see the platform, not the
+ * chaos. Scattered pose lives in data attributes for the enhancement.
+ */
+
+const modules = [
+  'Cold Start & Setup', 'Core HR & People Data', 'Platform & Experience',
+  'Time & Attendance', 'Leave Management', 'Daily Work Logging',
+  'Talent Acquisition', 'Onboarding & Offboarding', 'Performance & Growth',
+  'Learning & Development', 'Engagement & Culture', 'Payroll Processing',
+  'Compensation & Rewards', 'Expense Management', 'Compliance & Audit',
+  'Workforce Planning', 'Integrations & API', 'People Analytics & BI',
+  'Demo & Sandbox',
+];
+const AI_HEAVY = new Set([
+  'Payroll Processing', 'Talent Acquisition', 'Performance & Growth',
+  'Compliance & Audit', 'People Analytics & BI', 'Workforce Planning',
+]);
+
+interface Pose { gx: number; gy: number; sx: number; sy: number; rot: number; }
+
+const poses: Pose[] = modules.map((_, i) => {
+  const col = i % 5;
+  const row = Math.floor(i / 5);
+  const lastRowOffset = row === 3 ? 9.7 : 0; // 4 chips in the last row, centred
+  const gx = 1.5 + lastRowOffset + col * 19.6;
+  const gy = 2 + row * 25.4;
+  // golden-angle spiral scatter
+  const angle = i * 2.39996; // ~137.5°
+  const radius = 24 + ((i * 53) % 23);
+  const sx = 41 + Math.cos(angle) * radius * 1.05;
+  const sy = 40 + Math.sin(angle) * radius * 0.78;
+  const rot = ((i * 37) % 17) - 8;
+  return { gx, gy, sx: Math.min(Math.max(sx, -2), 84), sy: Math.min(Math.max(sy, -4), 86), rot };
+});
+---
+
+<div class="module-constellation relative w-full aspect-[16/11] sm:aspect-[16/9] max-w-4xl mx-auto mb-14 md:mb-20" role="img" aria-label="Nineteen HR modules converging into one unified platform grid; a payroll anomaly is detected and caught automatically.">
+  {modules.map((name, i) => {
+    const p = poses[i];
+    const isPayroll = name === 'Payroll Processing';
+    return (
+      <div
+        class:list={['mc-chip absolute rounded-lg border px-2 py-1.5 sm:px-2.5 sm:py-2 flex flex-col justify-center bg-cream-50 border-navy/10 shadow-soft', isPayroll && 'mc-payroll']}
+        style={`left:${p.gx}%; top:${p.gy}%; width:17.4%; height:21%; --sx:${(p.sx - p.gx).toFixed(1)}; --sy:${(p.sy - p.gy).toFixed(1)}; --rot:${p.rot};`}
+      >
+        <span class="text-[8px] sm:text-[10px] md:text-[11px] font-medium text-navy leading-[1.15] text-pretty">{name}</span>
+        {AI_HEAVY.has(name) && (
+          <span class="mt-0.5 text-[6px] sm:text-[7px] font-mono uppercase tracking-wider text-saffron-500">AI-heavy</span>
+        )}
+      </div>
+    );
+  })}
+
+  {/* anomaly ripple sweep */}
+  <div aria-hidden="true" class="mc-ripple absolute inset-y-0 w-16 -left-24 pointer-events-none opacity-0 bg-gradient-to-r from-transparent via-saffron-400/25 to-transparent"></div>
+
+  {/* anomaly caught badge */}
+  <div class="mc-badge absolute opacity-0 z-10 rounded-lg bg-navy text-cream px-3 py-2 shadow-lift text-[10px] sm:text-xs leading-snug pointer-events-none" style="left: 24%; top: 60%;" aria-hidden="true">
+    <span class="font-mono text-saffron-300">⚠ anomaly caught</span> — PF variance, 2 employees<br />
+    <span class="text-cream/60">flagged before filing · payroll run continues</span>
+  </div>
+
+  {/* converged caption */}
+  <p class="mc-caption absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] uppercase tracking-eyebrow text-ink-muted opacity-0" aria-hidden="true">
+    one platform · one data model · one login
+  </p>
+</div>
+
+<style>
+  .mc-chip { will-change: transform; }
+</style>
+
+<script>
+  import { withGsap } from '@lib/motion/gsap';
+  import { motionTier } from '@lib/motion/tier';
+
+  withGsap(
+    (gsap, ScrollTrigger) => {
+      const root = document.querySelector<HTMLElement>('.module-constellation');
+      if (!root) return;
+      const chips = gsap.utils.toArray<HTMLElement>('.mc-chip', root);
+
+      // Scatter (from CSS vars, expressed in % of container → use xPercent-like px calc)
+      const w = () => root.offsetWidth / 100;
+      const h = () => root.offsetHeight / 100;
+      gsap.set(chips, {
+        x: (i, el) => parseFloat(el.style.getPropertyValue('--sx')) * w(),
+        y: (i, el) => parseFloat(el.style.getPropertyValue('--sy')) * h(),
+        rotation: (i, el) => parseFloat(el.style.getPropertyValue('--rot')),
+        opacity: 0.85,
+      });
+
+      const converge = gsap.timeline({
+        defaults: { ease: 'power2.inOut' },
+        scrollTrigger:
+          motionTier() === 'full'
+            ? { trigger: root, start: 'top 82%', end: 'center 42%', scrub: 0.7 }
+            : undefined,
+        paused: motionTier() !== 'full',
+      });
+      converge
+        .to(chips, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: { each: 0.028, from: 'random' },
+          ease: 'power3.inOut',
+        })
+        .to(root.querySelector('.mc-caption'), { opacity: 1, duration: 0.3 }, 0.92);
+
+      // 'lite': play the convergence once on reveal
+      if (motionTier() !== 'full') {
+        const io = new IntersectionObserver(
+          (es) => es.some((e) => e.isIntersecting) && (converge.play(), io.disconnect()),
+          { threshold: 0.25 }
+        );
+        io.observe(root);
+      }
+
+      // Anomaly beat — one-shot after convergence
+      const anomaly = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
+      const payroll = root.querySelector('.mc-payroll');
+      anomaly
+        .fromTo(root.querySelector('.mc-ripple'), { x: 0, opacity: 1 }, { x: () => root.offsetWidth + 160, duration: 1.1, ease: 'power1.inOut' })
+        .to(payroll, { backgroundColor: 'rgba(168, 50, 84, 0.16)', borderColor: 'rgba(168, 50, 84, 0.6)', scale: 1.06, duration: 0.3 }, 0.45)
+        .to(root.querySelector('.mc-badge'), { opacity: 1, y: -6, duration: 0.4 }, 0.7)
+        .to(payroll, { backgroundColor: '#fdfcf9', borderColor: 'rgba(26,24,64,0.1)', scale: 1, duration: 0.5 }, 2.3)
+        .to([root.querySelector('.mc-badge'), root.querySelector('.mc-ripple')], { opacity: 0, duration: 0.5 }, 2.6);
+
+      const fireAnomaly = ScrollTrigger.create({
+        trigger: root,
+        start: 'center 46%',
+        once: true,
+        onEnter: () => anomaly.play(),
+      });
+      // If the scene is already past that point (or lite tier), chain it after convergence
+      if (motionTier() !== 'full') converge.eventCallback('onComplete', () => anomaly.play());
+
+      return () => fireAnomaly.kill();
+    },
+    { minTier: 'lite' }
+  );
+</script>

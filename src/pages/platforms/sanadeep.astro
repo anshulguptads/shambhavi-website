@@ -9,6 +9,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 import Pill from '@components/ui/Pill.astro';
 import GradientOrb from '@components/motion/GradientOrb.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import ModuleConstellation from '@components/scenes/ModuleConstellation.astro';
 import { productSchema, breadcrumbSchema } from '@lib/seo';
 import { site } from '@lib/site';
 
@@ -312,6 +313,9 @@ const faqs = [
       <SectionHead eyebrow="The Platform" id="modules-heading">
         <em class="italic font-light text-saffron-500">Nineteen modules,</em> woven into five clusters. The full lifecycle, one source of truth.
       </SectionHead>
+
+      {/* Signature scene — the modules converge into one platform as you scroll */}
+      <ModuleConstellation />
 
       <div class="space-y-10 md:space-y-12">
         {clusters.map((cluster, i) => (
