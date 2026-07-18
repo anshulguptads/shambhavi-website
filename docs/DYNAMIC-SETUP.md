@@ -25,10 +25,10 @@ uncomment the `d1_databases` block and paste the id — then create the table:
 npx wrangler d1 execute shambhavi-forms --remote --file db/migrations/0001_submissions.sql
 ```
 
-Commit + push the wrangler.jsonc change. **Also bind it in the dashboard**:
-Cloudflare → Workers & Pages → shambhavi-website → Settings → Bindings →
-Add → D1 database → variable name `DB` → select `shambhavi-forms` (both
-Production and Preview).
+Commit + push the wrangler.jsonc change — that's the binding. (The site
+deploys as a Cloudflare **Worker** with a config file, so bindings live in
+wrangler.jsonc, not the dashboard; dashboard-added bindings would be
+overwritten on the next deploy.)
 
 **Reading leads later:**
 ```bash
@@ -42,8 +42,9 @@ npx wrangler d1 execute shambhavi-forms --remote --command "SELECT created_at, k
    gives you 3 DNS records; add them in Cloudflare DNS, verification takes
    ~2 min).
 3. Create an API key (Sending access only).
-4. In Cloudflare Pages → Settings → Environment variables (Production):
-   - `RESEND_API_KEY` = `re_…` (encrypt)
+4. Cloudflare dashboard → Workers & Pages → shambhavi-website → Settings →
+   Variables and Secrets → add as type **Secret** (secrets survive deploys):
+   - `RESEND_API_KEY` = `re_…`
    - `FORMS_FROM` = `Shambhavi Website <forms@shambhavilabs.com>`
    - `FORMS_TO` = `info@shambhavilabs.com` (optional — this is the default)
 
@@ -54,10 +55,12 @@ Resend's `onboarding@resend.dev` sender (fine for testing, spammy for real use).
 
 1. Cloudflare dashboard → Turnstile → Add site → domain `shambhavilabs.com`,
    widget mode **Invisible**.
-2. Pages → Settings → Environment variables (Production):
-   - `PUBLIC_TURNSTILE_SITE_KEY` = the site key (build-time, plain text)
-   - `TURNSTILE_SECRET_KEY` = the secret key (encrypt)
-3. Redeploy (Deployments → Retry, or just push anything) — the widget only
+2. Two places (they serve different stages):
+   - `TURNSTILE_SECRET_KEY` = the secret key → Settings → Variables and
+     Secrets, type **Secret** (runtime).
+   - `PUBLIC_TURNSTILE_SITE_KEY` = the site key → Settings → **Build** →
+     Build variables (it's baked into the HTML at build time).
+3. Redeploy (retry the latest build, or push anything) — the widget only
    renders when the public key exists at build time.
 
 Until then, the honeypot field is the (already active) spam guard.
@@ -67,7 +70,7 @@ Until then, the honeypot field is the (already active) spam guard.
 1. Create a (free) team at keystatic.cloud, add a project pointed at the
    `anshulguptads/shambhavi-website` GitHub repo, default branch `main`.
 2. Note the project key (`team-slug/project-slug`).
-3. Pages → Settings → Environment variables (Production, build-time):
+3. Settings → **Build** → Build variables (these are build-time):
    - `KEYSTATIC_STORAGE` = `cloud`
    - `KEYSTATIC_PROJECT` = `team-slug/project-slug`
 4. Push/redeploy. Founders then sign in at `shambhavilabs.com/keystatic`

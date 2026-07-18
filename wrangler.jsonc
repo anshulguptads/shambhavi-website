@@ -1,11 +1,13 @@
 {
-  // Cloudflare Pages config. Deliberately minimal: bindings with invalid ids
-  // fail Pages deploy validation, so the D1 binding is added either
-  //   (a) in the dashboard (Settings → Bindings → D1 → name `DB`), or
-  //   (b) here, once you have the real id from `wrangler d1 create` —
-  //       see docs/DYNAMIC-SETUP.md step 1.
+  // Cloudflare WORKERS (with static assets) config — production deploys via
+  // Workers Builds (`npm run build` then `wrangler deploy`), which reads this
+  // file. Static files are served from ./dist; requests with no matching
+  // asset (the /api/* form routes, server islands) fall through to the
+  // Astro worker at dist/_worker.js.
   //
-  // Local dev bindings live in wrangler.dev.jsonc (used via platformProxy).
+  // The D1 binding is commented out until the database exists — deploys fail
+  // on bindings with invalid ids. After `wrangler d1 create shambhavi-forms`,
+  // uncomment and paste the real id (docs/DYNAMIC-SETUP.md step 1).
   //
   // "d1_databases": [
   //   { "binding": "DB", "database_name": "shambhavi-forms", "database_id": "<from wrangler d1 create>" }
@@ -14,5 +16,12 @@
   "name": "shambhavi-website",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": "./dist"
+  "main": "dist/_worker.js/index.js",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  }
 }
