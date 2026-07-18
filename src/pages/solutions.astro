@@ -13,6 +13,7 @@ const solutions = [
     eyebrow: 'K-12 EDUCATION',
     title: 'For schools and student wellness teams.',
     product: 'AspiremsAI',
+    slug: 'aspirems',
     productHref: '/platforms/aspirems',
     description:
       'A 24/7 AI mentor in Hindi, English, and 10+ regional languages. Four connected portals — student, teacher, parent, administrator. Crisis detection that reaches a counsellor in under two seconds.',
@@ -29,6 +30,7 @@ const solutions = [
     eyebrow: 'HIGHER EDUCATION',
     title: 'For CS and AI programmes.',
     product: 'NeuroLink',
+    slug: 'neurolink',
     productHref: '/platforms/neurolink',
     description:
       'The AI-native learning platform that turns any lecture into an interactive, personalised experience. Every student gets a live knowledge graph. Every professor gets real-time visibility. Zero GPU infrastructure required.',
@@ -45,6 +47,7 @@ const solutions = [
     eyebrow: 'ENTERPRISE · WORK',
     title: 'For CHROs and multi-country enterprises.',
     product: 'SanaDeep',
+    slug: 'sanadeep',
     productHref: '/platforms/sanadeep',
     description:
       'The AI-native HRMS built India-first with multi-country payroll from day one. Nineteen modules, hundreds of AI features, statutory coverage across India, UAE, UK, and US — one platform, one login, eight languages including Arabic RTL.',
@@ -61,6 +64,7 @@ const solutions = [
     eyebrow: 'ENGINEERING · BUILD',
     title: 'For engineering heads and QA leads.',
     product: 'InsightTest AI',
+    slug: 'insighttest',
     productHref: '/platforms/insighttest',
     description:
       'Low-code, AI-powered testing that cuts QA effort by 60–70%. Drag-and-drop test builder, AI-generated cases, self-healing automation. One platform for mobile, web, API, and analytics validation — instead of five.',
@@ -128,7 +132,7 @@ const solutions = [
                   </p>
                   <div class="mt-8 flex flex-wrap gap-4 items-center">
                     <Button href={sol.productHref} variant="primary" size="md">Explore {sol.product}</Button>
-                    <Button href={`mailto:info@shambhavilabs.com?subject=${encodeURIComponent(sol.product + ' — ' + sol.audience)}`} variant="ghost" size="md" icon="none">{sol.cta}</Button>
+                    <Button href={`/request-pilot?platform=${sol.slug}`} variant="ghost" size="md" icon="none">{sol.cta}</Button>
                   </div>
                 </div>
 
