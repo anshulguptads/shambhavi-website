@@ -4,6 +4,25 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
 
+/**
+ * The adapter's auto-generated _routes.json can emit overlapping rules
+ * (a directory splat plus individual files beneath it), which Cloudflare
+ * Pages rejects at deploy time. We know exactly which routes need the
+ * worker, so overwrite it with the canonical minimal version.
+ */
+const routesJsonOverride = {
+  name: 'routes-json-override',
+  hooks: {
+    'astro:build:done': async ({ dir }) => {
+      const fs = await import('node:fs/promises');
+      await fs.writeFile(
+        new URL('_routes.json', dir),
+        JSON.stringify({ version: 1, include: ['/api/*', '/_server-islands/*'], exclude: [] }, null, 2)
+      );
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://shambhavilabs.com',
   // Static-first: every page stays prerendered; only routes that opt out
@@ -19,6 +38,7 @@ export default defineConfig({
     mdx(),
     sitemap(),
     tailwind({ applyBaseStyles: false }),
+    routesJsonOverride,
   ],
   build: {
     format: 'directory',
