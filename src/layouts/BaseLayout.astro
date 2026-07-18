@@ -86,5 +86,13 @@ const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
   >
     <a href="#main-content" class="skip-link">Skip to content</a>
     <slot />
+
+    <script>
+      import { initInteractions } from '@lib/motion/interactions';
+      import { initSmoothScroll } from '@lib/motion/smooth-scroll';
+
+      initInteractions();
+      initSmoothScroll();
+    </script>
   </body>
 </html>

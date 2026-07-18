@@ -109,6 +109,30 @@
     @apply py-section;
   }
 
+  /* Cursor-following accent glow for [data-tilt] cards (see interactions.ts) */
+  .tilt-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    background: radial-gradient(
+      340px circle at var(--gx, 50%) var(--gy, 50%),
+      rgba(217, 145, 51, 0.09),
+      transparent 65%
+    );
+  }
+  .tilt-glow:hover::after {
+    opacity: 1;
+  }
+
+  /* Lenis owns scrolling when active — CSS smooth behavior must yield */
+  html.lenis-active {
+    scroll-behavior: auto !important;
+  }
+
   /* Grain overlay helper */
   .grain-overlay {
     position: relative;

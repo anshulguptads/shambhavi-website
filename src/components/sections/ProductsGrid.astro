@@ -30,6 +30,7 @@ const products = (await getCollection('products')).sort((a, b) => a.data.order -
         return (
           <Reveal>
             <article
+              data-tilt
               class:list={[
                 'group grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-stretch',
                 'rounded-3xl overflow-hidden border border-navy/8 bg-cream-50 hover:shadow-lift transition-shadow duration-500',

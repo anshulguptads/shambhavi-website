@@ -21,7 +21,7 @@ const isDark = variant === 'dark';
     <div class="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-16 mb-16">
       <div class="space-y-5">
         <a href="/" class="inline-flex items-center gap-3 group">
-          <svg class="h-7 w-auto shrink-0 text-cream" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg class="ftr-eye h-7 w-auto shrink-0 text-cream" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M 18 60 C 40 20, 120 20, 142 60 C 120 100, 40 100, 18 60 Z" stroke="currentColor" stroke-width="6" fill="none" stroke-linejoin="round" />
             <circle cx="80" cy="60" r="16" fill="#d99133" />
             <circle cx="80" cy="60" r="5.5" fill="currentColor" />
@@ -108,3 +108,16 @@ const isDark = variant === 'dark';
     </div>
   </div>
 </footer>
+
+<style>
+  /* The eye blinks, occasionally. (Killed globally under reduced motion.) */
+  .ftr-eye {
+    transform-origin: center;
+    animation: ftr-blink 9s ease-in-out infinite;
+  }
+  @keyframes ftr-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    94.5% { transform: scaleY(0.08); }
+    97% { transform: scaleY(1); }
+  }
+</style>

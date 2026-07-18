@@ -43,7 +43,7 @@ const currentPath = Astro.url.pathname;
       </a>
 
       {/* Desktop nav */}
-      <ul class="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium">
+      <ul id="desktop-nav" class="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium relative">
         {nav.primary.map((link) => {
           const linkPath = link.href.split('#')[0];
           const isActive =
@@ -308,6 +308,58 @@ const currentPath = Astro.url.pathname;
       if (window.innerWidth >= 768 && isOpen) setOpen(false);
     });
   }
+
+  // ---- Nav underline with spring physics (desktop, full tier) ----
+  onPageReady(() => {
+    const nav = document.getElementById('desktop-nav');
+    if (!nav || !window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let disposed = false;
+    let underline: HTMLElement | null = null;
+    const handlers: Array<[Element, string, EventListener]> = [];
+
+    import('@lib/motion/gsap').then(({ loadGsap }) =>
+      loadGsap().then(({ gsap }) => {
+        if (disposed) return;
+        underline = document.createElement('span');
+        underline.setAttribute('aria-hidden', 'true');
+        underline.className = 'absolute -bottom-0.5 h-[2px] rounded-full bg-saffron-400 pointer-events-none';
+        underline.style.opacity = '0';
+        nav.appendChild(underline);
+
+        const links = Array.from(nav.querySelectorAll<HTMLElement>('.hdr-link'));
+        let visible = false;
+        for (const link of links) {
+          const on = () => {
+            const left = link.offsetLeft + (link.parentElement?.offsetLeft ?? 0);
+            gsap.to(underline, {
+              x: left,
+              width: link.offsetWidth,
+              opacity: 1,
+              duration: visible ? 0.55 : 0.01,
+              ease: visible ? 'elastic.out(1, 0.6)' : 'power1.out',
+            });
+            visible = true;
+          };
+          link.addEventListener('pointerenter', on);
+          handlers.push([link, 'pointerenter', on]);
+        }
+        const off = () => {
+          visible = false;
+          gsap.to(underline, { opacity: 0, duration: 0.3 });
+        };
+        nav.addEventListener('pointerleave', off);
+        handlers.push([nav, 'pointerleave', off]);
+      })
+    );
+
+    return () => {
+      disposed = true;
+      handlers.forEach(([el, ev, fn]) => el.removeEventListener(ev, fn));
+      underline?.remove();
+    };
+  });
 
   // ---- Per-page re-sync ----
   onPageReady(() => {
