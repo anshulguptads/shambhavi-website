@@ -1,0 +1,135 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import FormShell from '@components/forms/FormShell.astro';
+import Field from '@components/forms/Field.astro';
+import Select from '@components/forms/Select.astro';
+import TextArea from '@components/forms/TextArea.astro';
+import PlatformChips from '@components/forms/PlatformChips.astro';
+
+const orgTypes = [
+  { value: '', label: 'Select…' },
+  { value: 'school', label: 'School (K-12)' },
+  { value: 'university', label: 'University / higher ed' },
+  { value: 'company', label: 'Company / enterprise' },
+  { value: 'ngo', label: 'NGO / non-profit' },
+  { value: 'government', label: 'Government / public sector' },
+  { value: 'other', label: 'Other' },
+];
+
+const expectations = [
+  { title: 'A reply within one business day', body: 'A founder reads every request — no ticket queues.' },
+  { title: 'A walkthrough that fits you', body: 'We demo the platform you chose, on your use case, not a canned deck.' },
+  { title: 'A pilot plan, if it fits', body: 'Scope, timeline, and pricing — transparent from the first call.' },
+];
+---
+
+<PageLayout
+  title="Request a Pilot"
+  description="Request a pilot or demo of AspiremsAI, NeuroLink, SanaDeep, or InsightTest. A founder replies within one business day."
+  canonical="/request-pilot"
+  headerMode="over-dark"
+>
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-40 pb-20 md:pb-28 min-h-svh">
+    <GradientOrb class="-top-32 -right-40" color="saffron" size="lg" />
+    <GradientOrb class="bottom-0 -left-40 opacity-60" color="maroon" size="md" />
+
+    <div class="container-page relative">
+      <div class="grid lg:grid-cols-[1fr_1.25fr] gap-12 lg:gap-20 items-start">
+        {/* Left: pitch */}
+        <div class="lg:sticky lg:top-32">
+          <Reveal>
+            <Eyebrow variant="dark" withLine={true}>Request a Pilot</Eyebrow>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1 class="mt-6 font-serif fraunces-display text-display-lg text-onDark-primary text-balance leading-[1]">
+              See it working — <em class="italic font-light text-saffron-300">on your problem.</em>
+            </h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <p class="mt-7 text-lead text-onDark-secondary text-pretty max-w-lg">
+              Whether you lead a school, a university, a people function, or an engineering team — tell us a little about your context and we'll show you the platform that fits.
+            </p>
+          </Reveal>
+
+          <Reveal delay={300}>
+            <ul class="mt-10 space-y-5 max-w-md">
+              {expectations.map((e, i) => (
+                <li class="flex gap-4">
+                  <span class="shrink-0 mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-saffron-400/15 border border-saffron-400/30 font-mono text-xs text-saffron-300">{i + 1}</span>
+                  <div>
+                    <p class="text-sm font-medium text-onDark-primary">{e.title}</p>
+                    <p class="mt-0.5 text-sm text-onDark-muted leading-relaxed">{e.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+
+        {/* Right: the form */}
+        <Reveal delay={150}>
+          <div class="rounded-3xl bg-cream/[0.04] border border-cream/10 p-6 md:p-10 backdrop-blur-sm">
+            <FormShell
+              action="/api/demo-request"
+              submitLabel="Request the pilot"
+              successTitle="Request received."
+              successBody="Thank you — a founder will reply within one business day. If it's urgent, email info@shambhavilabs.com and mention your organisation."
+            >
+              <PlatformChips />
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <Field name="name" label="Your name" required autocomplete="name" placeholder="Priya Sharma" />
+                <Field name="email" label="Work email" type="email" required autocomplete="email" placeholder="you@organisation.org" />
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <Field name="organisation" label="Organisation" required autocomplete="organization" placeholder="Green Valley School" />
+                <Field name="role" label="Your role" autocomplete="organization-title" placeholder="Principal, CHRO, QA Lead…" />
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <Select name="orgType" label="Organisation type" options={orgTypes} />
+                <Field name="country" label="Country" autocomplete="country-name" placeholder="India" />
+              </div>
+
+              <Field name="phone" label="Phone (optional)" type="tel" autocomplete="tel" placeholder="+91 …" />
+
+              <TextArea name="message" label="Anything we should know? (optional)" rows={4} placeholder="Team size, timeline, what you're hoping to solve…" />
+            </FormShell>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+
+  // Adaptive org-type: preselect from the chosen platform(s).
+  onPageReady(() => {
+    const chips = document.getElementById('platform-chips');
+    const orgType = document.getElementById('f-orgType') as HTMLSelectElement | null;
+    if (!chips || !orgType) return;
+
+    const suggestion: Record<string, string> = {
+      aspirems: 'school',
+      neurolink: 'university',
+      sanadeep: 'company',
+      insighttest: 'company',
+    };
+
+    const sync = () => {
+      if (orgType.value) return; // never override a human choice
+      const checked = chips.querySelector<HTMLInputElement>('input[name="platforms"]:checked');
+      if (checked && suggestion[checked.value]) orgType.value = suggestion[checked.value];
+    };
+    chips.addEventListener('change', sync);
+    sync();
+
+    return () => chips.removeEventListener('change', sync);
+  });
+</script>

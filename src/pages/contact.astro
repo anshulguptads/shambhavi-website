@@ -1,0 +1,66 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Reveal from '@components/motion/Reveal.astro';
+import GradientOrb from '@components/motion/GradientOrb.astro';
+import FormShell from '@components/forms/FormShell.astro';
+import Field from '@components/forms/Field.astro';
+import Select from '@components/forms/Select.astro';
+import TextArea from '@components/forms/TextArea.astro';
+
+const topics = [
+  { value: 'general', label: 'General enquiry' },
+  { value: 'partnership', label: 'Partnership' },
+  { value: 'press', label: 'Press & media' },
+  { value: 'careers', label: 'Careers' },
+  { value: 'support', label: 'Product support' },
+  { value: 'parent-or-student', label: "I'm a parent or student" },
+];
+---
+
+<PageLayout
+  title="Contact"
+  description="Get in touch with Shambhavi Innovation Lab — partnerships, press, careers, support, or anything else."
+  canonical="/contact"
+  headerMode="over-dark"
+>
+  <section class="relative overflow-hidden bg-navy-deepest text-onDark-primary grain-overlay pt-32 md:pt-40 pb-20 md:pb-28 min-h-svh">
+    <GradientOrb class="-top-32 left-1/2 -translate-x-1/2" color="mixed" size="lg" />
+
+    <div class="container-page relative max-w-2xl">
+      <Reveal>
+        <Eyebrow variant="dark" withLine={true}>Contact</Eyebrow>
+      </Reveal>
+      <Reveal delay={100}>
+        <h1 class="mt-6 font-serif fraunces-display text-display-lg text-onDark-primary text-balance leading-[1]">
+          Say hello — <em class="italic font-light text-saffron-300">we read everything.</em>
+        </h1>
+      </Reveal>
+      <Reveal delay={200}>
+        <p class="mt-6 text-lead text-onDark-secondary text-pretty">
+          Looking for a pilot instead? <a href="/request-pilot" class="text-saffron-300 hover:text-saffron-200 underline underline-offset-4">Request one here</a> — it gets you a faster, more specific answer.
+        </p>
+      </Reveal>
+
+      <Reveal delay={300}>
+        <div class="mt-12 rounded-3xl bg-cream/[0.04] border border-cream/10 p-6 md:p-10 backdrop-blur-sm">
+          <FormShell
+            action="/api/contact"
+            submitLabel="Send message"
+            successTitle="Message sent."
+            successBody="Thank you — we'll get back to you shortly. For anything urgent, email info@shambhavilabs.com."
+          >
+            <div class="grid sm:grid-cols-2 gap-5">
+              <Field name="name" label="Your name" required autocomplete="name" placeholder="Arjun Mehta" />
+              <Field name="email" label="Email" type="email" required autocomplete="email" placeholder="you@example.com" />
+            </div>
+
+            <Select name="topic" label="Topic" options={topics} required />
+
+            <TextArea name="message" label="Your message" required rows={6} placeholder="What's on your mind?" />
+          </FormShell>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  name: string;
+  label: string;
+  required?: boolean;
+  rows?: number;
+  placeholder?: string;
+  class?: string;
+}
+const { name, label, required = false, rows = 5, placeholder, class: className = '' } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class:list={['flex flex-col gap-1.5', className]}>
+  <label for={id} class="text-[11px] uppercase tracking-eyebrow font-medium text-onDark-muted">
+    {label}{required && <span class="text-saffron-300 ml-0.5" aria-hidden="true">*</span>}
+  </label>
+  <textarea
+    id={id}
+    name={name}
+    rows={rows}
+    required={required}
+    placeholder={placeholder}
+    class="w-full rounded-xl bg-cream/[0.05] border border-cream/15 px-4 py-3 text-sm text-onDark-primary placeholder:text-onDark-faint transition-[border-color,box-shadow] duration-300 focus:border-saffron-400/70 focus:shadow-[0_0_0_3px_rgba(217,145,51,0.15)] focus:outline-none resize-y min-h-[7rem]"
+  ></textarea>
+  <p class="lf-err text-xs text-[#f27992] leading-snug" data-for={name} hidden></p>
+</div>
