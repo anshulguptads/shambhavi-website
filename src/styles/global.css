@@ -18,6 +18,11 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Decorative elements (orbs, pinned stories) must never create horizontal scroll */
+  html, body {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-cream text-ink-primary font-sans;
     font-feature-settings: 'ss01', 'cv11';
