@@ -31,7 +31,7 @@ export default defineConfig({
     // Local D1/env bindings for `astro dev` come from the dev-only config —
     // the root wrangler.jsonc stays binding-free until real ids exist
     // (Pages rejects deploys whose bindings have invalid ids).
-    platformProxy: { enabled: true, configPath: 'wrangler.dev.jsonc' },
+    platformProxy: { enabled: true, configPath: 'cloudflare.dev.jsonc' },
     imageService: 'compile', // sharp optimizes prerendered pages at build time
   }),
   integrations: [

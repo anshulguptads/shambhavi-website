@@ -1,7 +1,7 @@
 {
   // FULL worker config — static assets + the Astro server (form APIs,
   // Keystatic). Used when the Workers Builds deploy command is:
-  //   npx wrangler deploy --config wrangler.worker.jsonc
+  //   npx wrangler deploy --config cloudflare.worker.jsonc
   // (docs/DYNAMIC-SETUP.md step 0.)
   //
   // After `wrangler d1 create shambhavi-forms`, uncomment and paste the id:

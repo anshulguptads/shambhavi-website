@@ -22,10 +22,10 @@ Cloudflare dashboard → Workers & Pages → **shambhavi-website** → Settings 
 **Build** → Deploy command, change it to:
 
 ```
-npx wrangler deploy --config wrangler.worker.jsonc
+npx wrangler deploy --config cloudflare.worker.jsonc
 ```
 
-[wrangler.worker.jsonc](../wrangler.worker.jsonc) is ready in the repo
+[cloudflare.worker.jsonc](../cloudflare.worker.jsonc) is ready in the repo
 (worker + assets + nodejs_compat). Retry the latest deployment after saving.
 While you're in that screen, note the **build log** of any failed deploy —
 if the command above errors, the log will say exactly why.
@@ -38,13 +38,13 @@ npx wrangler d1 create shambhavi-forms
 ```
 
 Copy the printed `database_id` into [wrangler.jsonc](../wrangler.jsonc) —
-uncomment the `d1_databases` block in **wrangler.worker.jsonc** and paste the id — then create the table:
+uncomment the `d1_databases` block in **cloudflare.worker.jsonc** and paste the id — then create the table:
 
 ```bash
 npx wrangler d1 execute shambhavi-forms --remote --file db/migrations/0001_submissions.sql
 ```
 
-Commit + push the wrangler.worker.jsonc change — that's the binding. (With
+Commit + push the cloudflare.worker.jsonc change — that's the binding. (With
 config-file deploys, bindings live in the config, not the dashboard;
 dashboard-added bindings would be overwritten on the next deploy.)
 
