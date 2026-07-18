@@ -22,9 +22,9 @@ export const nav = {
     { label: 'Solutions', href: '/solutions' },
     { label: 'About', href: '/about' },
     { label: 'Journal', href: '/journal' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'Contact', href: '/contact' },
   ],
-  cta: { label: 'Request a Pilot', href: '/#contact' },
+  cta: { label: 'Request a Pilot', href: '/request-pilot' },
   products: [
     { label: 'AspiremsAI', href: '/platforms/aspirems', description: 'AI mentor for school students' },
     { label: 'NeuroLink', href: '/platforms/neurolink', description: 'AI learning for universities' },
@@ -43,7 +43,7 @@ export const footerLinks = {
   company: [
     { label: 'About', href: '/about' },
     { label: 'Journal', href: '/journal' },
-    { label: 'Contact', href: 'mailto:info@shambhavilabs.com' },
+    { label: 'Contact', href: '/contact' },
   ],
   resources: [
     { label: 'RSS Feed', href: '/rss.xml' },

@@ -1,0 +1,33 @@
+---
+/** Dark-panel text field with label, optional hint, and an error slot the
+ *  enhancement script fills per-field (see FormShell.astro). */
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel';
+  required?: boolean;
+  autocomplete?: string;
+  placeholder?: string;
+  hint?: string;
+  class?: string;
+}
+const { name, label, type = 'text', required = false, autocomplete, placeholder, hint, class: className = '' } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class:list={['flex flex-col gap-1.5', className]}>
+  <label for={id} class="text-[11px] uppercase tracking-eyebrow font-medium text-onDark-muted">
+    {label}{required && <span class="text-saffron-300 ml-0.5" aria-hidden="true">*</span>}
+  </label>
+  <input
+    id={id}
+    name={name}
+    type={type}
+    required={required}
+    autocomplete={autocomplete}
+    placeholder={placeholder}
+    class="w-full rounded-xl bg-cream/[0.05] border border-cream/15 px-4 py-3 text-sm text-onDark-primary placeholder:text-onDark-faint transition-[border-color,box-shadow] duration-300 focus:border-saffron-400/70 focus:shadow-[0_0_0_3px_rgba(217,145,51,0.15)] focus:outline-none"
+  />
+  {hint && <p class="text-[11px] text-onDark-faint leading-snug">{hint}</p>}
+  <p class="lf-err text-xs text-[#f27992] leading-snug" data-for={name} hidden></p>
+</div>

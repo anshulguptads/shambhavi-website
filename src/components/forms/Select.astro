@@ -1,0 +1,28 @@
+---
+interface Props {
+  name: string;
+  label: string;
+  options: Array<{ value: string; label: string }>;
+  required?: boolean;
+  class?: string;
+}
+const { name, label, options, required = false, class: className = '' } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class:list={['flex flex-col gap-1.5', className]}>
+  <label for={id} class="text-[11px] uppercase tracking-eyebrow font-medium text-onDark-muted">
+    {label}{required && <span class="text-saffron-300 ml-0.5" aria-hidden="true">*</span>}
+  </label>
+  <select
+    id={id}
+    name={name}
+    required={required}
+    class="w-full appearance-none rounded-xl bg-cream/[0.05] border border-cream/15 px-4 py-3 text-sm text-onDark-primary transition-[border-color,box-shadow] duration-300 focus:border-saffron-400/70 focus:shadow-[0_0_0_3px_rgba(217,145,51,0.15)] focus:outline-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212%22%20height%3D%2212%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M3%204.5l3%203%203-3%22%20stroke%3D%22%23faf7ef%22%20stroke-opacity%3D%22.55%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center]"
+  >
+    {options.map((o) => (
+      <option value={o.value} class="bg-navy-deep text-onDark-primary">{o.label}</option>
+    ))}
+  </select>
+  <p class="lf-err text-xs text-[#f27992] leading-snug" data-for={name} hidden></p>
+</div>

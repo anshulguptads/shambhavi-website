@@ -1,0 +1,50 @@
+---
+/** Multi-select platform chips (checkboxes). Preselected server-agnostically —
+ *  a tiny script honors ?platform=<slug> so product-page CTAs deep-link. */
+const platforms = [
+  { slug: 'aspirems', name: 'AspiremsAI', desc: 'K-12 schools' },
+  { slug: 'neurolink', name: 'NeuroLink', desc: 'Universities' },
+  { slug: 'sanadeep', name: 'SanaDeep', desc: 'Enterprise HR' },
+  { slug: 'insighttest', name: 'InsightTest', desc: 'Engineering teams' },
+];
+---
+
+<fieldset class="flex flex-col gap-2">
+  <legend class="text-[11px] uppercase tracking-eyebrow font-medium text-onDark-muted mb-2">
+    Which platform(s)?<span class="text-saffron-300 ml-0.5" aria-hidden="true">*</span>
+  </legend>
+  <div class="grid sm:grid-cols-2 gap-2.5" id="platform-chips">
+    {platforms.map((p) => (
+      <label class="platform-chip group relative flex items-start gap-3 rounded-xl border border-cream/15 bg-cream/[0.04] px-4 py-3.5 cursor-pointer transition-all duration-300 hover:border-cream/30 has-[:checked]:border-saffron-400/80 has-[:checked]:bg-saffron-400/[0.08]">
+        <input
+          type="checkbox"
+          name="platforms"
+          value={p.slug}
+          class="mt-0.5 h-4 w-4 shrink-0 rounded border-cream/30 bg-transparent text-saffron-400 accent-[#d99133] focus:outline-none focus-visible:ring-2 focus-visible:ring-saffron-400"
+        />
+        <span class="flex flex-col">
+          <span class="text-sm font-medium text-onDark-primary leading-tight">{p.name}</span>
+          <span class="text-[11px] text-onDark-muted">{p.desc}</span>
+        </span>
+      </label>
+    ))}
+  </div>
+  <p class="lf-err text-xs text-[#f27992] leading-snug" data-for="platforms" hidden></p>
+</fieldset>
+
+<script>
+  import { onPageReady } from '@lib/motion/lifecycle';
+
+  // Deep-link preselection: /request-pilot?platform=aspirems (comma-separated ok)
+  onPageReady(() => {
+    const chips = document.getElementById('platform-chips');
+    if (!chips) return;
+    const param = new URLSearchParams(location.search).get('platform');
+    if (!param) return;
+    const wanted = param.split(',').map((s) => s.trim().toLowerCase());
+    chips.querySelectorAll<HTMLInputElement>('input[name="platforms"]').forEach((input) => {
+      if (wanted.includes(input.value)) input.checked = true;
+    });
+    chips.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+</script>
