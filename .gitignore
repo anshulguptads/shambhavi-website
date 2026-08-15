@@ -43,3 +43,7 @@ _legacy/
 
 # wrangler local state
 .wrangler/
+
+# Transient git worktrees created by Claude Code's agent isolation. Each is a
+# full second checkout of this repo, so they must never be committed into it.
+.claude/worktrees/
